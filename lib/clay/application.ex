@@ -14,6 +14,7 @@ defmodule Clay.Application do
       ClayWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Clay.PubSub},
+      ClayWeb.Presence,
       # Start the Endpoint (http/https)
       ClayWeb.Endpoint
       # Start a worker by calling: Clay.Worker.start_link(arg)
