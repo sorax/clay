@@ -15,7 +15,6 @@ defmodule ClayWeb.UserConfirmationController do
       )
     end
 
-    # In order to prevent user enumeration attacks, regardless of the outcome, show an impartial success/error message.
     conn
     |> put_flash(
       :info,
