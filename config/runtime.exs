@@ -40,18 +40,26 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
-  port = String.to_integer(System.get_env("PORT") || "4000")
+  host = System.get_env("PHX_HOST") || nil
+  http_port = String.to_integer(System.get_env("HTTP_PORT") || "80")
+  https_port = String.to_integer(System.get_env("HTTPS_PORT") || "443")
 
   config :clay, ClayWeb.Endpoint,
     url: [host: host, port: 443],
+    # url: [host: host]
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
       # See the documentation on https://hexdocs.pm/plug_cowboy/Plug.Cowboy.html
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: port
+      port: http_port
+    ],
+    https: [
+      port: https_port,
+      cipher_suite: :strong,
+      keyfile: System.get_env("SSL_KEY_PATH"),
+      certfile: System.get_env("SSL_CERT_PATH")
     ],
     secret_key_base: secret_key_base
 
