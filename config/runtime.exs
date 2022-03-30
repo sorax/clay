@@ -55,12 +55,12 @@ if config_env() == :prod do
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: http_port
     ],
-    https: [
-      port: https_port,
-      cipher_suite: :strong,
-      keyfile: System.get_env("SSL_KEY_PATH"),
-      certfile: System.get_env("SSL_CERT_PATH")
-    ],
+    # https: [
+    #   port: https_port,
+    #   cipher_suite: :strong,
+    #   keyfile: System.get_env("SSL_KEY_PATH"),
+    #   certfile: System.get_env("SSL_CERT_PATH")
+    # ],
     secret_key_base: secret_key_base
 
   # ## Using releases
