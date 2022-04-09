@@ -21,6 +21,8 @@ defmodule ClayWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+
+    live "/game/eyeballpaul", GameLive.Eyeballpaul, :index
   end
 
   # Other scopes may use custom stacks.
