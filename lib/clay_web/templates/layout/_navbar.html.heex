@@ -1,0 +1,31 @@
+<nav class="navbar is-info" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <%= link to: Routes.page_path(@conn, :index), class: "navbar-item", title: "hausgedacht" do %>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 100 100" preserveAspectRatio="xMidYMid meet" width="30" height="30">
+        <line x1="-45" y1="5" x2="0" y2="-40" /><line x1="45" y1="5" x2="0" y2="-40" /><line x1="-30" y1="40" x2="-30" y2="-5" /><line x1="30" y1="40" x2="30" y2="-5" /><line x1="-30" y1="40" x2="30" y2="40" />
+      </svg>
+    <% end %>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbar">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbar" class="navbar-menu">
+    <div class="navbar-start">
+      <%= link "home", class: "navbar-item", to: Routes.page_path(@conn, :index) %>
+      <!--
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">More</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item">About</a>
+        </div>
+      </div>
+      -->
+    </div>
+    <div class="navbar-end">
+      <%= render "_user_menu.html", assigns %>
+    </div>
+  </div>
+</nav>

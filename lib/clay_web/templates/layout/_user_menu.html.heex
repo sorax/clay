@@ -1,10 +1,20 @@
-<ul>
 <%= if @current_user do %>
-  <li><%= @current_user.email %></li>
-  <li><%= link "Settings", to: Routes.user_settings_path(@conn, :edit) %></li>
-  <li><%= link "Log out", to: Routes.user_session_path(@conn, :delete), method: :delete %></li>
+<div class="navbar-item has-dropdown is-hoverable">
+  <a class="navbar-link"><%= @current_user.email %></a>
+  <div class="navbar-dropdown is-right">
+    <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+      <%= link "LiveDashboard", class: "navbar-item", to: Routes.live_dashboard_path(@conn, :home) %>
+    <% end %>
+    <%= link "Settings", class: "navbar-item", to: Routes.user_settings_path(@conn, :edit) %>
+    <hr class="navbar-divider">
+    <%= link "Sign out", class: "navbar-item", to: Routes.user_session_path(@conn, :delete), method: :delete %>
+  </div>
+</div>
 <% else %>
-  <li><%= link "Register", to: Routes.user_registration_path(@conn, :new) %></li>
-  <li><%= link "Log in", to: Routes.user_session_path(@conn, :new) %></li>
+  <div class="navbar-item">
+    <div class="buttons">
+      <%= link "Sign in", class: "button is-light", to: Routes.user_session_path(@conn, :new) %>
+      <%= link "Sign up", class: "button is-primary", to: Routes.user_registration_path(@conn, :new) %>
+    </div>
+  </div>
 <% end %>
-</ul>

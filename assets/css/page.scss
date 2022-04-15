@@ -12,6 +12,15 @@ body {
   }
 }
 
-.container {
-  max-width: 960px;
+.navbar-brand {
+  .navbar-item {
+    svg {
+      line {
+        fill: none;
+        stroke: $white;
+        stroke-width: 10;
+        stroke-linecap: round;
+      }
+    }
+  }
 }
