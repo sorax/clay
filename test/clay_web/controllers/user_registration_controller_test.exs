@@ -9,7 +9,7 @@ defmodule ClayWeb.UserRegistrationControllerTest do
       response = html_response(conn, 200)
       assert response =~ "<h1>Register</h1>"
       assert response =~ "Log in</a>"
-      assert response =~ "Register</a>"
+      assert response =~ "Sign up</a>"
     end
 
     test "redirects if already logged in", %{conn: conn} do
@@ -36,7 +36,7 @@ defmodule ClayWeb.UserRegistrationControllerTest do
       response = html_response(conn, 200)
       assert response =~ email
       assert response =~ "Settings</a>"
-      assert response =~ "Log out</a>"
+      assert response =~ "Sign out</a>"
     end
 
     test "render errors for invalid data", %{conn: conn} do
