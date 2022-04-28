@@ -1,12 +1,22 @@
-$logo-color: #fff;
 
 // https://mularczyk.co
 
-// $color: #d9cccd;
-// $headline-color: #f7e9e9;
-// $link-color: #f34;
+//
+// COLORS
+//
+$back: #000;
+$brown: #1a1818;
+$red: #f34;
+$beige: #f7e9e9;
 
-// $body-background: #1a1818;
-
-// $scheme-main: #1a1818;
+//
+// BULMA VARIABLES
+//
+$primary: $red;
 $body-background-color: #1a1818;
+$text: $beige;
+
+//
+// PAGE VARIABLES
+//
+$logo-color: $text;
