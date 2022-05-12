@@ -8,7 +8,7 @@ defmodule Clay.Accounts.UserNotifier do
     email =
       new()
       |> to(recipient)
-      |> from({"MyApp", "contact@example.com"})
+      |> from({"clay", "info@sorax.net"})
       |> subject(subject)
       |> text_body(body)
 

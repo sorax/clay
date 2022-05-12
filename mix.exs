@@ -51,7 +51,8 @@ defmodule Clay.MixProject do
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
       {:dart_sass, "~> 0.4", runtime: Mix.env() == :dev},
-      {:bulma, "0.9.3"}
+      {:bulma, "0.9.3"},
+      {:gen_smtp, "~> 1.1"}
     ]
   end
 
