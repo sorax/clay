@@ -3,6 +3,7 @@ defmodule ClayWeb.GameLive.Eyeballpaul do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    socket
+    |> reply(:ok)
   end
 end
