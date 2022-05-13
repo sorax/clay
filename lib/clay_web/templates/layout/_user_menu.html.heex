@@ -2,7 +2,7 @@
 <div class="navbar-item has-dropdown is-hoverable">
   <a class="navbar-link"><%= @current_user.email %></a>
   <div class="navbar-dropdown is-right">
-    <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+    <%= if @current_user.admin === true do %>
       <%= link "LiveDashboard", class: "navbar-item", to: Routes.live_dashboard_path(@conn, :home) %>
     <% end %>
     <%= link "Settings", class: "navbar-item", to: Routes.user_settings_path(@conn, :edit) %>
