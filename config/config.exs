@@ -15,7 +15,8 @@ config :clay, ClayWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: ClayWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Clay.PubSub,
-  live_view: [signing_salt: "TMHIYmqf"]
+  live_view: [signing_salt: "TMHIYmqf"],
+  mail_sender: {"clay", "info@sorax.net"}
 
 # Configures the mailer
 #

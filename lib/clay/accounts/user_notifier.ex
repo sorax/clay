@@ -2,13 +2,16 @@ defmodule Clay.Accounts.UserNotifier do
   import Swoosh.Email
 
   alias Clay.Mailer
+  alias ClayWeb.Endpoint
 
   # Delivers the email using the application mailer.
   defp deliver(recipient, subject, body) do
+    sender = Endpoint.config(:mail_sender)
+
     email =
       new()
       |> to(recipient)
-      |> from({"clay", "info@sorax.net"})
+      |> from(sender)
       |> subject(subject)
       |> text_body(body)
 
