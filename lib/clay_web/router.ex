@@ -24,6 +24,8 @@ defmodule ClayWeb.Router do
 
     get "/", PageController, :index
 
+    live "/claudia", BlogLive.List, :claudia
+
     live "/game/eyeballpaul", GameLive.Eyeballpaul, :index
   end
 
