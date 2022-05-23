@@ -36,6 +36,9 @@ defmodule ClayWeb.Router do
   scope "/", ClayWeb do
     pipe_through [:browser, :require_admin]
 
+    # live "/file/list", FileLive, :index
+    live "/file/upload", FileLive.Upload, :index
+
     # Enable LiveDashboard
     live_dashboard "/dashboard", metrics: Telemetry
   end
