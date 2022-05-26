@@ -6,6 +6,7 @@ defmodule ClayWeb.Router do
   import ClayWeb.UserAccess
 
   pipeline :browser do
+    plug ClayWeb.Plugs.Log
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
@@ -40,6 +41,8 @@ defmodule ClayWeb.Router do
 
     # live "/file/list", FileLive, :index
     live "/file/upload", FileLive.Upload, :index
+
+    live "/requests", RequestLive.Index, :index
 
     # Enable LiveDashboard
     live_dashboard "/dashboard", metrics: Telemetry

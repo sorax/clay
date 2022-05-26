@@ -1,0 +1,6 @@
+<div class="container">
+  <h1>Requests</h1>
+  <%= for request <- @requests do %>
+    <pre><%= request.message %></pre>
+  <% end %>
+</div>
