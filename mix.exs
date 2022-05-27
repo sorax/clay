@@ -53,7 +53,8 @@ defmodule Clay.MixProject do
       {:dart_sass, "~> 0.4", runtime: Mix.env() == :dev},
       {:bulma, "0.9.3"},
       {:gen_smtp, "~> 1.1"},
-      {:csv, "~> 2.4"}
+      {:csv, "~> 2.4"},
+      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
 
