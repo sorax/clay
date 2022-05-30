@@ -5,6 +5,8 @@ defmodule ClayWeb.Router do
   import ClayWeb.UserAuth
   import ClayWeb.UserAccess
 
+  alias Plugs.Redirect
+
   pipeline :browser do
     plug ClayWeb.Plugs.Log
     plug :accepts, ["html"]
@@ -18,6 +20,13 @@ defmodule ClayWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  scope "/", ClayWeb, host: "sorax.net" do
+    pipe_through :browser
+
+    # get "/", Redirect, host: "https://hausgedacht.de"
+    get "/*ignore", Redirect, host: "https://hausgedacht.de"
   end
 
   scope "/", ClayWeb do
