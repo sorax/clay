@@ -350,4 +350,10 @@ defmodule Clay.Accounts do
       {:error, :user, changeset, _} -> {:error, changeset}
     end
   end
+
+  def update_user_privileges(%User{} = user, attrs) do
+    user
+    |> User.privileges_changeset(attrs)
+    |> Repo.update()
+  end
 end

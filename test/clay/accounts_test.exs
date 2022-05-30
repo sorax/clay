@@ -505,4 +505,16 @@ defmodule Clay.AccountsTest do
       refute inspect(%User{password: "123456"}) =~ "password: \"123456\""
     end
   end
+
+  describe "update_user_privileges/2" do
+    setup do
+      %{user: user_fixture()}
+    end
+
+    test "can change admin status", %{user: user} do
+      refute user.admin
+      assert {:ok, %{admin: true}} = Accounts.update_user_privileges(user, %{admin: true})
+      assert {:ok, %{admin: false}} = Accounts.update_user_privileges(user, %{admin: false})
+    end
+  end
 end
