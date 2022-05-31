@@ -3,7 +3,13 @@ defmodule Clay.Logs.Request do
   import Ecto.Changeset
 
   schema "requests" do
-    field :message, :string
+    field :host, :string
+    field :method, :string
+    field :port, :integer
+    field :query_string, :string
+    field :remote_ip, :string
+    field :req_headers, :string
+    field :request_path, :string
 
     timestamps()
   end
@@ -11,7 +17,6 @@ defmodule Clay.Logs.Request do
   @doc false
   def changeset(request, attrs) do
     request
-    |> cast(attrs, [:message])
-    |> validate_required([:message])
+    |> cast(attrs, [:host, :method, :port, :query_string, :remote_ip, :req_headers, :request_path])
   end
 end

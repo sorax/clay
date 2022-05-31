@@ -8,7 +8,7 @@ defmodule Clay.LogsTest do
 
     import Clay.LogsFixtures
 
-    @invalid_attrs %{message: nil}
+    @invalid_attrs %{port: "invalid"}
 
     test "list_requests/0 returns all requests" do
       request = request_fixture()
@@ -21,10 +21,10 @@ defmodule Clay.LogsTest do
     end
 
     test "create_request/1 with valid data creates a request" do
-      valid_attrs = %{message: "some message"}
+      valid_attrs = %{host: "localhost"}
 
       assert {:ok, %Request{} = request} = Logs.create_request(valid_attrs)
-      assert request.message == "some message"
+      assert request.host == "localhost"
     end
 
     test "create_request/1 with invalid data returns error changeset" do
@@ -33,10 +33,10 @@ defmodule Clay.LogsTest do
 
     test "update_request/2 with valid data updates the request" do
       request = request_fixture()
-      update_attrs = %{message: "some updated message"}
+      update_attrs = %{host: "example.com"}
 
       assert {:ok, %Request{} = request} = Logs.update_request(request, update_attrs)
-      assert request.message == "some updated message"
+      assert request.host == "example.com"
     end
 
     test "update_request/2 with invalid data returns error changeset" do

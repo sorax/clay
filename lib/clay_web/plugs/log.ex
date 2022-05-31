@@ -7,12 +7,9 @@ defmodule ClayWeb.Plugs.Log do
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    tracking_data =
-      conn
-      |> get_tracking_data()
-      |> transform_tracking_data()
-
-    %{message: tracking_data |> Jason.encode!()}
+    conn
+    |> get_tracking_data()
+    |> transform_tracking_data()
     |> Logs.create_request()
 
     conn
@@ -26,15 +23,13 @@ defmodule ClayWeb.Plugs.Log do
 
   defp transform_tracking_data(data) do
     data
-    |> Map.update!(:remote_ip, &transform_value/1)
-    |> Map.update!(:req_headers, &transform_value/1)
+    |> Map.update!(:remote_ip, &get_ip/1)
+    |> Map.update!(:req_headers, &get_req_headers/1)
   end
 
-  defp transform_value(value) when is_list(value) do
-    value |> Enum.map(&transform_value/1)
-  end
+  defp get_ip(remote_ip), do: remote_ip |> Tuple.to_list() |> Enum.join(".")
 
-  defp transform_value(value) when is_tuple(value) do
-    value |> Tuple.to_list()
+  defp get_req_headers(value) when is_list(value) do
+    value |> Enum.map(&Tuple.to_list/1) |> Jason.encode!()
   end
 end

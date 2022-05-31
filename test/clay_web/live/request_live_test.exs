@@ -29,7 +29,7 @@ defmodule ClayWeb.RequestLiveTest do
       [request] = Logs.list_requests()
 
       assert view |> has_element?("h1", "Requests")
-      assert view |> has_element?("pre", request.message)
+      assert view |> has_element?("td", request.host)
     end
   end
 end

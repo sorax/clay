@@ -1,6 +1,16 @@
 <div class="container">
   <h1>Requests</h1>
-  <%= for request <- @requests do %>
-    <pre><%= request.message %></pre>
-  <% end %>
+  <table>
+    <%= for request <- @requests do %>
+      <tr>
+        <td><%= request.host %></td>
+        <td><%= request.method %></td>
+        <td><%= request.port %></td>
+        <td><%= request.query_string %></td>
+        <td><%= request.remote_ip %></td>
+        <td><%= # request.req_headers %></td>
+        <td><%= request.request_path %></td>
+      </tr>
+    <% end %>
+  </table>
 </div>

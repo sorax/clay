@@ -11,7 +11,13 @@ defmodule Clay.LogsFixtures do
     {:ok, request} =
       attrs
       |> Enum.into(%{
-        message: "some message"
+        host: "localhost",
+        method: "GET",
+        port: 443,
+        query_string: "",
+        remote_ip: "127.0.0.1",
+        req_headers: "",
+        request_path: "/"
       })
       |> Clay.Logs.create_request()
 
