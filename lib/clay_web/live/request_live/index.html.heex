@@ -1,8 +1,8 @@
-<div class="container">
+<div id="requests" class="container">
   <h1>Requests</h1>
   <table>
     <%= for request <- @requests do %>
-      <tr>
+      <tr id={"request-#{request.id}"}>
         <td><%= request.host %></td>
         <td><%= request.method %></td>
         <td><%= request.port %></td>
