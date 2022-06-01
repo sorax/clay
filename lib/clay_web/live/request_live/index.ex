@@ -5,19 +5,18 @@ defmodule ClayWeb.RequestLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
+    if connected?(socket), do: Process.send_after(self(), :update, 1000)
+
     socket
-    |> assign(:requests, list_requests())
+    |> assign(:page_title, "Requests")
+    |> assign(:requests, [])
     |> reply(:ok)
   end
 
   @impl true
-  def handle_params(_params, _url, socket) do
+  def handle_info(:update, socket) do
     socket
-    |> assign(:page_title, "Requests")
+    |> assign(:requests, Logs.list_requests())
     |> reply(:noreply)
-  end
-
-  defp list_requests do
-    Logs.list_requests()
   end
 end
