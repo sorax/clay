@@ -6,6 +6,10 @@ defmodule ClayWeb.Plugs.Log do
 
   def init(opts), do: opts
 
+  def call(%{assigns: %{current_user: %{admin: true}}} = conn, _opts) do
+    conn
+  end
+
   def call(conn, _opts) do
     conn
     |> get_tracking_data()

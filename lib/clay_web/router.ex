@@ -8,7 +8,6 @@ defmodule ClayWeb.Router do
   alias Plugs.Redirect
 
   pipeline :browser do
-    plug ClayWeb.Plugs.Log
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
@@ -16,10 +15,12 @@ defmodule ClayWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :fetch_current_user
+    plug ClayWeb.Plugs.Log
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug ClayWeb.Plugs.Log
   end
 
   scope "/", ClayWeb, host: "sorax.net" do
