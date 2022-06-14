@@ -4,7 +4,7 @@ defmodule ClayWeb.RequestLiveTest do
   import Phoenix.LiveViewTest
   import Clay.AccountsFixtures
 
-  alias Clay.Logs
+  # alias Clay.Logs
 
   describe "show requests" do
     test "redirect if not logged in", %{conn: conn} do
