@@ -74,6 +74,16 @@ if config_env() == :prod do
   # Then you can assemble a release by calling `mix release`.
   # See `mix help release` for more information.
 
+  # Configures file storage
+  storage_path =
+    System.get_env("STORAGE_PATH") ||
+      raise """
+      environment variable STORAGE_PATH is missing.
+      For example: /var/www/uploads
+      """
+
+  config :clay, :storage, path: storage_path
+
   # ## Configuring the mailer
   #
   # In production you need to configure the mailer to use a different adapter.
