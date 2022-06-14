@@ -49,7 +49,7 @@ defmodule ClayWeb.Router do
   scope "/", ClayWeb do
     pipe_through [:browser, :require_admin]
 
-    # live "/file/list", FileLive, :index
+    live "/file/list", FileLive.List, :index
     live "/file/upload", FileLive.Upload, :index
 
     live "/requests", RequestLive.Index, :index
