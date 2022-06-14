@@ -54,6 +54,13 @@ defmodule ClayWeb.Router do
 
     live "/requests", RequestLive.Index, :index
 
+    live "/posts", PostLive.Index, :index
+    live "/posts/new", PostLive.Index, :new
+    live "/posts/:id/edit", PostLive.Index, :edit
+
+    live "/posts/:id", PostLive.Show, :show
+    live "/posts/:id/show/edit", PostLive.Show, :edit
+
     # Enable LiveDashboard
     live_dashboard "/dashboard", metrics: Telemetry
   end
