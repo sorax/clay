@@ -16,4 +16,7 @@ defmodule ClayWeb.LayoutView do
     <meta name="robots" content="index,follow"/>
     <link rel="canonical" href="https://hausgedacht.de#{path}"/>)
   end
+
+  defp is_admin(%{admin: true}), do: true
+  defp is_admin(_user), do: false
 end
