@@ -32,3 +32,5 @@ clay-*.tar
 npm-debug.log
 /assets/node_modules/
 
+# Ignore uploaded files.
+/priv/static/uploads/
