@@ -18,5 +18,8 @@
       </a> %>
     </header>
     <%= @inner_content %>
+    <footer class="container">
+      <%= link "Impressum", to: Routes.page_path(@conn, :imprint) %>
+    </footer>
   </body>
 </html>

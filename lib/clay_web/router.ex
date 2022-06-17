@@ -34,6 +34,7 @@ defmodule ClayWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/impressum", PageController, :imprint
 
     live "/claudia", BlogLive.List, :claudia
 
