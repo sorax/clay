@@ -40,7 +40,6 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  # host = System.get_env("PHX_HOST") || nil
   http_port = String.to_integer(System.get_env("HTTP_PORT") || "80")
   https_port = String.to_integer(System.get_env("HTTPS_PORT") || "443")
 
