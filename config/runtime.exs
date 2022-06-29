@@ -42,6 +42,7 @@ if config_env() == :prod do
 
   http_port = String.to_integer(System.get_env("HTTP_PORT") || "80")
   https_port = String.to_integer(System.get_env("HTTPS_PORT") || "443")
+  check_origin = System.get_env("CERTBOT_DOMAINS") |> String.split(",") |> Enum.map(&"//*.#{&1}")
 
   config :clay, ClayWeb.Endpoint,
     # url: [host: host, port: 443],
@@ -61,7 +62,7 @@ if config_env() == :prod do
       certfile: System.get_env("SSL_CERT_PATH")
     ],
     secret_key_base: secret_key_base,
-    check_origin: ["//sorax.net", "//*.hausgedacht.de"]
+    check_origin: check_origin
 
   # ## Using releases
   #
