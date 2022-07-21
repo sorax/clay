@@ -14,17 +14,17 @@
   </div>
   <div id="navbar" class="navbar-menu">
     <div class="navbar-start">
-      <%= link "home", class: "navbar-item", to: Routes.page_path(@conn, :index) %>
+      <%= link "Start", class: "navbar-item", to: Routes.page_path(@conn, :index) %>
       <%= if is_admin(@current_user) do %>
-        <%= link "blog", class: "navbar-item", to: Routes.blog_list_path(@conn, :claudia) %>
+        <%= link "Blog", class: "navbar-item", to: Routes.blog_list_path(@conn, :claudia) %>
         <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">files</a>
+          <a class="navbar-link">Files</a>
           <div class="navbar-dropdown">
-            <%= link "list", class: "navbar-item", to: Routes.file_list_path(@conn, :index) %>
-            <%= link "upload", class: "navbar-item", to: Routes.file_upload_path(@conn, :index) %>
+            <%= link "List", class: "navbar-item", to: Routes.file_list_path(@conn, :index) %>
+            <%= link "Upload", class: "navbar-item", to: Routes.file_upload_path(@conn, :index) %>
           </div>
         </div>
-        <%= link "games", class: "navbar-item", to: Routes.game_eyeballpaul_path(@conn, :index) %>
+        <%= link "Games", class: "navbar-item", to: Routes.game_eyeballpaul_path(@conn, :index) %>
       <% end %>
     </div>
     <div class="navbar-end">
