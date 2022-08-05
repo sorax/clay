@@ -16,10 +16,13 @@
       <%# <a href="https://phoenixframework.org/" class="phx-logo">
         <img src={Routes.static_path(@conn, "/images/phoenix.png")} alt="Phoenix Framework Logo"/>
       </a> %>
+      <h1>hausgedacht</h1>
+      <p>Frische Ideen aus eigenem Anbau</p>
     </header>
     <%= @inner_content %>
     <footer class="container">
       <%= link "Impressum", to: Routes.page_path(@conn, :imprint) %>
+      <%= link "Datenschutz", to: Routes.page_path(@conn, :privacy) %>
     </footer>
   </body>
 </html>

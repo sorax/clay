@@ -35,6 +35,7 @@ defmodule ClayWeb.Router do
 
     get "/", PageController, :index
     get "/impressum", PageController, :imprint
+    get "/datenschutz", PageController, :privacy
 
     live "/claudia", BlogLive.List, :claudia
 
