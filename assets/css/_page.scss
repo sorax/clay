@@ -4,7 +4,7 @@ body {
   color: $text-color;
   background: $body-background;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 0.625rem;
+  // font-size: 0.625rem;
 }
 
 .navbar-brand {
@@ -21,14 +21,17 @@ body {
 }
 
 body > header {
-  font-size: 2em;
+  // font-size: 2em;
 }
 
 body > main {
-  .container {
-    max-width: 768px;
-    margin-left: auto;
-    margin-right: auto;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $headline-color;
   }
 
   h1 {
@@ -42,5 +45,15 @@ body > main {
 
 body > footer {
   font-size: 0.8em;
-  // opacity: 0.5;
+  opacity: 0.5;
+
+  a {
+    color: $text-color;
+  }
+}
+
+.container {
+  max-width: 768px;
+  margin-left: auto;
+  margin-right: auto;
 }
