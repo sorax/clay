@@ -39,7 +39,8 @@ defmodule ClayWeb.Router do
 
     live "/claudia", BlogLive.List, :claudia
 
-    live "/game/eyeballpaul", GameLive.Eyeballpaul, :index
+    live "/games/eyeballpaul", GameLive.Eyeballpaul, :index
+    live "/games/spacegame", GameLive.Spacegame, :index
   end
 
   # Other scopes may use custom stacks.
