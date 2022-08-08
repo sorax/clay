@@ -5,6 +5,18 @@ defmodule ClayWeb.LayoutView do
     {:safe, get_page_config(conn)}
   end
 
+  defp get_page_config(%{path_info: ["impressum" | _], request_path: path}) do
+    ~s(<meta name="description" content=""/>
+    <meta name="robots" content="noindex,follow"/>
+    <link rel="canonical" href="https://hausgedacht.de#{path}"/>)
+  end
+
+  defp get_page_config(%{path_info: ["datenschutz" | _], request_path: path}) do
+    ~s(<meta name="description" content=""/>
+    <meta name="robots" content="noindex,follow"/>
+    <link rel="canonical" href="https://hausgedacht.de#{path}"/>)
+  end
+
   defp get_page_config(%{path_info: ["claudia" | _], request_path: path}) do
     ~s(<meta name="description" content=""/>
     <meta name="robots" content="noindex,nofollow"/>

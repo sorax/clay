@@ -11,7 +11,7 @@
     <script defer phx-track-static type="text/javascript" src={Routes.static_path(@conn, "/assets/app.js")}></script>
   </head>
   <body>
-    <header class="container">
+    <header>
       <%= render "_navbar.html", assigns %>
       <%# <a href="https://phoenixframework.org/" class="phx-logo">
         <img src={Routes.static_path(@conn, "/images/phoenix.png")} alt="Phoenix Framework Logo"/>
@@ -20,7 +20,7 @@
       <p>Frische Ideen aus eigenem Anbau</p>
     </header>
     <%= @inner_content %>
-    <footer class="container">
+    <footer>
       <%= link "Impressum", to: Routes.page_path(@conn, :imprint) %>
       <%= link "Datenschutz", to: Routes.page_path(@conn, :privacy) %>
     </footer>
