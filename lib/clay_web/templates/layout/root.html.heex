@@ -21,8 +21,10 @@
     </header>
     <%= @inner_content %>
     <footer>
-      <%= link "Impressum", to: Routes.page_path(@conn, :imprint) %>
-      <%= link "Datenschutz", to: Routes.page_path(@conn, :privacy) %>
+      <div class="meta">
+        <%= link "Impressum", to: Routes.page_path(@conn, :imprint) %>
+        <%= link "Datenschutz", to: Routes.page_path(@conn, :privacy) %>
+      </div>
     </footer>
   </body>
 </html>
