@@ -12,12 +12,10 @@
   </head>
   <body>
     <header>
-      <%= render "_navbar.html", assigns %>
-      <%# <a href="https://phoenixframework.org/" class="phx-logo">
-        <img src={Routes.static_path(@conn, "/images/phoenix.png")} alt="Phoenix Framework Logo"/>
-      </a> %>
       <h1>hausgedacht</h1>
       <p>Frische Ideen aus eigenem Anbau</p>
+      <%= render "_navbar.html", assigns %>
+      <%# <img src={Routes.static_path(@conn, "/images/phoenix.png")} /> %>
     </header>
     <%= @inner_content %>
     <footer>
