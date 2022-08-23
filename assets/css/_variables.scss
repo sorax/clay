@@ -18,3 +18,105 @@ $body-background: $dark-gray;
 $headline-color: $beige2;
 $link-color: $red;
 $text-color: $beige1;
+
+//
+// FONTS
+//
+$font-size1: 6em;
+$font-size2: 4.8em;
+$font-size3: 3.4em;
+$font-size4: 2.4em;
+$font-size5: 2em;
+$font-size6: 1.6em;
+$font-size7: 1.4em;
+$font-size8: 1.2em;
+// $font-size9: 1em;
+
+html {
+  font-size: 0.625rem;
+}
+
+body {
+  font-size: $font-size7;
+}
+
+.display {
+  font-size: $font-size2;
+  font-weight: 900;
+}
+
+h1,
+.h1 {
+  font-size: $font-size3;
+  font-weight: 900;
+}
+
+h2,
+.h2 {
+  font-size: $font-size4;
+  font-weight: 700;
+}
+
+h3,
+.h3 {
+  font-size: $font-size5;
+  font-weight: 700;
+}
+
+h4,
+.h4 {
+  font-size: $font-size6;
+  font-weight: 700;
+}
+
+h5,
+.h5 {
+  font-size: $font-size7;
+  font-weight: 700;
+}
+
+h6,
+.h6 {
+  font-size: $font-size8;
+  font-weight: 700;
+}
+
+@media (min-width: 1024px) {
+  body {
+    font-size: $font-size6;
+  }
+
+  .display {
+    font-size: $font-size1;
+  }
+
+  h1,
+  .h1 {
+    font-size: $font-size2;
+  }
+
+  h2,
+  .h2 {
+    font-size: $font-size3;
+  }
+
+  h3,
+  .h3 {
+    font-size: $font-size4;
+  }
+
+  h4,
+  .h4 {
+    font-size: $font-size5;
+  }
+
+  h5,
+  .h5 {
+    font-size: $font-size6;
+  }
+
+  h6,
+  .h6 {
+    font-size: $font-size7;
+  }
+}
