@@ -1,15 +1,15 @@
 <%= if @current_user do %>
-<div class="navbar-item has-dropdown is-hoverable">
-  <a class="navbar-link"><%= @current_user.email %></a>
-  <div class="navbar-dropdown is-right">
-    <%= if @current_user.admin === true do %>
-      <%= link "LiveDashboard", class: "navbar-item", to: Routes.live_dashboard_path(@conn, :home) %>
-    <% end %>
-    <%= link "Settings", class: "navbar-item", to: Routes.user_settings_path(@conn, :edit) %>
-    <hr class="navbar-divider">
-    <%= link "Sign out", class: "navbar-item", to: Routes.user_session_path(@conn, :delete), method: :delete %>
+  <div class="navbar-item has-dropdown is-hoverable">
+    <a class="navbar-link"><%= @current_user.email %></a>
+    <div class="navbar-dropdown is-right">
+      <%= if @current_user.admin === true do %>
+        <%= link "LiveDashboard", class: "navbar-item", to: Routes.live_dashboard_path(@conn, :home) %>
+      <% end %>
+      <%= link "Settings", class: "navbar-item", to: Routes.user_settings_path(@conn, :edit) %>
+      <hr class="navbar-divider">
+      <%= link "Sign out", class: "navbar-item", to: Routes.user_session_path(@conn, :delete), method: :delete %>
+    </div>
   </div>
-</div>
 <% else %>
   <div class="navbar-item">
     <div class="buttons">
