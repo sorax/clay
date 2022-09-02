@@ -1,6 +1,8 @@
 defmodule ClayWeb.FileLive.Upload do
   use ClayWeb, :live_view
 
+  @storage_path :clay |> Application.get_env(:storage) |> Keyword.fetch!(:path)
+
   @impl true
   def mount(_params, _session, socket) do
     socket
@@ -26,7 +28,10 @@ defmodule ClayWeb.FileLive.Upload do
   def handle_event("save", _params, socket) do
     uploaded_files =
       consume_uploaded_entries(socket, :avatar, fn %{path: path}, _entry ->
-        dest = Path.join([:code.priv_dir(:clay), "static", "uploads", Path.basename(path)])
+        # entry |> IO.inspect(label: "entry")
+        # path |> IO.inspect(label: "path")
+        # dest = Path.join([:code.priv_dir(:clay), "static", "uploads", Path.basename(path)])
+        dest = @storage_path <> "/" <> Path.basename(path)
         File.cp!(path, dest)
         {:ok, Routes.static_path(socket, "/uploads/#{Path.basename(dest)}")}
       end)
