@@ -7,10 +7,8 @@ defmodule ClayWeb.GameLive.Spacegame do
   def mount(_params, _session, socket) do
     qr =
       (Endpoint.url() <> Routes.game_spacegame_path(socket, :index))
-      |> IO.inspect()
-
-    #   |> EQRCode.encode()
-    #   |> EQRCode.svg(color: "#fff", viewbox: true, background_color: ":transparent")
+      |> EQRCode.encode()
+      |> EQRCode.svg(color: "#fff", viewbox: true, background_color: ":transparent")
 
     socket
     |> assign(page_title: "Spacegame")
