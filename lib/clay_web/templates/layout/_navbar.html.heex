@@ -1,9 +1,9 @@
 <nav class="main">
   <%= link "Start", to: Routes.page_path(@conn, :index) %>
-  <!--<%= link "Eyeballpaul", to: Routes.game_eyeballpaul_path(@conn, :index) %>-->
   <%= link "Spacegame", to: Routes.game_spacegame_path(@conn, :index) %>
   <%= if !is_admin(@current_user) do %>
     <%= link "Blog", class: "navbar-item", to: Routes.blog_list_path(@conn, :claudia) %>
+    <%= link "Eyeballpaul", to: Routes.game_eyeballpaul_path(@conn, :index) %>
   <% end %>
 </nav>
 
