@@ -2,4 +2,11 @@
   <h1>Spacegame</h1>
   <canvas id="canvas"></canvas>
   <div id="qr"><%#= raw @qr %></div>
+
+  <div>Players</div>
+  <ul>
+    <%= for user <- @users do %>
+      <li><%= user.id %></li>
+    <% end %>
+  </ul>
 </section>

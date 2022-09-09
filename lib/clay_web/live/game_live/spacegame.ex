@@ -2,6 +2,13 @@ defmodule ClayWeb.GameLive.Spacegame do
   use ClayWeb, :live_view
 
   alias ClayWeb.Endpoint
+  alias ClayWeb.GameView
+
+  @impl true
+  def render(assigns) do
+    GameView.render("spacegame.html", assigns)
+  end
+
 
   @impl true
   def mount(_params, _session, socket) do
