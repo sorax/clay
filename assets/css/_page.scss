@@ -24,12 +24,16 @@ body {
       font-size: 6vw;
     }
 
-    nav {
+    nav.main {
       // margin-top: 4em;
       font-size: 2em;
 
-      li {
+      a {
+        color: $link-color;
+        display: block;
         margin: 1em 0;
+        text-decoration: none;
+        text-transform: uppercase;
       }
     }
   }
@@ -138,23 +142,6 @@ body {
 //   }
 // }
 
-nav {
-  text-transform: uppercase;
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-
-    li {
-      a {
-        color: $link-color;
-        text-decoration: none;
-      }
-    }
-  }
-}
-
 @media (min-width: 1024px) {
   body {
     > header {
@@ -175,7 +162,7 @@ nav {
         font-size: 1.2vw;
       }
 
-      nav {
+      nav.main {
         margin-top: 4em;
       }
     }

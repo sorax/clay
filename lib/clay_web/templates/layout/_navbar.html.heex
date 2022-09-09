@@ -1,10 +1,17 @@
-<nav>
-  <ul>
-    <li><%= link "Start", to: Routes.page_path(@conn, :index) %></li>
-    <!--<li><%= link "Eyeballpaul", to: Routes.game_eyeballpaul_path(@conn, :index) %></li>-->
-    <li><%= link "Spacegame", to: Routes.game_spacegame_path(@conn, :index) %></li>
-  </ul>
+<nav class="main">
+  <%= link "Start", to: Routes.page_path(@conn, :index) %>
+  <!--<%= link "Eyeballpaul", to: Routes.game_eyeballpaul_path(@conn, :index) %>-->
+  <%= link "Spacegame", to: Routes.game_spacegame_path(@conn, :index) %>
+  <%= if !is_admin(@current_user) do %>
+    <%= link "Blog", class: "navbar-item", to: Routes.blog_list_path(@conn, :claudia) %>
+  <% end %>
 </nav>
+
+<nav class="meta">
+  <%= link "Sign in", to: Routes.user_session_path(@conn, :new) %>
+  <%= link "Sign up", to: Routes.user_registration_path(@conn, :new) %>
+</nav>
+
 
 <!--
 <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
