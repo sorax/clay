@@ -25,13 +25,24 @@ body {
     }
 
     nav.main {
-      // margin-top: 4em;
       font-size: 2em;
 
       a {
         color: $link-color;
         display: block;
-        margin: 1em 0;
+        padding: 0.5em 0;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+    }
+
+    nav.meta {
+      padding: 1em 0;
+      margin: 0 -1em;
+
+      a {
+        color: $link-color;
+        padding: 0 1em;
         text-decoration: none;
         text-transform: uppercase;
       }
