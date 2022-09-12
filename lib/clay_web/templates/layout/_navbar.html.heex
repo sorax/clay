@@ -2,14 +2,21 @@
   <%= link "Start", to: Routes.page_path(@conn, :index) %>
   <%= link "Spacegame", to: Routes.game_spacegame_path(@conn, :index) %>
   <%= if !is_admin(@current_user) do %>
-    <%= link "Blog", class: "navbar-item", to: Routes.blog_list_path(@conn, :claudia) %>
+    <%= link "Blog", to: Routes.blog_list_path(@conn, :claudia) %>
     <%= link "Eyeballpaul", to: Routes.game_eyeballpaul_path(@conn, :index) %>
+    <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %>
   <% end %>
 </nav>
 
 <nav class="meta">
-  <%= link "Sign in", to: Routes.user_session_path(@conn, :new) %>
-  <%= link "Sign up", to: Routes.user_registration_path(@conn, :new) %>
+  <%= if @current_user do %>
+    <p><%= @current_user.email %></p>
+    <%= link "Settings", class: "navbar-item", to: Routes.user_settings_path(@conn, :edit) %>
+    <%= link "Sign out", class: "navbar-item", to: Routes.user_session_path(@conn, :delete), method: :delete %>
+  <% else %>
+    <%= link "Sign in", to: Routes.user_session_path(@conn, :new) %>
+    <%= link "Sign up", to: Routes.user_registration_path(@conn, :new) %>
+  <% end %>
 </nav>
 
 
