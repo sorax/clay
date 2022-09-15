@@ -5,30 +5,23 @@ defmodule ClayWeb.GameLive.Spacegame do
   alias ClayWeb.GameView
   alias ClayWeb.Presence
 
+  # lobby
+  # game
+
   @topic "spacegame"
 
   @impl true
-  def render(%{player_name: _} = assigns) do
+  def render(%{name: _} = assigns) do
     GameView.render("spacegame.html", assigns)
   end
 
-  def render(assigns) do
-    ~H"""
-    <.form let={f} for={:user} phx-submit="set_username">
-      <%= text_input f, :name %>
-      <%= submit "Save" %>
-    </.form>
-    """
-  end
+  # entrance
+  # lobby
+  # game
 
   @impl true
   def mount(_params, _session, socket) do
-    Presence.track(
-      self(),
-      @topic,
-      socket.id,
-      %{id: socket.id}
-    )
+    Presence.track(self(), @topic, socket.id, %{id: socket.id})
 
     Endpoint.subscribe(@topic)
 
@@ -38,37 +31,37 @@ defmodule ClayWeb.GameLive.Spacegame do
     |> reply(:ok)
   end
 
-  @impl true
-  def handle_event("set_username", %{"user" => %{"name" => name}}, socket) do
-    name |> IO.inspect()
+  # @impl true
+  # def handle_event("set_username", %{"user" => %{"name" => name}}, socket) do
+  #   update_presence(self(), @topic, socket.id, %{name: name})
 
-    socket
-    |> assign(player_name: name)
-    |> reply(:noreply)
-  end
+  #   socket
+  #   |> assign(name: name)
+  #   |> reply(:noreply)
+  # end
 
   @impl true
-  def handle_info(params, socket) do
-    params |> IO.inspect()
+  def handle_info(_params, socket) do
+    # params |> IO.inspect()
 
     socket
     |> reply(:noreply)
   end
 
   defp list_presences(topic) do
-    Presence.list(topic)
-    |> Enum.map(fn {_user_id, data} ->
-      data[:metas]
-      |> List.first()
-    end)
+    topic
+    |> Presence.list()
+    |> Enum.map(&get_presence_meta/1)
   end
 
-  # def update_presence(pid, topic, key, payload) do
-  #   metas =
-  #     Presence.get_by_key(topic, key)[:metas]
-  #     |> List.first()
-  #     |> Map.merge(payload)
+  defp get_presence_meta({_user_id, %{metas: [meta | _]}}), do: meta
 
-  #   Presence.update(pid, topic, key, metas)
-  # end
+  defp update_presence(pid, topic, key, payload) do
+    metas =
+      Presence.get_by_key(topic, key)[:metas]
+      |> List.first()
+      |> Map.merge(payload)
+
+    Presence.update(pid, topic, key, metas)
+  end
 end

@@ -5,7 +5,7 @@
   <div>Players</div>
   <ul>
     <%= for user <- @users do %>
-      <li><%= user.id %></li>
+      <li><%= @user.name %> (<%= user.id %>)</li>
     <% end %>
   </ul>
 </section>

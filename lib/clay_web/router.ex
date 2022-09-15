@@ -39,6 +39,7 @@ defmodule ClayWeb.Router do
 
     live "/claudia", BlogLive.List, :claudia
 
+    live "/games", GameLive.Entrance, :index
     live "/games/eyeballpaul", GameLive.Eyeballpaul, :index
     live "/games/spacegame", GameLive.Spacegame, :index
   end
