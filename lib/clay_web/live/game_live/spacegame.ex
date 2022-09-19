@@ -11,7 +11,7 @@ defmodule ClayWeb.GameLive.Spacegame do
   @topic "spacegame"
 
   @impl true
-  def render(%{name: _} = assigns) do
+  def render(assigns) do
     GameView.render("spacegame.html", assigns)
   end
 
