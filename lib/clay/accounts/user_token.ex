@@ -1,6 +1,9 @@
 defmodule Clay.Accounts.UserToken do
   use Ecto.Schema
+
   import Ecto.Query
+
+  alias Clay.Accounts.UserToken
 
   @hash_algorithm :sha256
   @rand_size 32
@@ -42,7 +45,7 @@ defmodule Clay.Accounts.UserToken do
   """
   def build_session_token(user) do
     token = :crypto.strong_rand_bytes(@rand_size)
-    {token, %Clay.Accounts.UserToken{token: token, context: "session", user_id: user.id}}
+    {token, %UserToken{token: token, context: "session", user_id: user.id}}
   end
 
   @doc """
@@ -85,7 +88,7 @@ defmodule Clay.Accounts.UserToken do
     hashed_token = :crypto.hash(@hash_algorithm, token)
 
     {Base.url_encode64(token, padding: false),
-     %Clay.Accounts.UserToken{
+     %UserToken{
        token: hashed_token,
        context: context,
        sent_to: sent_to,
@@ -162,17 +165,17 @@ defmodule Clay.Accounts.UserToken do
   Returns the token struct for the given token value and context.
   """
   def token_and_context_query(token, context) do
-    from Clay.Accounts.UserToken, where: [token: ^token, context: ^context]
+    from UserToken, where: [token: ^token, context: ^context]
   end
 
   @doc """
   Gets all tokens for the given user for the given contexts.
   """
   def user_and_contexts_query(user, :all) do
-    from t in Clay.Accounts.UserToken, where: t.user_id == ^user.id
+    from t in UserToken, where: t.user_id == ^user.id
   end
 
   def user_and_contexts_query(user, [_ | _] = contexts) do
-    from t in Clay.Accounts.UserToken, where: t.user_id == ^user.id and t.context in ^contexts
+    from t in UserToken, where: t.user_id == ^user.id and t.context in ^contexts
   end
 end

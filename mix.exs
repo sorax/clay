@@ -7,7 +7,7 @@ defmodule Clay.MixProject do
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
-      compilers: [:gettext] ++ Mix.compilers(),
+      compilers: Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -33,13 +33,12 @@ defmodule Clay.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:bcrypt_elixir, "~> 2.0"},
-      {:bulma, "0.9.3"},
+      {:bcrypt_elixir, "~> 3.0"},
       {:csv, "~> 2.4"},
-      {:dart_sass, "~> 0.4", runtime: Mix.env() == :dev},
+      {:dart_sass, "~> 0.5", runtime: Mix.env() == :dev},
       {:ecto_sql, "~> 3.6"},
       {:eqrcode, "~> 0.1.10"},
-      {:esbuild, "~> 0.3", runtime: Mix.env() == :dev},
+      {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
       {:floki, ">= 0.30.0", only: :test},
       {:gen_smtp, "~> 1.1"},
       {:gettext, "~> 0.18"},
@@ -50,7 +49,7 @@ defmodule Clay.MixProject do
       {:phoenix_live_dashboard, "~> 0.6"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 0.17.5"},
-      {:phoenix, "~> 1.6.6"},
+      {:phoenix, "~> 1.6.12"},
       {:plug_cowboy, "~> 2.5"},
       {:postgrex, ">= 0.0.0"},
       {:swoosh, "~> 1.3"},

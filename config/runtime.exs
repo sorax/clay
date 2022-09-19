@@ -7,8 +7,16 @@ import Config
 # any compile-time configuration in here, as it won't be applied.
 # The block below contains prod specific runtime configuration.
 
-# Start the phoenix server if environment is set and running in a release
-if System.get_env("PHX_SERVER") && System.get_env("RELEASE_NAME") do
+# ## Using releases
+#
+# If you use `mix release`, you need to explicitly enable the server
+# by passing the PHX_SERVER=true when you start it:
+#
+#     PHX_SERVER=true bin/clay start
+#
+# Alternatively, you can use `mix phx.gen.release` to generate a `bin/server`
+# script that automatically sets the env var above.
+if System.get_env("PHX_SERVER") do
   config :clay, ClayWeb.Endpoint, server: true
 end
 
@@ -45,7 +53,7 @@ if config_env() == :prod do
   check_origin = System.get_env("CERTBOT_DOMAINS") |> String.split(",") |> Enum.map(&"//*.#{&1}")
 
   config :clay, ClayWeb.Endpoint,
-    # url: [host: host, port: 443],
+    # url: [host: nil, port: https_port, scheme: "https"],
     url: [host: nil],
     http: [
       # Enable IPv6 and bind on all interfaces.
@@ -63,16 +71,6 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base,
     check_origin: check_origin
-
-  # ## Using releases
-  #
-  # If you are doing OTP releases, you need to instruct Phoenix
-  # to start each relevant endpoint:
-
-  config :clay, ClayWeb.Endpoint, server: true
-
-  # Then you can assemble a release by calling `mix release`.
-  # See `mix help release` for more information.
 
   # Configures file storage
   storage_path =
@@ -102,6 +100,10 @@ if config_env() == :prod do
     retries: 2,
     no_mx_lookups: false
 
+  #     config :clay, Clay.Mailer,
+  #       adapter: Swoosh.Adapters.Mailgun,
+  #       api_key: System.get_env("MAILGUN_API_KEY"),
+  #       domain: System.get_env("MAILGUN_DOMAIN")
   #
   # For this example you need include a HTTP client required by Swoosh API client.
   # Swoosh supports Hackney and Finch out of the box:

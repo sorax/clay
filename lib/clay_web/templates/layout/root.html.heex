@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <%= csrf_meta_tag() %>
+    <meta name="csrf-token" content={csrf_token_value()}>
     <%= live_title_tag assigns[:page_title] || "Frische Ideen aus eigenem Anbau", suffix: " | hausgedacht" %>
     <%= raw get_metatags(@conn) %>
     <link phx-track-static rel="stylesheet" href={Routes.static_path(@conn, "/assets/app.css")}/>
@@ -16,6 +16,9 @@
       <p>Frische Ideen aus eigenem Anbau</p>
       <%= render "_navbar.html", assigns %>
       <%# <img src={Routes.static_path(@conn, "/images/phoenix.png")} /> %>
+      <%#= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+        <%#= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %>
+      <%# end %>
     </header>
     <%= @inner_content %>
     <footer>

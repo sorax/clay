@@ -1,6 +1,10 @@
 defmodule ClayWeb.LayoutView do
   use ClayWeb, :view
 
+  # Phoenix LiveDashboard is available only in development by default,
+  # so we instruct Elixir to not warn if the dashboard route is missing.
+  # @compile {:no_warn_undefined, {Routes, :live_dashboard_path, 2}}
+
   defp get_metatags(conn) do
     {:safe, get_page_config(conn)}
   end

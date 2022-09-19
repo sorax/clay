@@ -6,6 +6,7 @@ config :clay, Clay.Repo,
   password: "postgres",
   hostname: "localhost",
   database: "clay_dev",
+  stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
