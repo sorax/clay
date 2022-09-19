@@ -19,16 +19,17 @@ body {
       font-size: 15vw;
     }
 
-    p {
-      margin: 0 0 1em;
-      font-size: 6vw;
-    }
+    // p {
+    //   margin: 0 0 1em;
+    //   font-size: 6vw;
+    // }
 
     nav.main {
+      color: $link-color;
       font-size: 2em;
 
       a {
-        color: $link-color;
+        color: inherit;
         display: block;
         padding: 0.5em 0;
         text-decoration: none;
@@ -37,11 +38,12 @@ body {
     }
 
     nav.meta {
+      color: $link-color;
       padding: 1em 0;
       margin: 0 -1em;
 
       a {
-        color: $link-color;
+        color: inherit;
         padding: 0 1em;
         text-decoration: none;
         text-transform: uppercase;
