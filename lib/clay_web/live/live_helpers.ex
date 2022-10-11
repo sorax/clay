@@ -12,14 +12,14 @@ defmodule ClayWeb.LiveHelpers do
 
   ## Examples
 
-      <.modal return_to={Routes.match_index_path(@socket, :index)}>
+      <.modal return_to={Routes.post_index_path(@socket, :index)}>
         <.live_component
-          module={ClayWeb.MatchLive.FormComponent}
-          id={@match.id || :new}
+          module={ClayWeb.PostLive.FormComponent}
+          id={@post.id || :new}
           title={@page_title}
           action={@live_action}
-          return_to={Routes.match_index_path(@socket, :index)}
-          match: @match
+          return_to={Routes.post_index_path(@socket, :index)}
+          post: @post
         />
       </.modal>
   """

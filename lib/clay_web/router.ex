@@ -66,7 +66,7 @@ defmodule ClayWeb.Router do
     live "/posts/:id/show/edit", PostLive.Show, :edit
 
     # Enable LiveDashboard
-    live_dashboard "/dashboard", metrics: Telemetry
+    live_dashboard "/dashboard", metrics: ClayWeb.Telemetry
   end
 
   # Enables the Swoosh mailbox preview in development.
