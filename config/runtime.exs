@@ -50,7 +50,7 @@ if config_env() == :prod do
 
   http_port = String.to_integer(System.get_env("HTTP_PORT") || "80")
   https_port = String.to_integer(System.get_env("HTTPS_PORT") || "443")
-  check_origin = System.get_env("CERTBOT_DOMAINS") |> String.split(",") |> Enum.map(&"//*.#{&1}")
+  check_origin = System.get_env("DOMAINS") |> String.split(",") |> Enum.map(&"//*.#{&1}")
 
   config :clay, ClayWeb.Endpoint,
     # url: [host: nil, port: https_port, scheme: "https"],
