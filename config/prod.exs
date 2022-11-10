@@ -48,5 +48,7 @@ config :logger, level: :info
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
-config :dart_sass,
-  path: System.get_env("MIX_SASS_PATH")
+if System.get_env("MIX_SASS_PATH") do
+  config :dart_sass,
+    path: System.get_env("MIX_SASS_PATH")
+end
