@@ -20,7 +20,7 @@ defmodule Clay.MixProject do
   def application do
     [
       mod: {Clay.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :httpoison]
     ]
   end
 
@@ -42,6 +42,7 @@ defmodule Clay.MixProject do
       {:floki, ">= 0.30.0", only: :test},
       {:gen_smtp, "~> 1.1"},
       {:gettext, "~> 0.18"},
+      {:httpoison, "~> 1.8"},
       {:jason, "~> 1.2"},
       {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false},
       {:phoenix_ecto, "~> 4.4"},
