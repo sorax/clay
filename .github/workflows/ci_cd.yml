@@ -91,8 +91,7 @@ jobs:
       - name: Trigger remote deploy-script
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.PI_HOSTNAME }}
-          username: ${{ secrets.PI_USERNAME }}
-          key: ${{ secrets.PI_SSH_KEY }}
-          port: ${{ secrets.PI_SSH_PORT }}
+          host: ${{ secrets.UBERSPACE_HOSTNAME }}
+          username: ${{ secrets.UBERSPACE_USERNAME }}
+          key: ${{ secrets.UBERSPACE_SSH_KEY }}
           script: ./deploy.sh
