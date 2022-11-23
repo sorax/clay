@@ -23,6 +23,9 @@ config :clay, ClayWeb.Endpoint,
   secret_key_base: "88pLTlRA9oQy0uzHsMVPP2CLytfYPbaVNAtmA022mNJY4uMO7kjT3InYFnuoVG66",
   server: false
 
+# Configures file storage
+config :clay, :storage, path: "priv/static/uploads"
+
 # In test we don't send emails.
 config :clay, Clay.Mailer, adapter: Swoosh.Adapters.Test
 

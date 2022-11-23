@@ -18,9 +18,6 @@ config :clay, ClayWeb.Endpoint,
   live_view: [signing_salt: "TMHIYmqf"],
   mail_sender: {"clay", "info@sorax.net"}
 
-# Configures file storage
-config :clay, :storage, path: "priv/static/uploads"
-
 # Configures the mailer
 #
 # By default it uses the "Local" adapter which stores the emails
