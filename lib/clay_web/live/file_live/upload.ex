@@ -1,8 +1,6 @@
 defmodule ClayWeb.FileLive.Upload do
   use ClayWeb, :live_view
 
-  @storage_path :clay |> Application.compile_env(:storage) |> Keyword.fetch!(:path)
-
   @impl true
   def mount(_params, _session, socket) do
     socket
@@ -31,7 +29,7 @@ defmodule ClayWeb.FileLive.Upload do
         # entry |> IO.inspect(label: "entry")
         # path |> IO.inspect(label: "path")
         # dest = Path.join([:code.priv_dir(:clay), "static", "uploads", Path.basename(path)])
-        dest = @storage_path <> "/" <> Path.basename(path)
+        dest = get_storage_path() <> "/" <> Path.basename(path)
         File.cp!(path, dest)
         {:ok, Routes.static_path(socket, "/uploads/#{Path.basename(dest)}")}
       end)
@@ -44,4 +42,6 @@ defmodule ClayWeb.FileLive.Upload do
   defp error_to_string(:too_large), do: "Too large"
   defp error_to_string(:too_many_files), do: "You have selected too many files"
   defp error_to_string(:not_accepted), do: "You have selected an unacceptable file type"
+
+  defp get_storage_path(), do: :clay |> Application.fetch_env!(:storage) |> Keyword.fetch!(:path)
 end

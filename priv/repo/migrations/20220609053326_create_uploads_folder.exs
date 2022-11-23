@@ -1,7 +1,7 @@
 defmodule Clay.Repo.Migrations.CreateUploadsFolder do
   use Ecto.Migration
 
-  @storage_path :clay |> Application.compile_env(:storage) |> Keyword.fetch!(:path)
+  @storage_path :clay |> Application.fetch_env!(:storage) |> Keyword.fetch!(:path)
 
   def up do
     File.mkdir_p!(@storage_path)

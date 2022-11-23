@@ -1,8 +1,6 @@
 defmodule ClayWeb.FileLive.List do
   use ClayWeb, :live_view
 
-  @storage_path :clay |> Application.compile_env(:storage) |> Keyword.fetch!(:path)
-
   @impl true
   def mount(_params, _session, socket) do
     socket
@@ -11,7 +9,9 @@ defmodule ClayWeb.FileLive.List do
   end
 
   defp get_files() do
-    @storage_path
+    get_storage_path()
     |> File.ls!()
   end
+
+  defp get_storage_path(), do: :clay |> Application.fetch_env!(:storage) |> Keyword.fetch!(:path)
 end
