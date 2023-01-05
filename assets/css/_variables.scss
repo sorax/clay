@@ -81,6 +81,10 @@ h6,
   font-weight: 700;
 }
 
+a {
+  color: $link-color;
+}
+
 @media (min-width: 1024px) {
   body {
     font-size: $font-size6;
