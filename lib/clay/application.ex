@@ -8,17 +8,16 @@ defmodule Clay.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Start the Ecto repository
-      Clay.Repo,
-      # Start the Telemetry supervisor
       ClayWeb.Telemetry,
-      # Start the PubSub system
+      Clay.Repo,
+      {DNSCluster, query: Application.get_env(:clay, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Clay.PubSub},
-      ClayWeb.Presence,
-      # Start the Endpoint (http/https)
-      ClayWeb.Endpoint
+      # Start the Finch HTTP client for sending emails
+      {Finch, name: Clay.Finch},
       # Start a worker by calling: Clay.Worker.start_link(arg)
-      # {Clay.Worker, arg}
+      # {Clay.Worker, arg},
+      # Start to serve requests, typically the last entry
+      ClayWeb.Endpoint
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

@@ -1,15 +1,9 @@
 defmodule ClayWeb.PageController do
   use ClayWeb, :controller
 
-  def index(conn, _params) do
-    render(conn, "index.html")
-  end
-
-  def imprint(conn, _params) do
-    render(conn, "imprint.html")
-  end
-
-  def privacy(conn, _params) do
-    render(conn, "privacy.html")
+  def home(conn, _params) do
+    # The home page is often custom made,
+    # so skip the default app layout.
+    render(conn, :home, layout: false)
   end
 end

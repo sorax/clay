@@ -7,7 +7,8 @@ defmodule ClayWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_clay_key",
-    signing_salt: "ILVXERT/"
+    signing_salt: "XtFOYA1E",
+    same_site: "Lax"
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
@@ -20,8 +21,7 @@ defmodule ClayWeb.Endpoint do
     at: "/",
     from: :clay,
     gzip: false,
-    only:
-      ~w(assets fonts images favicon.ico robots.txt apple-touch-icon.png apple-touch-icon-precomposed.png)
+    only: ClayWeb.static_paths()
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
