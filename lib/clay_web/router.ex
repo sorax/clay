@@ -21,6 +21,9 @@ defmodule ClayWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    get "/datenschutz", PageController, :privacy
+    get "/impressum", PageController, :imprint
   end
 
   # Other scopes may use custom stacks.
