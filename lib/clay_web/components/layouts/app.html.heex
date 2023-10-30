@@ -1,19 +1,19 @@
-<header class="text-center text-white bg-black bg-page">
+<header class="px-6 py-16 text-center text-white bg-black bg-page">
+  <.link href={~p"/"} class="text-2xl">hausgedacht</.link>
+  <p class="text-md">Frische Ideen aus eigenem Anbau</p>
+  <!--
   <nav>
     <ul>
-      <li>
-        <.link href={~p"/"}>
-          hausgedacht
-        </.link>
-      </li>
+      <li></li>
     </ul>
   </nav>
+  -->
 </header>
 <main class="px-6 py-9">
   <.flash_group flash={@flash} />
   <%= @inner_content %>
 </main>
-<footer class="bg-page text-lightgray">
+<footer class="px-6 py-9 bg-page text-lightgray">
   <nav>
     <ul class="text-center">
       <%= if @current_user do %>
