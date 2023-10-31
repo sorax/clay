@@ -85,6 +85,7 @@ defmodule ClayWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import ClayWeb.CoreComponents
+      import ClayWeb.ContentComponents
       import ClayWeb.Gettext
 
       # Shortcut for generating JS commands

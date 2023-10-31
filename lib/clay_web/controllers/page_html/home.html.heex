@@ -1,7 +1,6 @@
 <.flash_group flash={@flash} />
 <section>
-  <article id="elixir-auf-uberspace">
-    <time datetime="2022-01-05">05.01.2023</time>
+  <.article id="elixir-auf-uberspace" date={~D[2023-01-05]}>
     <h2>Elixir auf Uberspace hosten</h2>
     <p>
       Eine Elixir-App bei <a href="https://uberspace.de" rel="nofollow">Uberspace</a>
@@ -15,12 +14,11 @@
       <li>Link zu passenden GitHub-Actions für CI/CD</li>
     </ul>
     <p><a href="https://github.com/sorax/deploy-elixir-uberspace">Elixir on Uberspace</a></p>
-  </article>
-  <article id="elixir-auf-rasperry-pi">
-    <time datetime="2022-05-16">16.05.2022</time>
+  </.article>
+  <.article id="elixir-auf-rasperry-pi" date={~D[2022-05-16]}>
     <h2>Elixir auf einem Rasperry Pi hosten</h2>
     <p>
       <a href="https://github.com/sorax/deploy-elixir-raspberry-pi">Elixir on Raspberry Pi</a>
     </p>
-  </article>
+  </.article>
 </section>
