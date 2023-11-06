@@ -6,7 +6,11 @@ defmodule ClayWeb.PageController do
     # so skip the default app layout.
     # render(conn, :home, layout: false)
 
-    render(conn, :home)
+    conn
+    |> assign(:robots, "index,follow")
+    # |> assign(:description, "")
+    |> assign(:canonical, "https://hausgedacht.de/")
+    |> render(:home)
   end
 
   def privacy(conn, _params) do
