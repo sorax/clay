@@ -10,10 +10,10 @@ defmodule ClayWeb.PageController do
   end
 
   def privacy(conn, _params) do
-    render(conn, "privacy.html")
+    render(conn, :privacy)
   end
 
   def imprint(conn, _params) do
-    render(conn, "imprint.html")
+    render(conn, :imprint)
   end
 end
