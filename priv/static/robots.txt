@@ -2,4 +2,3 @@ User-agent: *
 Disallow: /datenschutz/
 Disallow: /impressum/
 Disallow: /users/
-Disallow: /dashboard/
