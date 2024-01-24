@@ -12,10 +12,13 @@ module.exports = {
     "../lib/clay_web/**/*.*ex"
   ],
   theme: {
-    backgroundColor: {
-      page: "#1F1815"
-    },
     extend: {
+      backgroundColor: {
+        layout: "#1F1815"
+      },
+      backgroundImage: {
+        layout: "url('/images/overlay.png'), url('/images/bg.jpg')",
+      },
       colors: {
         brand: "#FD4F00",
         lightgray: "#A2A2A2"
