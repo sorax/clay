@@ -17,11 +17,18 @@ module.exports = {
         layout: "#1F1815"
       },
       backgroundImage: {
-        layout: "url('/images/overlay.png'), url('/images/bg.jpg')",
+        layout: "url('/images/overlay.png'), url('/images/bg.jpg')"
+      },
+      backgroundRepeat: {
+        layout: 'repeat, no-repeat'
+      },
+      backgroundSize: {
+        layout: 'auto, cover'
       },
       colors: {
         brand: "#FD4F00",
-        lightgray: "#A2A2A2"
+        lightgray: "#A2A2A2",
+        darkgray: "#787878"
       }
     },
   },

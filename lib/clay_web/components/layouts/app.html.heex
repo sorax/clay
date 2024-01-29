@@ -1,4 +1,7 @@
-<header class="bg-layout bg-center py-6 px-3 md:px-6 md:py-16 text-white text-center md:fixed md:w-[35%] md:h-full">
+<header class={[
+  "bg-layout bg-center py-6 px-3 text-white text-center",
+  "md:bg-left-top md:text-right md:fixed md:w-[35%] md:h-full md:pr-16 md:py-32"
+]}>
   <.link href={~p"/"} class="text-4xl">hausgedacht</.link>
   <p class="text-sm">Frische Ideen aus eigenem Anbau</p>
   <!--
@@ -9,51 +12,31 @@
   </nav>
   -->
 </header>
-<main class="py-8 px-6 md:ml-[35%]">
+<main class="py-8 px-6 md:ml-[35%] md:px-16 md:py-32 text-lightgray">
   <.flash_group flash={@flash} />
   <%= @inner_content %>
 </main>
-<footer class="max-md:bg-layout max-md:bg-bottom py-6 px-3 text-center text-lightgray md:fixed md:w-[35%] md:bottom-0">
+<footer class={[
+  "max-md:bg-layout max-md:bg-bottom",
+  "px-3 py-6 text-lightgray",
+  "md:pr-16 md:py-8 md:fixed md:w-[35%] md:bottom-0"
+]}>
   <nav>
-    <ul class="flex justify-center gap-4 mb-2">
+    <!--
+    <ul class="flex justify-center gap-4 md:justify-end">
       <%= if @current_user do %>
-        <li class="inline">
-          <%= @current_user.email %>
-        </li>
-        <li class="inline">
-          <.link href={~p"/users/settings"}>
-            Settings
-          </.link>
-        </li>
-        <li class="inline">
-          <.link href={~p"/users/log_out"} method="delete">
-            Log out
-          </.link>
-        </li>
+        <li><%= @current_user.email %></li>
+        <li><.link href={~p"/users/settings"}>Settings</.link></li>
+        <li><.link href={~p"/users/log_out"} method="delete">Log out</.link></li>
       <% else %>
-        <li class="inline">
-          <.link href={~p"/users/register"}>
-            Register
-          </.link>
-        </li>
-        <li class="inline">
-          <.link href={~p"/users/log_in"}>
-            Log in
-          </.link>
-        </li>
+        <li><.link href={~p"/users/register"}>Register</.link></li>
+        <li><.link href={~p"/users/log_in"}>Log in</.link></li>
       <% end %>
     </ul>
-    <ul class="flex justify-center gap-4 mt-2">
-      <li class="inline">
-        <.link href={~p"/datenschutz"}>
-          Datenschutz
-        </.link>
-      </li>
-      <li class="inline">
-        <.link href={~p"/impressum"}>
-          Impressum
-        </.link>
-      </li>
+    -->
+    <ul class="flex justify-center gap-4 mt-4 md:justify-end">
+      <li><.link href={~p"/datenschutz"}>Datenschutz</.link></li>
+      <li><.link href={~p"/impressum"}>Impressum</.link></li>
     </ul>
   </nav>
 </footer>
