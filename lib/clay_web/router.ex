@@ -71,6 +71,13 @@ defmodule ClayWeb.Router do
       on_mount: [{ClayWeb.UserAuth, :ensure_authenticated}] do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
+
+      live "/buecher", BookLive.Index, :index
+      live "/buecher/new", BookLive.Index, :new
+      live "/buecher/:id/edit", BookLive.Index, :edit
+
+      live "/buecher/:id", BookLive.Show, :show
+      live "/buecher/:id/show/edit", BookLive.Show, :edit
     end
   end
 
