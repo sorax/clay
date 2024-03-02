@@ -94,38 +94,4 @@ defmodule ClayWeb.BookLiveTest do
       refute has_element?(index_live, "#books-#{book.id}")
     end
   end
-
-  describe "Show" do
-    setup [:create_book, :log_in]
-
-    test "displays book", %{conn: conn, book: book} do
-      {:ok, _show_live, html} = live(conn, ~p"/buecher/#{book}")
-
-      assert html =~ "Show Book"
-      assert html =~ book.author
-    end
-
-    test "updates book within modal", %{conn: conn, book: book} do
-      {:ok, show_live, _html} = live(conn, ~p"/buecher/#{book}")
-
-      assert show_live |> element("a", "Edit") |> render_click() =~
-               "Edit Book"
-
-      assert_patch(show_live, ~p"/buecher/#{book}/show/edit")
-
-      assert show_live
-             |> form("#book-form", book: @invalid_attrs)
-             |> render_change() =~ "can&#39;t be blank"
-
-      assert show_live
-             |> form("#book-form", book: @update_attrs)
-             |> render_submit()
-
-      assert_patch(show_live, ~p"/buecher/#{book}")
-
-      html = render(show_live)
-      assert html =~ "Book updated successfully"
-      assert html =~ "some updated author"
-    end
-  end
 end
