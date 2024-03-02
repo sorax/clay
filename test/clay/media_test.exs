@@ -26,7 +26,7 @@ defmodule Clay.MediaTest do
         title: "some title",
         series: "some series",
         episode: 42,
-        tags: ["option1", "option2"]
+        tags: ["read", "unread"]
       }
 
       assert {:ok, %Book{} = book} = Media.create_book(valid_attrs)
@@ -34,7 +34,7 @@ defmodule Clay.MediaTest do
       assert book.title == "some title"
       assert book.series == "some series"
       assert book.episode == 42
-      assert book.tags == ["option1", "option2"]
+      assert book.tags == ["read", "unread"]
     end
 
     test "create_book/1 with invalid data returns error changeset" do
@@ -49,7 +49,7 @@ defmodule Clay.MediaTest do
         title: "some updated title",
         series: "some updated series",
         episode: 43,
-        tags: ["option1"]
+        tags: ["read"]
       }
 
       assert {:ok, %Book{} = book} = Media.update_book(book, update_attrs)
@@ -57,7 +57,7 @@ defmodule Clay.MediaTest do
       assert book.title == "some updated title"
       assert book.series == "some updated series"
       assert book.episode == 43
-      assert book.tags == ["option1"]
+      assert book.tags == ["read"]
     end
 
     test "update_book/2 with invalid data returns error changeset" do

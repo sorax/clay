@@ -10,14 +10,14 @@ defmodule ClayWeb.BookLiveTest do
     title: "some title",
     series: "some series",
     episode: 42,
-    tags: ["option1", "option2"]
+    tags: ["read", "unread"]
   }
   @update_attrs %{
     author: "some updated author",
     title: "some updated title",
     series: "some updated series",
     episode: 43,
-    tags: ["option1"]
+    tags: ["read"]
   }
   @invalid_attrs %{author: nil, title: nil, series: nil, episode: nil, tags: []}
 

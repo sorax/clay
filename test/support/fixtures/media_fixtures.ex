@@ -14,7 +14,7 @@ defmodule Clay.MediaFixtures do
         author: "some author",
         episode: 42,
         series: "some series",
-        tags: ["option1", "option2"],
+        tags: ["read", "unread"],
         title: "some title"
       })
       |> Clay.Media.create_book()

@@ -27,7 +27,7 @@ defmodule ClayWeb.BookLive.FormComponent do
           type="select"
           multiple
           label="Tags"
-          options={[{"Option 1", "option1"}, {"Option 2", "option2"}]}
+          options={[{"gelesen", "read"}, {"ungelesen", "unread"}]}
         />
         <:actions>
           <.button phx-disable-with="Saving...">Save Book</.button>
