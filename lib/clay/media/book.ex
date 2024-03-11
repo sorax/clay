@@ -16,6 +16,6 @@ defmodule Clay.Media.Book do
   def changeset(book, attrs) do
     book
     |> cast(attrs, [:author, :series, :episode, :title, :tags])
-    |> validate_required([:author, :series, :episode, :title, :tags])
+    |> validate_required([:author, :title, :tags])
   end
 end
