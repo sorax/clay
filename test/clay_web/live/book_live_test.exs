@@ -37,7 +37,7 @@ defmodule ClayWeb.BookLiveTest do
     test "lists all books", %{conn: conn, book: book} do
       {:ok, _index_live, html} = live(conn, ~p"/buecher")
 
-      assert html =~ "Listing Books"
+      assert html =~ "Bücherliste"
       assert html =~ book.author
     end
 
@@ -68,7 +68,7 @@ defmodule ClayWeb.BookLiveTest do
       {:ok, index_live, _html} = live(conn, ~p"/buecher")
 
       assert index_live |> element("#books-#{book.id} a[title=Edit]") |> render_click() =~
-               "Edit Book"
+               "Buch bearbeiten"
 
       assert_patch(index_live, ~p"/buecher/#{book}/edit")
 

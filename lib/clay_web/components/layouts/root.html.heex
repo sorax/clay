@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <.live_meta name="apple-mobile-web-app-title" content={assigns[:app_title]} />
     <.live_meta name="robots" content={assigns[:robots] || "noindex,nofollow"} />
     <.live_meta name="description" content={assigns[:page_description]} />
     <.live_title suffix=" | hausgedacht">

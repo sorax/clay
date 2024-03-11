@@ -15,7 +15,7 @@ defmodule ClayWeb.LayoutComponents do
   ```
   """
 
-  attr :name, :string, required: true, values: ~w(description robots)
+  attr :name, :string, required: true, values: ~w(description robots apple-mobile-web-app-title)
   attr :content, :string, required: true
 
   def live_meta(assigns) do

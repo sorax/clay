@@ -6,17 +6,22 @@ defmodule ClayWeb.BookLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :books, Media.list_books())}
+    socket
+    |> assign(:app_title, "Bücherliste")
+    |> stream(:books, Media.list_books())
+    |> reply(:ok)
   end
 
   @impl true
   def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+    socket
+    |> apply_action(socket.assigns.live_action, params)
+    |> reply(:noreply)
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
-    |> assign(:page_title, "Edit Book")
+    |> assign(:page_title, "Buch bearbeiten")
     |> assign(:book, Media.get_book!(id))
   end
 
@@ -28,13 +33,15 @@ defmodule ClayWeb.BookLive.Index do
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Listing Books")
+    |> assign(:page_title, "Bücherliste")
     |> assign(:book, nil)
   end
 
   @impl true
   def handle_info({ClayWeb.BookLive.FormComponent, {:saved, book}}, socket) do
-    {:noreply, stream_insert(socket, :books, book)}
+    socket
+    |> stream_insert(:books, book)
+    |> reply(:noreply)
   end
 
   @impl true
@@ -42,6 +49,8 @@ defmodule ClayWeb.BookLive.Index do
     book = Media.get_book!(id)
     {:ok, _} = Media.delete_book(book)
 
-    {:noreply, stream_delete(socket, :books, book)}
+    socket
+    |> stream_delete(:books, book)
+    |> reply(:noreply)
   end
 end
