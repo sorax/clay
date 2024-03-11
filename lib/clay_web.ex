@@ -84,6 +84,8 @@ defmodule ClayWeb do
       # HTML escaping functionality
       import Phoenix.HTML
 
+      import Extension.Phoenix.Socket
+
       # Core UI components and translation
       import ClayWeb.CoreComponents
       import ClayWeb.LayoutComponents
