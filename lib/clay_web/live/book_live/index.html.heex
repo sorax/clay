@@ -11,10 +11,14 @@
   <h2 class="my-1 text-xl text-darkgray"><%= author %></h2>
 
   <div class="px-4 py-2 rounded bg-lightgray">
-    <div :for={{series, booklist} <- Enum.group_by(books, & &1.series)}>
+    <div :for={{series, booklist} <- Enum.group_by(books, & &1.series)} class="mt-4 first:mt-0">
       <h3 class="font-bold"><%= series %></h3>
-      <ol class="">
-        <li :for={book <- booklist} id={"books-#{book.id}"}>
+      <ol>
+        <li
+          :for={book <- booklist}
+          id={"books-#{book.id}"}
+          class={Enum.member?(book.tags, "read") && "text-gray/60"}
+        >
           <span :if={Enum.member?(book.tags, "read")} class="bg-blue-500">&nbsp;</span>
           <span :if={Enum.member?(book.tags, "unread")} class="bg-red-500">&nbsp;</span>
           <%= book.episode %>
