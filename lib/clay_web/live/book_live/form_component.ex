@@ -4,47 +4,13 @@ defmodule ClayWeb.BookLive.FormComponent do
   alias Clay.Media
 
   @impl true
-  def render(assigns) do
-    ~H"""
-    <div>
-      <.header>
-        <%= @title %>
-      </.header>
-
-      <.simple_form
-        for={@form}
-        id="book-form"
-        phx-target={@myself}
-        phx-change="validate"
-        phx-submit="save"
-      >
-        <.input field={@form[:author]} type="text" label="Author" />
-        <.input field={@form[:series]} type="text" label="Series" />
-        <.input field={@form[:episode]} type="number" label="Episode" />
-        <.input field={@form[:title]} type="text" label="Title" />
-        <.input
-          field={@form[:tags]}
-          type="select"
-          multiple
-          label="Tags"
-          options={[{"gelesen", "read"}, {"ungelesen", "unread"}]}
-        />
-        <:actions>
-          <.button phx-disable-with="Saving...">Save Book</.button>
-        </:actions>
-      </.simple_form>
-    </div>
-    """
-  end
-
-  @impl true
   def update(%{book: book} = assigns, socket) do
     changeset = Media.change_book(book)
 
-    {:ok,
-     socket
-     |> assign(assigns)
-     |> assign_form(changeset)}
+    socket
+    |> assign(assigns)
+    |> assign_form(changeset)
+    |> reply(:ok)
   end
 
   @impl true
@@ -54,7 +20,9 @@ defmodule ClayWeb.BookLive.FormComponent do
       |> Media.change_book(book_params)
       |> Map.put(:action, :validate)
 
-    {:noreply, assign_form(socket, changeset)}
+    socket
+    |> assign_form(changeset)
+    |> reply(:noreply)
   end
 
   def handle_event("save", %{"book" => book_params}, socket) do
@@ -66,13 +34,13 @@ defmodule ClayWeb.BookLive.FormComponent do
       {:ok, book} ->
         notify_parent({:saved, book})
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Book updated successfully")
-         |> push_patch(to: socket.assigns.patch)}
+        socket
+        |> put_flash(:info, "Book updated successfully")
+        |> push_patch(to: socket.assigns.patch)
+        |> reply(:noreply)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
+        socket |> assign_form(changeset) |> reply(:noreply)
     end
   end
 
@@ -81,13 +49,13 @@ defmodule ClayWeb.BookLive.FormComponent do
       {:ok, book} ->
         notify_parent({:saved, book})
 
-        {:noreply,
-         socket
-         |> put_flash(:info, "Book created successfully")
-         |> push_patch(to: socket.assigns.patch)}
+        socket
+        |> put_flash(:info, "Book created successfully")
+        |> push_patch(to: socket.assigns.patch)
+        |> reply(:noreply)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign_form(socket, changeset)}
+        socket |> assign_form(changeset) |> reply(:noreply)
     end
   end
 

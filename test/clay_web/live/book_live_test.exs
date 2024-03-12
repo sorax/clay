@@ -90,7 +90,13 @@ defmodule ClayWeb.BookLiveTest do
     test "deletes book in listing", %{conn: conn, book: book} do
       {:ok, index_live, _html} = live(conn, ~p"/buecher")
 
-      assert index_live |> element("#books-#{book.id} a[title=Delete]") |> render_click()
+      assert index_live |> element("#books-#{book.id} a[title=Edit]") |> render_click() =~
+               "Buch bearbeiten"
+
+      assert_patch(index_live, ~p"/buecher/#{book}/edit")
+
+      refute index_live |> element("a", "Löschen") |> render_click() =~ "Buch bearbeiten"
+
       refute has_element?(index_live, "#books-#{book.id}")
     end
   end

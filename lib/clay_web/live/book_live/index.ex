@@ -6,9 +6,11 @@ defmodule ClayWeb.BookLive.Index do
 
   @impl true
   def mount(_params, _session, socket) do
+    books = Media.list_books() |> Enum.group_by(& &1.author)
+
     socket
     |> assign(:app_title, "Bücherliste")
-    |> stream(:books, Media.list_books())
+    |> assign(:books, books)
     |> reply(:ok)
   end
 
@@ -28,7 +30,7 @@ defmodule ClayWeb.BookLive.Index do
   defp apply_action(socket, :new, _params) do
     socket
     |> assign(:page_title, "Neues Buch")
-    |> assign(:book, %Book{})
+    |> assign(:book, %Book{tags: ["unread"]})
   end
 
   defp apply_action(socket, :index, _params) do
@@ -38,9 +40,11 @@ defmodule ClayWeb.BookLive.Index do
   end
 
   @impl true
-  def handle_info({ClayWeb.BookLive.FormComponent, {:saved, book}}, socket) do
+  def handle_info({ClayWeb.BookLive.FormComponent, {:saved, _book}}, socket) do
+    books = Media.list_books() |> Enum.group_by(& &1.author)
+
     socket
-    |> stream_insert(:books, book)
+    |> assign(:books, books)
     |> reply(:noreply)
   end
 
@@ -49,8 +53,11 @@ defmodule ClayWeb.BookLive.Index do
     book = Media.get_book!(id)
     {:ok, _} = Media.delete_book(book)
 
+    books = Media.list_books() |> Enum.group_by(& &1.author)
+
     socket
-    |> stream_delete(:books, book)
+    |> assign(:books, books)
+    |> push_patch(to: ~p"/buecher")
     |> reply(:noreply)
   end
 end

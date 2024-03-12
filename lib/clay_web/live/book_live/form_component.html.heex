@@ -1,0 +1,40 @@
+<div>
+  <.header>
+    <%= @title %>
+  </.header>
+
+  <.simple_form
+    for={@form}
+    id="book-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save"
+  >
+    <.input field={@form[:author]} type="text" label="Autor" />
+    <.input field={@form[:series]} type="text" label="Buchreihe" />
+    <.input field={@form[:episode]} type="number" label="Teil" />
+    <.input field={@form[:title]} type="text" label="Titel" />
+    <.input
+      field={@form[:tags]}
+      type="select"
+      multiple
+      label="Tags"
+      options={[{"gelesen", "read"}, {"ungelesen", "unread"}]}
+    />
+    <:actions>
+      <span :if={@action != :edit}></span>
+      <.link
+        :if={@action == :edit}
+        class={[
+          "rounded-lg border-zinc-400 py-2 px-3 border-2",
+          "text-sm font-semibold leading-6 text-zinc-400"
+        ]}
+        phx-click={JS.push("delete", value: %{id: @id})}
+        data-confirm="Are you sure?"
+      >
+        Löschen
+      </.link>
+      <.button phx-disable-with="Speichert...">Speichern</.button>
+    </:actions>
+  </.simple_form>
+</div>
