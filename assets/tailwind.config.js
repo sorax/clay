@@ -27,8 +27,9 @@ module.exports = {
       },
       colors: {
         brand: "#FD4F00",
-        lightgray: "#A2A2A2",
-        darkgray: "#787878"
+        gray: "#A2A2A2",
+        darkgray: "#787878",
+        lightgray: "#f7f7f7"
       }
     },
   },
