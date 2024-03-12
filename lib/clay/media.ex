@@ -19,7 +19,7 @@ defmodule Clay.Media do
   """
   def list_books do
     Book
-    |> order_by(asc: :author, asc: :series, asc: :episode)
+    |> order_by(asc: :author, asc: :series, asc: :episode, asc: :title)
     |> Repo.all()
   end
 
