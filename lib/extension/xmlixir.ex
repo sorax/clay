@@ -35,7 +35,7 @@ defmodule Extension.XMLixir do
     list |> pmap(&parse_record/1) |> Enum.reject(&is_nil/1)
   end
 
-  defp parse_record({:xmlText, _, _, _, ' ', _}), do: nil
+  defp parse_record({:xmlText, _, _, _, ~c" ", _}), do: nil
 
   defp parse_record({:xmlText, _, _, _, value, _}), do: parse_value(value)
 
