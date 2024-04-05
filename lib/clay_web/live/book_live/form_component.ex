@@ -9,6 +9,8 @@ defmodule ClayWeb.BookLive.FormComponent do
 
     socket
     |> assign(assigns)
+    |> assign(:authors, Media.list_authors())
+    |> assign(:series, Media.list_series())
     |> assign_form(changeset)
     |> reply(:ok)
   end

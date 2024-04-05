@@ -10,8 +10,16 @@
     phx-change="validate"
     phx-submit="save"
   >
-    <.input field={@form[:author]} type="text" label="Autor" />
-    <.input field={@form[:series]} type="text" label="Buchreihe" />
+    <.input field={@form[:author]} type="text" label="Autor" list="authors" />
+    <datalist id="authors">
+      <option :for={author <- @authors} value={author}><%= author %></option>
+    </datalist>
+
+    <.input field={@form[:series]} type="text" label="Buchreihe" list="series" />
+    <datalist id="series">
+      <option :for={series <- @series} value={series}><%= series %></option>
+    </datalist>
+
     <.input field={@form[:episode]} type="number" label="Teil" />
     <.input field={@form[:title]} type="text" label="Titel" />
     <.input
