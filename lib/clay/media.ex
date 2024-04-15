@@ -12,6 +12,7 @@ defmodule Clay.Media do
     Book
     |> group_by([b], b.author)
     |> select([b], b.author)
+    |> order_by(asc: :author)
     |> Repo.all()
   end
 
@@ -19,6 +20,7 @@ defmodule Clay.Media do
     Book
     |> group_by([b], b.series)
     |> select([b], b.series)
+    |> order_by(asc: :series)
     |> Repo.all()
   end
 
