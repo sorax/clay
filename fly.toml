@@ -6,7 +6,6 @@
 app = "clay"
 primary_region = "ams"
 kill_signal = "SIGTERM"
-swap_size_mb = 512
 
 [build]
 
@@ -28,3 +27,8 @@ swap_size_mb = 512
     type = "connections"
     hard_limit = 1000
     soft_limit = 1000
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 512
