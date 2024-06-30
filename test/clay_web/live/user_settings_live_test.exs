@@ -1,5 +1,5 @@
 defmodule ClayWeb.UserSettingsLiveTest do
-  use ClayWeb.ConnCase
+  use ClayWeb.ConnCase, async: true
 
   alias Clay.Accounts
   import Phoenix.LiveViewTest

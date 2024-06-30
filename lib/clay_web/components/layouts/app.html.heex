@@ -49,7 +49,10 @@
     </.link>
   </div>
   <nav>
-    <!--
+    <ul class="flex justify-center gap-4 my-4 md:justify-end">
+      <li><.link href={~p"/datenschutz"}>Datenschutz</.link></li>
+      <li><.link href={~p"/impressum"}>Impressum</.link></li>
+    </ul>
     <ul class="flex justify-center gap-4 md:justify-end">
       <%= if @current_user do %>
         <li><%= @current_user.email %></li>
@@ -59,11 +62,6 @@
         <li><.link href={~p"/users/register"}>Register</.link></li>
         <li><.link href={~p"/users/log_in"}>Log in</.link></li>
       <% end %>
-    </ul>
-    -->
-    <ul class="flex justify-center gap-4 mt-4 md:justify-end">
-      <li><.link href={~p"/datenschutz"}>Datenschutz</.link></li>
-      <li><.link href={~p"/impressum"}>Impressum</.link></li>
     </ul>
   </nav>
 </footer>

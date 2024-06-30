@@ -1,5 +1,5 @@
 defmodule ClayWeb.UserConfirmationInstructionsLiveTest do
-  use ClayWeb.ConnCase
+  use ClayWeb.ConnCase, async: true
 
   import Phoenix.LiveViewTest
   import Clay.AccountsFixtures

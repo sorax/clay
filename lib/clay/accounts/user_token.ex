@@ -19,7 +19,7 @@ defmodule Clay.Accounts.UserToken do
     field :sent_to, :string
     belongs_to :user, Clay.Accounts.User
 
-    timestamps(updated_at: false)
+    timestamps(type: :utc_datetime, updated_at: false)
   end
 
   @doc """

@@ -86,11 +86,12 @@ defmodule ClayWeb do
 
       import Reply
 
-      # Core UI components and translation
+      # UI components
       import ClayWeb.CoreComponents
       import ClayWeb.LayoutComponents
       import ClayWeb.ContentComponents
 
+      # Translation
       import ClayWeb.Gettext
 
       # Shortcut for generating JS commands
@@ -111,7 +112,7 @@ defmodule ClayWeb do
   end
 
   @doc """
-  When used, dispatch to the appropriate controller/view/etc.
+  When used, dispatch to the appropriate controller/live_view/etc.
   """
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])

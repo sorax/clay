@@ -14,7 +14,7 @@ config :clay, Clay.Repo,
   hostname: "localhost",
   database: "clay_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
-  pool_size: 10
+  pool_size: System.schedulers_online() * 2
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
@@ -23,10 +23,10 @@ config :clay, ClayWeb.Endpoint,
   secret_key_base: "f9teMpw8gjlNAjy9zaFZZKZr8yl1qdv+RVMFYnXa2qIt15o9JhplYoBjLq8fQCsw",
   server: false
 
-# In test we don't send emails.
+# In test we don't send emails
 config :clay, Clay.Mailer, adapter: Swoosh.Adapters.Test
 
-# Disable swoosh api client as it is only required for production adapters.
+# Disable swoosh api client as it is only required for production adapters
 config :swoosh, :api_client, false
 
 # Print only warnings and errors during test
@@ -34,3 +34,7 @@ config :logger, level: :warning
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Enable helpful, but potentially expensive runtime checks
+config :phoenix_live_view,
+  enable_expensive_runtime_checks: true
