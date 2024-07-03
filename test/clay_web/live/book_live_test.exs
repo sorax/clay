@@ -60,7 +60,7 @@ defmodule ClayWeb.BookLiveTest do
       assert_patch(index_live, ~p"/buecher")
 
       html = render(index_live)
-      assert html =~ "Book created successfully"
+      assert html =~ "Buch erstellt"
       assert html =~ "some author"
     end
 
@@ -83,11 +83,11 @@ defmodule ClayWeb.BookLiveTest do
       assert_patch(index_live, ~p"/buecher")
 
       html = render(index_live)
-      assert html =~ "Book updated successfully"
+      assert html =~ "Buch aktualisiert"
       assert html =~ "some updated author"
     end
 
-    test "deletes book in listing", %{conn: conn, book: book} do
+    test "deletes book", %{conn: conn, book: book} do
       {:ok, index_live, _html} = live(conn, ~p"/buecher")
 
       assert index_live |> element("#books-#{book.id} a[title=Edit]") |> render_click() =~
@@ -95,7 +95,9 @@ defmodule ClayWeb.BookLiveTest do
 
       assert_patch(index_live, ~p"/buecher/#{book}/edit")
 
-      refute index_live |> element("a", "Löschen") |> render_click() =~ "Buch bearbeiten"
+      assert index_live |> element("a", "Löschen") |> render_click()
+
+      assert_patch(index_live, ~p"/buecher")
 
       refute has_element?(index_live, "#books-#{book.id}")
     end

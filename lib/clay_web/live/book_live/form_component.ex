@@ -4,14 +4,15 @@ defmodule ClayWeb.BookLive.FormComponent do
   alias Clay.Media
 
   @impl true
-  def update(%{book: book} = assigns, socket) do
+  def update(%{book: book, books: books} = assigns, socket) do
     changeset = Media.change_book(book)
+    authors = books |> Map.keys() |> Enum.sort()
 
     socket
     |> assign(assigns)
-    |> assign(:authors, Media.list_authors())
-    |> assign(:series, Media.list_series())
-    |> assign_form(changeset)
+    |> assign(authors: authors)
+    |> assign(series: [])
+    |> assign_new(:form, fn -> to_form(changeset) end)
     |> reply(:ok)
   end
 
@@ -20,10 +21,10 @@ defmodule ClayWeb.BookLive.FormComponent do
     changeset =
       socket.assigns.book
       |> Media.change_book(book_params)
-      |> Map.put(:action, :validate)
 
     socket
-    |> assign_form(changeset)
+    |> assign(series: get_series(changeset, socket.assigns.books))
+    |> assign(form: to_form(changeset, action: :validate))
     |> reply(:noreply)
   end
 
@@ -37,7 +38,7 @@ defmodule ClayWeb.BookLive.FormComponent do
         notify_parent({:saved, book})
 
         socket
-        |> put_flash(:info, "Book updated successfully")
+        |> put_flash(:info, "Buch aktualisiert")
         |> push_patch(to: socket.assigns.patch)
         |> reply(:noreply)
 
@@ -52,7 +53,7 @@ defmodule ClayWeb.BookLive.FormComponent do
         notify_parent({:saved, book})
 
         socket
-        |> put_flash(:info, "Book created successfully")
+        |> put_flash(:info, "Buch erstellt")
         |> push_patch(to: socket.assigns.patch)
         |> reply(:noreply)
 
@@ -61,9 +62,18 @@ defmodule ClayWeb.BookLive.FormComponent do
     end
   end
 
-  defp assign_form(socket, %Ecto.Changeset{} = changeset) do
-    assign(socket, :form, to_form(changeset))
+  defp assign_form(socket, changeset) do
+    assign(socket, form: to_form(changeset))
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+
+  defp get_series(changeset, books) do
+    %{author: author} = Media.Book.to_struct(changeset)
+
+    case Map.get(books, author) do
+      nil -> []
+      list -> Enum.map(list, & &1.series)
+    end
+  end
 end

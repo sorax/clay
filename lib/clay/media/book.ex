@@ -12,6 +12,8 @@ defmodule Clay.Media.Book do
     timestamps(type: :utc_datetime)
   end
 
+  def to_struct(changeset), do: apply_changes(changeset)
+
   @doc false
   def changeset(book, attrs) do
     book

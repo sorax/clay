@@ -10,24 +10,6 @@ defmodule Clay.MediaTest do
 
     @invalid_attrs %{author: nil, title: nil, series: nil, episode: nil, tags: nil}
 
-    test "list_authors/0 returns all authors" do
-      author = "some random author"
-
-      book_fixture(%{author: author, title: "book 1"})
-      book_fixture(%{author: author, title: "book 2"})
-
-      assert Media.list_authors() == [author]
-    end
-
-    test "list_series/0 returns all series" do
-      series = "some random series"
-
-      book_fixture(%{series: series, title: "book 1"})
-      book_fixture(%{series: series, title: "book 2"})
-
-      assert Media.list_series() == [series]
-    end
-
     test "list_books/0 returns all books" do
       book = book_fixture()
       assert Media.list_books() == [book]

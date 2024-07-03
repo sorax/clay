@@ -8,22 +8,6 @@ defmodule Clay.Media do
 
   alias Clay.Media.Book
 
-  def list_authors do
-    Book
-    |> group_by([b], b.author)
-    |> select([b], b.author)
-    |> order_by(asc: :author)
-    |> Repo.all()
-  end
-
-  def list_series do
-    Book
-    |> group_by([b], b.series)
-    |> select([b], b.series)
-    |> order_by(asc: :series)
-    |> Repo.all()
-  end
-
   @doc """
   Returns the list of books.
 
