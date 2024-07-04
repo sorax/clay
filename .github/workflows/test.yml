@@ -6,7 +6,7 @@ on:
 
 env:
   OTP_VERSION: "26"
-  ELIXIR_VERSION: "1.15"
+  ELIXIR_VERSION: "1.17"
 
 permissions:
   contents: read
