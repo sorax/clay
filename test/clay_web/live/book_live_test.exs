@@ -44,7 +44,7 @@ defmodule ClayWeb.BookLiveTest do
     test "saves new book", %{conn: conn} do
       {:ok, index_live, _html} = live(conn, ~p"/buecher")
 
-      assert index_live |> element("a", "Neues Buch") |> render_click() =~
+      assert index_live |> element("a[title=New]") |> render_click() =~
                "Neues Buch"
 
       assert_patch(index_live, ~p"/buecher/new")
