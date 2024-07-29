@@ -72,9 +72,13 @@ defmodule ClayWeb.Router do
       live "/users/settings", UserSettingsLive, :edit
       live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
 
-      live "/buecher", BookLive.Index, :index
-      live "/buecher/new", BookLive.Index, :new
-      live "/buecher/:id/edit", BookLive.Index, :edit
+      live "/buecher", ListLive.Index, :index
+      live "/buecher/new", ListLive.Index, :new
+      live "/buecher/:id/edit", ListLive.Index, :edit
+
+      live "/buecher/:list", BookLive.Index, :index
+      live "/buecher/:list/new", BookLive.Index, :new
+      live "/buecher/:list/:id/edit", BookLive.Index, :edit
     end
   end
 

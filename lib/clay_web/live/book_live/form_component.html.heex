@@ -10,25 +10,18 @@
     phx-change="validate"
     phx-submit="save"
   >
+    <input type="hidden" name={@form[:list_id].name} value={@list.id} />
     <.input field={@form[:author]} type="text" label="Autor" list="authors" />
     <datalist id="authors">
       <option :for={author <- @authors} value={author}><%= author %></option>
     </datalist>
-
     <.input field={@form[:series]} type="text" label="Buchreihe" list="series" />
     <datalist id="series">
       <option :for={series <- @series} value={series}><%= series %></option>
     </datalist>
-
     <.input field={@form[:episode]} type="number" label="Teil" />
     <.input field={@form[:title]} type="text" label="Titel" />
-    <.input
-      field={@form[:tags]}
-      type="select"
-      multiple
-      label="Tags"
-      options={[{"gelesen", "read"}, {"ungelesen", "unread"}]}
-    />
+    <.input field={@form[:read]} type="checkbox" label="Gelesen" />
     <:actions>
       <span :if={@action != :edit}></span>
       <.link

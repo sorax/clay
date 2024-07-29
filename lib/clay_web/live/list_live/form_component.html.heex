@@ -1,0 +1,19 @@
+<div>
+  <.header>
+    <%= @title %>
+  </.header>
+
+  <.simple_form
+    for={@form}
+    id="list-form"
+    phx-target={@myself}
+    phx-change="validate"
+    phx-submit="save"
+  >
+    <.input field={@form[:title]} type="text" label="Titel" />
+    <:actions>
+      <span></span>
+      <.button phx-disable-with="Speichert...">Speichern</.button>
+    </:actions>
+  </.simple_form>
+</div>

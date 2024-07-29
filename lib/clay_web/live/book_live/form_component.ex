@@ -5,22 +5,19 @@ defmodule ClayWeb.BookLive.FormComponent do
 
   @impl true
   def update(%{book: book, books: books} = assigns, socket) do
-    changeset = Media.change_book(book)
     authors = books |> Map.keys() |> Enum.sort()
 
     socket
     |> assign(assigns)
     |> assign(authors: authors)
     |> assign(series: [])
-    |> assign_new(:form, fn -> to_form(changeset) end)
+    |> assign_new(:form, fn -> to_form(Media.change_book(book)) end)
     |> reply(:ok)
   end
 
   @impl true
   def handle_event("validate", %{"book" => book_params}, socket) do
-    changeset =
-      socket.assigns.book
-      |> Media.change_book(book_params)
+    changeset = Media.change_book(socket.assigns.book, book_params)
 
     socket
     |> assign(series: get_series(changeset, socket.assigns.books))
@@ -43,7 +40,7 @@ defmodule ClayWeb.BookLive.FormComponent do
         |> reply(:noreply)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        socket |> assign_form(changeset) |> reply(:noreply)
+        socket |> assign(form: to_form(changeset)) |> reply(:noreply)
     end
   end
 
@@ -58,12 +55,8 @@ defmodule ClayWeb.BookLive.FormComponent do
         |> reply(:noreply)
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        socket |> assign_form(changeset) |> reply(:noreply)
+        socket |> assign(form: to_form(changeset)) |> reply(:noreply)
     end
-  end
-
-  defp assign_form(socket, changeset) do
-    assign(socket, form: to_form(changeset))
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})

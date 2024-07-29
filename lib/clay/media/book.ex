@@ -2,12 +2,16 @@ defmodule Clay.Media.Book do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Clay.Media.List
+
   schema "books" do
     field :author, :string
     field :title, :string
     field :series, :string
     field :episode, :integer
-    field :tags, {:array, :string}
+    field :read, :boolean, default: false
+
+    belongs_to :list, List
 
     timestamps(type: :utc_datetime)
   end
@@ -17,7 +21,7 @@ defmodule Clay.Media.Book do
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:author, :series, :episode, :title, :tags])
-    |> validate_required([:author, :title, :tags])
+    |> cast(attrs, [:author, :series, :episode, :title, :read, :list_id])
+    |> validate_required([:author, :title, :read, :list_id])
   end
 end

@@ -1,7 +1,7 @@
 <.header>
-  Bücherliste
+  Bücherliste <%= @list.title %>
   <:actions>
-    <.link patch={~p"/buecher/new"} title="New">
+    <.link patch={~p"/buecher/#{@list}/new"} title="New">
       <.button><.icon name="hero-book-open" class="w-5 h-5" /></.button>
     </.link>
   </:actions>
@@ -14,15 +14,10 @@
     <div :for={{series, booklist} <- Enum.group_by(books, & &1.series)} class="mt-4 first:mt-0">
       <h3 class="font-bold"><%= series %></h3>
       <ol>
-        <li
-          :for={book <- booklist}
-          id={"books-#{book.id}"}
-          class={Enum.member?(book.tags, "read") && "text-gray/60"}
-        >
-          <span :if={Enum.member?(book.tags, "read")} class="bg-blue-500">&nbsp;</span>
-          <span :if={Enum.member?(book.tags, "unread")} class="bg-red-500">&nbsp;</span>
+        <li :for={book <- booklist} id={"books-#{book.id}"} class={[book.read && "text-gray/60"]}>
+          <span class={[book.read && "bg-blue-500", !book.read && "bg-red-500"]}>&nbsp;</span>
           <%= book.episode %>
-          <.link patch={~p"/buecher/#{book}/edit"} title="Edit" class="group">
+          <.link patch={~p"/buecher/#{@list}/#{book}/edit"} title="Edit" class="group">
             <%= book.title %>
             <.icon name="hero-pencil-square" class="hidden w-5 h-5 group-hover:inline-block" />
           </.link>
@@ -36,15 +31,16 @@
   :if={@live_action in [:new, :edit]}
   id="book-modal"
   show
-  on_cancel={JS.patch(~p"/buecher")}
+  on_cancel={JS.patch(~p"/buecher/#{@list}")}
 >
   <.live_component
     module={ClayWeb.BookLive.FormComponent}
     id={@book.id || :new}
     title={@page_title}
     action={@live_action}
+    list={@list}
     book={@book}
     books={Map.new(@books)}
-    patch={~p"/buecher"}
+    patch={~p"/buecher/#{@list}"}
   />
 </.modal>
