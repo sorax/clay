@@ -58,8 +58,10 @@ defmodule ClayWeb.BookLive.Index do
     |> reply(:noreply)
   end
 
-  defp get_books(_list) do
-    Media.list_books()
+  defp get_books(list) do
+    %{books: books} = Media.get_list_with_books!(list.id)
+
+    books
     |> Enum.group_by(& &1.author)
     |> Enum.sort_by(&elem(&1, 0))
   end
