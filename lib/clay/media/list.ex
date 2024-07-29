@@ -4,10 +4,12 @@ defmodule Clay.Media.List do
 
   alias Clay.Media.Book
 
+  @preload_order [asc: :author, asc: :series, asc: :episode, asc: :title]
+
   schema "lists" do
     field :title, :string
 
-    has_many(:books, Book)
+    has_many(:books, Book, preload_order: @preload_order)
 
     timestamps(type: :utc_datetime)
   end

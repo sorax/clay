@@ -39,6 +39,26 @@ defmodule Clay.Media do
   def get_list!(id), do: Repo.get!(List, id)
 
   @doc """
+  Gets a list with preloaded books.
+
+  Raises `Ecto.NoResultsError` if the List does not exist.
+
+  ## Examples
+
+      iex> get_list_with_books!(123)
+      %List{}
+
+      iex> get_list_with_books!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_list_with_books!(id) do
+    List
+    |> Repo.get!(id)
+    |> Repo.preload(:books)
+  end
+
+  @doc """
   Creates a list.
 
   ## Examples
@@ -101,21 +121,6 @@ defmodule Clay.Media do
   """
   def change_list(%List{} = list, attrs \\ %{}) do
     List.changeset(list, attrs)
-  end
-
-  @doc """
-  Returns an ordered list of books.
-
-  ## Examples
-
-      iex> list_books()
-      [%Book{}, ...]
-
-  """
-  def list_books_ordered do
-    Book
-    |> order_by(asc: :author, asc: :series, asc: :episode, asc: :title)
-    |> Repo.all()
   end
 
   @doc """
