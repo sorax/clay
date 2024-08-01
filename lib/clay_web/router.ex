@@ -74,6 +74,7 @@ defmodule ClayWeb.Router do
 
       live "/buecher", ListLive.Index, :index
       live "/buecher/new", ListLive.Index, :new
+      live "/buecher/:id/import", ListLive.Index, :import
       live "/buecher/:id/edit", ListLive.Index, :edit
 
       live "/buecher/:list", BookLive.Index, :index

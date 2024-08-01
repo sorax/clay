@@ -19,6 +19,12 @@ defmodule ClayWeb.ListLive.Index do
     |> reply(:noreply)
   end
 
+  defp apply_action(socket, :import, %{"id" => id}) do
+    socket
+    |> assign(:page_title, "Liste importieren")
+    |> assign(:list, Media.get_list!(id))
+  end
+
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Liste bearbeiten")

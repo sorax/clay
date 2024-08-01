@@ -34,6 +34,7 @@ defmodule Clay.MixProject do
     [
       {:bandit, "~> 1.5"},
       {:bcrypt_elixir, "~> 3.0"},
+      {:csv, "~> 3.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:ecto_sql, "~> 3.10"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},

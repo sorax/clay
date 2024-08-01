@@ -14,6 +14,9 @@
 >
   <:col :let={{_id, list}} label="Titel"><%= list.title %></:col>
   <:action :let={{_id, list}}>
+    <.link patch={~p"/buecher/#{list}/import"} title="Import">
+      <.icon name="hero-document-arrow-up" class="w-5 h-5" />
+    </.link>
     <.link patch={~p"/buecher/#{list}/edit"} title="Edit">
       <.icon name="hero-pencil-square" class="w-5 h-5" />
     </.link>
@@ -30,13 +33,23 @@
 </.table>
 
 <.modal
-  :if={@live_action in [:new, :edit]}
+  :if={@live_action in [:new, :edit, :import]}
   id="list-modal"
   show
   on_cancel={JS.patch(~p"/buecher")}
 >
   <.live_component
+    :if={@live_action in [:new, :edit]}
     module={ClayWeb.ListLive.FormComponent}
+    id={@list.id || :new}
+    title={@page_title}
+    action={@live_action}
+    list={@list}
+    patch={~p"/buecher"}
+  />
+  <.live_component
+    :if={@live_action in [:import]}
+    module={ClayWeb.ListLive.ImportComponent}
     id={@list.id || :new}
     title={@page_title}
     action={@live_action}
