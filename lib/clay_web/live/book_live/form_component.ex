@@ -4,14 +4,16 @@ defmodule ClayWeb.BookLive.FormComponent do
   alias Clay.Media
 
   @impl true
-  def update(%{book: book, books: books} = assigns, socket) do
-    authors = books |> Map.keys() |> Enum.sort()
+  def update(%{book: book, list: list} = assigns, socket) do
+    authors = list.books |> Enum.map(& &1.author) |> Enum.uniq()
+
+    changeset = Media.change_book(book)
 
     socket
     |> assign(assigns)
     |> assign(authors: authors)
-    |> assign(series: [])
-    |> assign_new(:form, fn -> to_form(Media.change_book(book)) end)
+    |> assign(series: get_series(changeset, list.books))
+    |> assign_new(:form, fn -> to_form(changeset) end)
     |> reply(:ok)
   end
 
@@ -20,7 +22,7 @@ defmodule ClayWeb.BookLive.FormComponent do
     changeset = Media.change_book(socket.assigns.book, book_params)
 
     socket
-    |> assign(series: get_series(changeset, socket.assigns.books))
+    |> assign(series: get_series(changeset, socket.assigns.list.books))
     |> assign(form: to_form(changeset, action: :validate))
     |> reply(:noreply)
   end
@@ -64,9 +66,9 @@ defmodule ClayWeb.BookLive.FormComponent do
   defp get_series(changeset, books) do
     %{author: author} = Media.Book.to_struct(changeset)
 
-    case Map.get(books, author) do
-      nil -> []
-      list -> Enum.map(list, & &1.series)
-    end
+    books
+    |> Enum.filter(&(&1.author == author))
+    |> Enum.map(& &1.series)
+    |> Enum.uniq()
   end
 end

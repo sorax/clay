@@ -13,12 +13,12 @@ defmodule ClayWeb.BookLive.Index do
 
   @impl true
   def handle_params(%{"list" => id} = params, _url, socket) do
-    list = Media.get_list!(id)
+    list = Media.get_list_with_books!(id)
 
     socket
     |> apply_action(socket.assigns.live_action, params)
     |> assign(:list, list)
-    |> assign(:books, get_books(list))
+    |> assign(:books, get_books(list.id))
     |> reply(:noreply)
   end
 
@@ -43,7 +43,7 @@ defmodule ClayWeb.BookLive.Index do
   @impl true
   def handle_info({ClayWeb.BookLive.FormComponent, {:saved, _book}}, socket) do
     socket
-    |> assign(:books, get_books(socket.assigns.list))
+    |> assign(:books, get_books(socket.assigns.list.id))
     |> reply(:noreply)
   end
 
@@ -53,13 +53,13 @@ defmodule ClayWeb.BookLive.Index do
     {:ok, _} = Media.delete_book(book)
 
     socket
-    |> assign(:books, get_books(socket.assigns.list))
+    |> assign(:books, get_books(socket.assigns.list.id))
     |> push_patch(to: ~p"/buecher/#{socket.assigns.list}")
     |> reply(:noreply)
   end
 
-  defp get_books(list) do
-    %{books: books} = Media.get_list_with_books!(list.id)
+  defp get_books(list_id) do
+    %{books: books} = Media.get_list_with_books!(list_id)
 
     books
     |> Enum.group_by(& &1.author)
