@@ -14,6 +14,15 @@
   </:actions>
 </.header>
 
+<section>
+  <.form :let={f} for={@filter_form} phx-change="filter">
+    <div class="flex gap-12">
+      <.input field={f[:read]} type="checkbox" label="Gelesen" />
+      <.input field={f[:unread]} type="checkbox" label="Ungelesen" />
+    </div>
+  </.form>
+</section>
+
 <div :for={{author, books} <- @books} class="mt-8">
   <h2 class="my-1 text-xl text-darkgray"><%= author %></h2>
 

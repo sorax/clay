@@ -33,9 +33,7 @@ defmodule ClayWeb.BookLive.FormComponent do
 
   defp save_book(socket, :edit, book_params) do
     case Media.update_book(socket.assigns.book, book_params) do
-      {:ok, book} ->
-        notify_parent({:saved, book})
-
+      {:ok, _book} ->
         socket
         |> put_flash(:info, "Buch aktualisiert")
         |> push_patch(to: socket.assigns.patch)
@@ -48,9 +46,7 @@ defmodule ClayWeb.BookLive.FormComponent do
 
   defp save_book(socket, :new, book_params) do
     case Media.create_book(book_params) do
-      {:ok, book} ->
-        notify_parent({:saved, book})
-
+      {:ok, _book} ->
         socket
         |> put_flash(:info, "Buch erstellt")
         |> push_patch(to: socket.assigns.patch)
@@ -60,8 +56,6 @@ defmodule ClayWeb.BookLive.FormComponent do
         socket |> assign(form: to_form(changeset)) |> reply(:noreply)
     end
   end
-
-  defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 
   defp get_series(changeset, books) do
     %{author: author} = Media.Book.to_struct(changeset)

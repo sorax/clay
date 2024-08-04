@@ -7,6 +7,7 @@ defmodule Clay.Media do
 
   alias Clay.Media.Book
   alias Clay.Media.List
+  alias Clay.Media.Filter
   alias Clay.Repo
 
   @doc """
@@ -20,6 +21,21 @@ defmodule Clay.Media do
   """
   def list_lists do
     Repo.all(List)
+  end
+
+  @doc """
+  Returns the list of lists with preloaded associations.
+
+  ## Examples
+
+      iex> list_lists(preload: :books)
+      [%List{}, ...]
+
+  """
+  def list_lists(preload: preload) do
+    List
+    |> Repo.all()
+    |> Repo.preload(preload)
   end
 
   @doc """
@@ -39,23 +55,23 @@ defmodule Clay.Media do
   def get_list!(id), do: Repo.get!(List, id)
 
   @doc """
-  Gets a list with preloaded books.
+  Gets a single list with preloaded associations.
 
   Raises `Ecto.NoResultsError` if the List does not exist.
 
   ## Examples
 
-      iex> get_list_with_books!(123)
+      iex> get_list!(123)
       %List{}
 
-      iex> get_list_with_books!(456)
+      iex> get_list!(456)
       ** (Ecto.NoResultsError)
 
   """
-  def get_list_with_books!(id) do
+  def get_list!(id, preload: preload) do
     List
     |> Repo.get!(id)
-    |> Repo.preload(:books)
+    |> Repo.preload(preload)
   end
 
   @doc """
@@ -215,5 +231,18 @@ defmodule Clay.Media do
   """
   def change_book(%Book{} = book, attrs \\ %{}) do
     Book.changeset(book, attrs)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking filter changes.
+
+  ## Examples
+
+      iex> change_filter(filter)
+      %Ecto.Changeset{data: %Filter{}}
+
+  """
+  def change_filter(%Filter{} = filter, attrs \\ %{}) do
+    Filter.changeset(filter, attrs)
   end
 end

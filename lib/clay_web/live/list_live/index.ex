@@ -8,7 +8,7 @@ defmodule ClayWeb.ListLive.Index do
   def mount(_params, _session, socket) do
     socket
     |> assign(:app_title, "Bücherliste")
-    |> stream(:lists, Media.list_lists())
+    |> stream(:lists, Media.list_lists(preload: :books))
     |> reply(:ok)
   end
 
