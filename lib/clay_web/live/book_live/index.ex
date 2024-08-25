@@ -8,7 +8,6 @@ defmodule ClayWeb.BookLive.Index do
   @impl true
   def mount(_params, _session, socket) do
     socket
-    |> assign(:app_title, "Bücherliste")
     |> reply(:ok)
   end
 
@@ -22,6 +21,7 @@ defmodule ClayWeb.BookLive.Index do
 
     socket
     |> apply_action(socket.assigns.live_action, params)
+    |> assign(:app_title, "Bücher #{list.title}")
     |> assign(:list, list)
     |> assign(:books, get_books(list.id, filter))
     |> assign(:filter_form, to_form(changeset, action: :validate))
@@ -65,18 +65,9 @@ defmodule ClayWeb.BookLive.Index do
   end
 
   defp get_books(list_id, %Filter{} = filter) do
-    %{books: books} = Media.get_list!(list_id, preload: :books)
-
-    books
-    |> filter_read_books(filter)
-    |> filter_unread_books(filter)
+    list_id
+    |> Media.find_books(filter)
     |> Enum.group_by(& &1.author)
     |> Enum.sort_by(&elem(&1, 0))
   end
-
-  defp filter_read_books(books, %{read: false}), do: Enum.reject(books, &(&1.read == true))
-  defp filter_read_books(books, _), do: books
-
-  defp filter_unread_books(books, %{unread: false}), do: Enum.reject(books, &(&1.read == false))
-  defp filter_unread_books(books, _), do: books
 end

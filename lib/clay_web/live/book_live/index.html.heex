@@ -16,9 +16,10 @@
 
 <section>
   <.form :let={f} for={@filter_form} phx-change="filter">
-    <div class="flex gap-12">
+    <div class="flex items-center gap-12">
       <.input field={f[:read]} type="checkbox" label="Gelesen" />
       <.input field={f[:unread]} type="checkbox" label="Ungelesen" />
+      <.input field={f[:search]} type="search" placeholder="Suche" />
     </div>
   </.form>
 </section>

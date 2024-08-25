@@ -153,6 +153,33 @@ defmodule Clay.Media do
   end
 
   @doc """
+  Returns a filtered list of books.
+  """
+
+  def find_books(list_id, filter) do
+    Book
+    |> where(list_id: ^list_id)
+    |> add_search_filter(filter)
+    |> add_read_filter(filter)
+    |> Repo.all()
+  end
+
+  def add_read_filter(query, %{read: true, unread: true}), do: query
+  def add_read_filter(query, %{read: false, unread: false}), do: where(query, false)
+  def add_read_filter(query, %{read: read}), do: where(query, read: ^read)
+
+  defp add_search_filter(query, %{search: search}) when not is_nil(search) do
+    pattern = "%#{search}%"
+
+    query
+    |> where([b], ilike(b.author, ^pattern))
+    |> or_where([b], ilike(b.title, ^pattern))
+    |> or_where([b], ilike(b.series, ^pattern))
+  end
+
+  defp add_search_filter(query, _), do: query
+
+  @doc """
   Gets a single book.
 
   Raises `Ecto.NoResultsError` if the Book does not exist.

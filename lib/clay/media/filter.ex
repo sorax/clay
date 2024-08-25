@@ -6,6 +6,7 @@ defmodule Clay.Media.Filter do
   embedded_schema do
     field :read, :boolean, default: true
     field :unread, :boolean, default: true
+    field :search, :string
   end
 
   def to_struct(changeset), do: apply_changes(changeset)
@@ -13,6 +14,6 @@ defmodule Clay.Media.Filter do
   @doc false
   def changeset(filter, attrs) do
     filter
-    |> cast(attrs, [:read, :unread])
+    |> cast(attrs, [:read, :unread, :search])
   end
 end
