@@ -161,6 +161,7 @@ defmodule Clay.Media do
     |> where(list_id: ^list_id)
     |> add_search_filter(filter)
     |> add_read_filter(filter)
+    |> order_by(asc: :author, asc: :series, asc: :episode, asc: :title)
     |> Repo.all()
   end
 
