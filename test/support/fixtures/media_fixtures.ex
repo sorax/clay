@@ -33,6 +33,7 @@ defmodule Clay.MediaFixtures do
         read: true,
         series: "some series",
         title: "some title",
+        rating: 0,
         list_id: list.id
       })
       |> Media.create_book()

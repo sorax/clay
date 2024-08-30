@@ -10,6 +10,7 @@ defmodule Clay.Media.Book do
     field :series, :string
     field :episode, :integer
     field :read, :boolean, default: false
+    field :rating, :integer
 
     belongs_to :list, List
 
@@ -21,7 +22,7 @@ defmodule Clay.Media.Book do
   @doc false
   def changeset(book, attrs) do
     book
-    |> cast(attrs, [:author, :series, :episode, :title, :read, :list_id])
-    |> validate_required([:author, :title, :read, :list_id])
+    |> cast(attrs, [:author, :series, :episode, :title, :read, :rating, :list_id])
+    |> validate_required([:author, :title, :read, :rating, :list_id])
   end
 end

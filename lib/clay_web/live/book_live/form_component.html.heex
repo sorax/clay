@@ -21,7 +21,48 @@
     </datalist>
     <.input field={@form[:episode]} type="number" label="Teil" />
     <.input field={@form[:title]} type="text" label="Titel" />
-    <.input field={@form[:read]} type="checkbox" label="Gelesen" />
+
+    <div class="flex gap-8">
+      <.input field={@form[:read]} type="checkbox" label="Gelesen" />
+
+      <label>
+        <input
+          id={"#{@form.id}-rating"}
+          type="radio"
+          name={@form[:rating].name}
+          value={-1}
+          checked={@form[:rating].value == -1}
+          class="hidden peer"
+        />
+        <.icon name="hero-hand-thumb-down" class="block h-5 inlinew-5 peer-checked:hidden" />
+        <.icon name="hero-hand-thumb-down-solid" class="hidden h-5 inlinew-5 peer-checked:block" />
+      </label>
+      <label>
+        <input
+          id={"#{@form.id}-rating"}
+          type="radio"
+          name={@form[:rating].name}
+          value={0}
+          checked={@form[:rating].value == 0}
+          class="hidden peer"
+        />
+        <.icon name="hero-minus-circle" class="block w-5 h-5 peer-checked:hidden" />
+        <.icon name="hero-minus-circle-solid" class="hidden w-5 h-5 peer-checked:block" />
+      </label>
+      <label>
+        <input
+          id={"#{@form.id}-rating"}
+          type="radio"
+          name={@form[:rating].name}
+          value={1}
+          checked={@form[:rating].value == 1}
+          class="hidden peer"
+        />
+        <.icon name="hero-hand-thumb-up" class="block w-5 h-5 peer-checked:hidden" />
+        <.icon name="hero-hand-thumb-up-solid" class="hidden w-5 h-5 peer-checked:block" />
+      </label>
+    </div>
+
     <:actions>
       <span :if={@action != :edit}></span>
       <.link

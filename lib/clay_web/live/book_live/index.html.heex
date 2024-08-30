@@ -38,6 +38,8 @@
             <%= book.title %>
             <.icon name="hero-pencil-square" class="hidden w-5 h-5 group-hover:inline-block" />
           </.link>
+          <.icon :if={book.rating == -1} name="hero-hand-thumb-down" class="w-5 h-5" />
+          <.icon :if={book.rating == 1} name="hero-hand-thumb-up" class="w-5 h-5" />
         </li>
       </ol>
     </div>

@@ -83,6 +83,7 @@ defmodule Clay.MediaTest do
         title: "some title",
         series: "some series",
         episode: 42,
+        rating: 0,
         list_id: list.id
       }
 
@@ -92,6 +93,7 @@ defmodule Clay.MediaTest do
       assert book.title == "some title"
       assert book.series == "some series"
       assert book.episode == 42
+      assert book.rating == 0
       assert book.list_id == list.id
     end
 
@@ -107,7 +109,8 @@ defmodule Clay.MediaTest do
         author: "some updated author",
         title: "some updated title",
         series: "some updated series",
-        episode: 43
+        episode: 43,
+        rating: 1
       }
 
       assert {:ok, %Book{} = book} = Media.update_book(book, update_attrs)
@@ -116,6 +119,7 @@ defmodule Clay.MediaTest do
       assert book.title == "some updated title"
       assert book.series == "some updated series"
       assert book.episode == 43
+      assert book.rating == 1
     end
 
     test "update_book/2 with invalid data returns error changeset" do

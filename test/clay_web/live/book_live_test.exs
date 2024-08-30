@@ -10,16 +10,18 @@ defmodule ClayWeb.BookLiveTest do
     author: "some author",
     title: "some title",
     series: "some series",
-    episode: 42
+    episode: 42,
+    rating: 0
   }
   @update_attrs %{
     read: false,
     author: "some updated author",
     title: "some updated title",
     series: "some updated series",
-    episode: 43
+    episode: 43,
+    rating: 1
   }
-  @invalid_attrs %{read: false, author: nil, title: nil, series: nil, episode: nil}
+  @invalid_attrs %{read: false, author: nil, title: nil, series: nil, episode: nil, rating: 0}
 
   defp create_book(_) do
     list = list_fixture()
