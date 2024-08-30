@@ -64,6 +64,11 @@ defmodule ClayWeb.BookLive.Index do
     |> reply(:noreply)
   end
 
+  def handle_event("submit", _params, socket) do
+    socket
+    |> reply(:noreply)
+  end
+
   defp get_books(list_id, %Filter{} = filter) do
     list_id
     |> Media.find_books(filter)

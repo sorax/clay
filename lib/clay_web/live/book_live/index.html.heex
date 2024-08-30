@@ -15,7 +15,7 @@
 </.header>
 
 <section>
-  <.form :let={f} for={@filter_form} phx-change="filter">
+  <.form :let={f} for={@filter_form} phx-change="filter" phx-submit="submit">
     <div class="flex items-center gap-12">
       <.input field={f[:read]} type="checkbox" label="Gelesen" />
       <.input field={f[:unread]} type="checkbox" label="Ungelesen" />
