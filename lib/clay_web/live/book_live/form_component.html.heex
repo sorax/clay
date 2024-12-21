@@ -1,6 +1,6 @@
 <div>
   <.header>
-    <%= @title %>
+    {@title}
   </.header>
 
   <.simple_form
@@ -13,11 +13,11 @@
     <input type="hidden" name={@form[:list_id].name} value={@list.id} />
     <.input field={@form[:author]} type="text" label="Autor" list="authors" />
     <datalist id="authors">
-      <option :for={author <- @authors} value={author}><%= author %></option>
+      <option :for={author <- @authors} value={author}>{author}</option>
     </datalist>
     <.input field={@form[:series]} type="text" label="Buchreihe" list="series" />
     <datalist id="series">
-      <option :for={series <- @series} value={series}><%= series %></option>
+      <option :for={series <- @series} value={series}>{series}</option>
     </datalist>
     <.input field={@form[:episode]} type="number" label="Teil" />
     <.input field={@form[:title]} type="text" label="Titel" />
@@ -27,7 +27,6 @@
 
       <label>
         <input
-          id={"#{@form.id}-rating"}
           type="radio"
           name={@form[:rating].name}
           value={-1}
@@ -39,7 +38,6 @@
       </label>
       <label>
         <input
-          id={"#{@form.id}-rating"}
           type="radio"
           name={@form[:rating].name}
           value={0}
@@ -51,7 +49,6 @@
       </label>
       <label>
         <input
-          id={"#{@form.id}-rating"}
           type="radio"
           name={@form[:rating].name}
           value={1}

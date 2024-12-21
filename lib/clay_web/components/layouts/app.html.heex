@@ -14,7 +14,7 @@
 </header>
 <main class="py-8 px-6 md:ml-[35%] md:px-16 md:py-32 text-gray">
   <.flash_group flash={@flash} />
-  <%= @inner_content %>
+  {@inner_content}
 </main>
 <footer class={[
   "max-md:bg-layout max-md:bg-bottom",
@@ -55,7 +55,7 @@
     </ul>
     <ul class="flex justify-center gap-4 md:justify-end">
       <%= if @current_user do %>
-        <li><%= @current_user.email %></li>
+        <li>{@current_user.email}</li>
         <li><.link href={~p"/users/settings"}>Settings</.link></li>
         <li><.link href={~p"/users/log_out"} method="delete">Log out</.link></li>
       <% else %>

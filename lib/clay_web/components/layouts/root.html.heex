@@ -9,7 +9,7 @@
     <.live_meta name="robots" content={assigns[:robots] || "noindex,nofollow"} />
     <.live_meta name="description" content={assigns[:page_description]} />
     <.live_title suffix=" | hausgedacht">
-      <%= assigns[:page_title] || "Frische Ideen aus eigenem Anbau" %>
+      {assigns[:page_title] || "Frische Ideen aus eigenem Anbau"}
     </.live_title>
     <.live_link rel="canonical" href={assigns[:canonical]} />
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
@@ -17,6 +17,6 @@
     </script>
   </head>
   <body class="antialiased bg-white">
-    <%= @inner_content %>
+    {@inner_content}
   </body>
 </html>

@@ -25,12 +25,12 @@ defmodule ClayWeb.ContentComponents do
       class="first:mt-0 first:pt-0 mt-16 pt-16 border-t-2 border-solid border-[#efefef] first:border-t-0"
     >
       <header class="mb-8">
-        <time class="text-sm" datetime={@date_string}><%= @date_format %></time>
+        <time class="text-sm" datetime={@date_string}>{@date_format}</time>
         <h1 :if={@title != []} class="text-3xl leading-6 text-darkgray">
-          <%= render_slot(@title) %>
+          {render_slot(@title)}
         </h1>
       </header>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     </article>
     """
   end
@@ -57,9 +57,9 @@ defmodule ClayWeb.ContentComponents do
   def radio_group(assigns) do
     ~H"""
     <div>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
       <div :for={{%{value: value} = rad, idx} <- Enum.with_index(@radio)}>
-        <label for={"#{@field.id}-#{idx}"}><%= render_slot(rad) %></label>
+        <label for={"#{@field.id}-#{idx}"}>{render_slot(rad)}</label>
         <input
           type="radio"
           name={@field.name}

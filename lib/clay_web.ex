@@ -42,8 +42,9 @@ defmodule ClayWeb do
         formats: [:html, :json],
         layouts: [html: ClayWeb.Layouts]
 
+      use Gettext, backend: ClayWeb.Gettext
+
       import Plug.Conn
-      import ClayWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -81,6 +82,9 @@ defmodule ClayWeb do
 
   defp html_helpers do
     quote do
+      # Translation
+      use Gettext, backend: ClayWeb.Gettext
+
       # HTML escaping functionality
       import Phoenix.HTML
 
@@ -90,9 +94,6 @@ defmodule ClayWeb do
       import ClayWeb.CoreComponents
       import ClayWeb.LayoutComponents
       import ClayWeb.ContentComponents
-
-      # Translation
-      import ClayWeb.Gettext
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

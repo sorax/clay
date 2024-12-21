@@ -6,7 +6,7 @@
 </.link>
 
 <.header>
-  Bücherliste <%= @list.title %>
+  Bücherliste {@list.title}
   <:actions>
     <.link patch={~p"/buecher/#{@list}/new"} title="New">
       <.button><.icon name="hero-book-open" class="w-5 h-5" /></.button>
@@ -25,17 +25,17 @@
 </section>
 
 <div :for={{author, books} <- @books} class="mt-8">
-  <h2 class="my-1 text-xl text-darkgray"><%= author %></h2>
+  <h2 class="my-1 text-xl text-darkgray">{author}</h2>
 
   <div class="px-4 py-2 rounded bg-lightgray">
     <div :for={{series, booklist} <- Enum.group_by(books, & &1.series)} class="mt-4 first:mt-0">
-      <h3 class="font-bold"><%= series %></h3>
+      <h3 class="font-bold">{series}</h3>
       <ol>
         <li :for={book <- booklist} id={"books-#{book.id}"} class={[book.read && "text-gray/60"]}>
           <span class={[book.read && "bg-blue-500", !book.read && "bg-red-500"]}>&nbsp;</span>
-          <%= book.episode %>
+          {book.episode}
           <.link patch={~p"/buecher/#{@list}/#{book}/edit"} title="Edit" class="group">
-            <%= book.title %>
+            {book.title}
             <.icon name="hero-pencil-square" class="hidden w-5 h-5 group-hover:inline-block" />
           </.link>
           <.icon :if={book.rating == -1} name="hero-hand-thumb-down" class="w-5 h-5" />
