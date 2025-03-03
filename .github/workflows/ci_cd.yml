@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 env:
-  OTP_VERSION: "26"
-  ELIXIR_VERSION: "1.17"
+  OTP_VERSION: "27"
+  ELIXIR_VERSION: "1.18"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
