@@ -12,8 +12,6 @@ defmodule Clay.Application do
       Clay.Repo,
       {DNSCluster, query: Application.get_env(:clay, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Clay.PubSub},
-      # Start the Finch HTTP client for sending emails
-      {Finch, name: Clay.Finch},
       # Start a worker by calling: Clay.Worker.start_link(arg)
       # {Clay.Worker, arg},
       # Start to serve requests, typically the last entry

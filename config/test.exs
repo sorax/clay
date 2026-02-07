@@ -1,8 +1,5 @@
 import Config
 
-# Only in tests, remove the complexity from the password hashing algorithm
-config :bcrypt_elixir, :log_rounds, 1
-
 # Configure your database
 #
 # The MIX_TEST_PARTITION environment variable can be used
@@ -20,7 +17,7 @@ config :clay, Clay.Repo,
 # you can enable the server option below.
 config :clay, ClayWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "f9teMpw8gjlNAjy9zaFZZKZr8yl1qdv+RVMFYnXa2qIt15o9JhplYoBjLq8fQCsw",
+  secret_key_base: "QaeR9PsN30RHmCiSuYtx7dP3yy3sfr5dhTe9APGq7o74dgnW/gTRJzzsT9kUJuSK",
   server: false
 
 # In test we don't send emails
@@ -38,3 +35,9 @@ config :phoenix, :plug_init_mode, :runtime
 # Enable helpful, but potentially expensive runtime checks
 config :phoenix_live_view,
   enable_expensive_runtime_checks: true
+
+# Sort query params output of verified routes for robust url comparisons
+config :phoenix,
+  sort_verified_routes_query_params: true
+
+config :phoenix_test, :endpoint, ClayWeb.Endpoint

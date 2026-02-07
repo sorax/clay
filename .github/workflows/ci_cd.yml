@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 env:
-  OTP_VERSION: "27"
-  ELIXIR_VERSION: "1.18"
+  OTP_VERSION: "28"
+  ELIXIR_VERSION: "1.19"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -75,6 +75,12 @@ jobs:
       - name: Check Formatting
         run: mix format --check-formatted
 
+      - name: Check Code Style
+        run: mix credo --strict
+
+      - name: Sobelow static analysis
+        run: mix sobelow -i Config.CSP,Config.HTTPS
+
       - name: Run Tests
         run: mix test
 
@@ -83,7 +89,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - build_test
-    # concurrency: deploy-group # optional: ensure only one action runs at a time
 
     steps:
       - name: Checkout Repository
