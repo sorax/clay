@@ -52,7 +52,7 @@ config :spark,
 config :clay,
   ecto_repos: [Clay.Repo],
   generators: [timestamp_type: :utc_datetime],
-  ash_domains: [Clay.Accounts],
+  ash_domains: [Clay.Media, Clay.Accounts],
   ash_authentication: [return_error_on_invalid_magic_link_token?: true]
 
 # Configure the endpoint
