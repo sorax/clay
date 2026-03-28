@@ -62,14 +62,6 @@ defmodule ClayWeb.CustomComponents do
           </ul>
         </nav>
       </div>
-      
-    <!--
-      <div class="max-w-xl">
-        <div class="flex justify-between items-center">
-          <ClayWeb.Layouts.theme_toggle />
-        </div>
-      </div>
-      -->
     </header>
     """
   end
@@ -78,7 +70,7 @@ defmodule ClayWeb.CustomComponents do
 
   def page_main(assigns) do
     ~H"""
-    <main class={["py-16 px-8", "md:ml-[35%]"]}>
+    <main class={["py-16 px-8 max-w-4xl", "md:ml-[35%]"]}>
       {render_slot(@inner_block)}
     </main>
     """
@@ -119,6 +111,9 @@ defmodule ClayWeb.CustomComponents do
           <li><.link href={~p"/impressum"}>Impressum</.link></li>
         </ul>
       </nav>
+      <div class="hidden flex justify-between items-center">
+        <ClayWeb.Layouts.theme_toggle />
+      </div>
     </footer>
     """
   end
