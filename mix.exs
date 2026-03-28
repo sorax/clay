@@ -41,10 +41,12 @@ defmodule Clay.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:ash_authentication_phoenix, "~> 2.0"},
       {:ash_phoenix, "~> 2.0"},
       {:ash_postgres, "~> 2.0"},
       {:ash, "~> 3.0"},
       {:bandit, "~> 1.5"},
+      {:bcrypt_elixir, "~> 3.0"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dns_cluster, "~> 0.2.0"},
       {:ecto_sql, "~> 3.13"},
@@ -68,6 +70,7 @@ defmodule Clay.MixProject do
       {:phoenix_live_view, "~> 1.1.0"},
       {:phoenix_test, "~> 0.9", only: :test, runtime: false},
       {:phoenix, "~> 1.8.5"},
+      {:picosat_elixir, "~> 0.2"},
       {:postgrex, ">= 0.0.0"},
       {:reply, "~> 1.1"},
       {:req, "~> 0.5"},

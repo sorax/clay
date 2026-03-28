@@ -15,7 +15,8 @@ defmodule Clay.Application do
       # Start a worker by calling: Clay.Worker.start_link(arg)
       # {Clay.Worker, arg},
       # Start to serve requests, typically the last entry
-      ClayWeb.Endpoint
+      ClayWeb.Endpoint,
+      {AshAuthentication.Supervisor, [otp_app: :clay]}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

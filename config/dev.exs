@@ -69,7 +69,7 @@ config :clay, ClayWeb.Endpoint,
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :clay, dev_routes: true
+config :clay, dev_routes: true, token_signing_secret: "cjrGF0eRRmSMg01/sZM/QVnkFetXGbEV"
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :default_formatter, format: "[$level] $message\n"
