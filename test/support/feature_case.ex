@@ -21,4 +21,28 @@ defmodule ClayWeb.FeatureCase do
 
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
+
+  def register_and_log_in_user(%{conn: conn} = context) do
+    email = "user@example.com"
+    password = "password"
+    {:ok, hashed_password} = AshAuthentication.BcryptProvider.hash(password)
+
+    Ash.Seed.seed!(Clay.Accounts.User, %{
+      email: email,
+      hashed_password: hashed_password
+    })
+
+    # Replace `:password` with the appropriate strategy for your application.
+    strategy = AshAuthentication.Info.strategy!(Clay.Accounts.User, :password)
+
+    {:ok, user} =
+      AshAuthentication.Strategy.action(strategy, :sign_in, %{email: email, password: password})
+
+    new_conn =
+      conn
+      |> Phoenix.ConnTest.init_test_session(%{})
+      |> AshAuthentication.Plug.Helpers.store_in_session(user)
+
+    %{context | conn: new_conn}
+  end
 end

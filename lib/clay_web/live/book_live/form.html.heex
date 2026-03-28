@@ -1,0 +1,19 @@
+<Layouts.app flash={@flash}>
+  <.header>
+    {@page_title}
+    <:subtitle>Use this form to manage book records in your database.</:subtitle>
+  </.header>
+
+  <.form for={@form} id="book-form" phx-change="validate" phx-submit="save">
+    <.input field={@form[:list_id]} type="select" label="List" options={[]} />
+    <.input field={@form[:author]} type="text" label="Author" />
+    <.input field={@form[:series]} type="text" label="Series" />
+    <.input field={@form[:episode]} type="number" label="Episode" />
+    <.input field={@form[:title]} type="text" label="Title" />
+    <.input field={@form[:read]} type="checkbox" label="Read" />
+    <.input field={@form[:rating]} type="number" label="Rating" />
+
+    <.button phx-disable-with="Saving..." variant="primary">Save Book</.button>
+    <.button navigate={return_path(@return_to, @book)}>Cancel</.button>
+  </.form>
+</Layouts.app>
