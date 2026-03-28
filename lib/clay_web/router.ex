@@ -41,6 +41,13 @@ defmodule ClayWeb.Router do
       #
       # If an authenticated user must *not* be present:
       # on_mount {ClayWeb.LiveUserAuth, :live_no_user}
+
+      live "/buecher", BookLive.Index, :index
+      live "/buecher/new", BookLive.Form, :new
+      live "/buecher/:id/edit", BookLive.Form, :edit
+
+      live "/buecher/:id", BookLive.Show, :show
+      live "/buecher/:id/show/edit", BookLive.Show, :edit
     end
   end
 
