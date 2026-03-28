@@ -9,5 +9,13 @@ defmodule Clay.Media do
       define :update_book, action: :update
       define :destroy_book, action: :destroy
     end
+
+    resource Clay.Media.List do
+      define :create_list, action: :create
+      define :read_lists, action: :read
+      define :get_list_by_id, action: :read, get_by: :id
+      define :update_list, action: :update
+      define :destroy_list, action: :destroy
+    end
   end
 end
