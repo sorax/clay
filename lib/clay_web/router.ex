@@ -30,24 +30,30 @@ defmodule ClayWeb.Router do
   scope "/", ClayWeb do
     pipe_through :browser
 
-    ash_authentication_live_session :authenticated_routes do
-      # in each liveview, add one of the following at the top of the module:
-      #
-      # If an authenticated user must be present:
-      # on_mount {ClayWeb.LiveUserAuth, :live_user_required}
-      #
-      # If an authenticated user *may* be present:
-      # on_mount {ClayWeb.LiveUserAuth, :live_user_optional}
-      #
-      # If an authenticated user must *not* be present:
-      # on_mount {ClayWeb.LiveUserAuth, :live_no_user}
+    # ash_authentication_live_session :authenticated_routes do
+    #   in each liveview, add one of the following at the top of the module:
+    #
+    #   If an authenticated user must be present:
+    #   on_mount {ClayWeb.LiveUserAuth, :live_user_required}
+    #
+    #   If an authenticated user *may* be present:
+    #   on_mount {ClayWeb.LiveUserAuth, :live_user_optional}
+    #
+    #   If an authenticated user must *not* be present:
+    #   on_mount {ClayWeb.LiveUserAuth, :live_no_user}
+    # end
 
-      live "/buecher", BookLive.Index, :index
-      live "/buecher/new", BookLive.Form, :new
-      live "/buecher/:id/edit", BookLive.Form, :edit
+    ash_authentication_live_session :authenticated_routes,
+      on_mount: [{ClayWeb.LiveUserAuth, :live_user_required}] do
+      live "/medien", MediaLive.Index, :index
 
-      live "/buecher/:id", BookLive.Show, :show
-      live "/buecher/:id/show/edit", BookLive.Show, :edit
+      live "/medien/neu", MediaLive.ListForm, :new
+      live "/medien/:list_id/bearbeiten", MediaLive.ListForm, :edit
+
+      live "/medien/:list_id", MediaLive.Show, :show
+
+      live "/medien/:list_id/neu", MediaLive.BookForm, :new
+      live "/medien/:list_id/:book_id/bearbeiten", MediaLive.BookForm, :edit
     end
   end
 
@@ -58,6 +64,7 @@ defmodule ClayWeb.Router do
 
     get "/datenschutz", PageController, :privacy
     get "/impressum", PageController, :imprint
+
     auth_routes AuthController, Clay.Accounts.User, path: "/auth"
     sign_out_route AuthController
 

@@ -6,6 +6,8 @@ defmodule ClayWeb.CustomComponents do
   use Phoenix.Component
   use ClayWeb, :verified_routes
 
+  import ClayWeb.CoreComponents, only: [button: 1, icon: 1]
+
   @doc """
   Renders a meta tag on `@content` updates.
 
@@ -48,7 +50,7 @@ defmodule ClayWeb.CustomComponents do
   def page_header(assigns) do
     ~H"""
     <header class={[
-      "text-center",
+      "text-white text-center",
       "bg-page bg-center",
       "pt-2 md:pt-32",
       "md:fixed md:w-[35%] md:h-full"
@@ -58,9 +60,12 @@ defmodule ClayWeb.CustomComponents do
         <p class="text-sm">Frische Ideen aus eigenem Anbau</p>
         <nav class="p-4 md:mt-4">
           <ul>
-            <li><.link href="/buecher">Bücherliste</.link></li>
+            <li><.link href="/medien">Medien</.link></li>
           </ul>
         </nav>
+        <div class="flex justify-between items-center">
+          <ClayWeb.Layouts.theme_toggle />
+        </div>
       </div>
     </header>
     """
@@ -79,6 +84,7 @@ defmodule ClayWeb.CustomComponents do
   def page_footer(assigns) do
     ~H"""
     <footer class={[
+      "text-white",
       "max-md:bg-page max-md:bg-bottom",
       "py-2 px-4",
       "md:fixed md:w-[35%] md:bottom-0"
@@ -105,16 +111,117 @@ defmodule ClayWeb.CustomComponents do
           </svg>
         </.link>
       </div>
-      <nav class="mt-2">
+      <nav class="text-white mt-2">
         <ul class="flex justify-center gap-4 md:justify-end text-xs">
           <li><.link href={~p"/datenschutz"}>Datenschutz</.link></li>
           <li><.link href={~p"/impressum"}>Impressum</.link></li>
         </ul>
       </nav>
-      <div class="hidden flex justify-between items-center">
-        <ClayWeb.Layouts.theme_toggle />
-      </div>
     </footer>
+    """
+  end
+
+  @doc """
+  Renders a title.
+  """
+  attr :back, :string, default: nil
+
+  slot :inner_block, required: true
+  slot :subtitle
+  slot :actions
+
+  def title(assigns) do
+    ~H"""
+    <header class={["grid grid-cols-[1fr_auto_1fr] items-center gap-6", "pb-4"]}>
+      <div class="justify-self-start">
+        <.button :if={@back} variant="primary" navigate={@back}>
+          <.icon name="hero-chevron-left" />
+        </.button>
+      </div>
+      <div class="text-center">
+        <h1 class="text-lg font-semibold leading-8">
+          {render_slot(@inner_block)}
+        </h1>
+        <p :if={@subtitle != []} class="text-sm text-base-content/70">
+          {render_slot(@subtitle)}
+        </p>
+      </div>
+      <div class="justify-self-end">{render_slot(@actions)}</div>
+    </header>
+    """
+  end
+
+  @doc """
+  Renders a book_list
+
+  ## Examples
+
+      <.book_list id="books" list_id={@list.id} books={@streams.books} />
+  """
+  attr :id, :string, required: true
+  attr :list_id, :string, required: true
+  attr :books, :list, required: true
+
+  def book_list(assigns) do
+    ~H"""
+    <div id={@id} phx-update="stream" phx-hook=".Book">
+      <.book :for={{id, book} <- @books} list_id={@list_id} id={id} book={book} />
+    </div>
+    <script :type={Phoenix.LiveView.ColocatedHook} name=".Book">
+      export default {
+        mounted() {
+          const authors = this.el.querySelectorAll("h2")
+          const series = this.el.querySelectorAll("h3")
+
+          this.hideDuplicates(authors)
+          this.hideDuplicates(series)
+        },
+        updated() {
+          const authors = this.el.querySelectorAll("h2")
+          const series = this.el.querySelectorAll("h3")
+
+          this.hideDuplicates(authors)
+          this.hideDuplicates(series)
+        },
+        hideDuplicates(nodes) {
+          let lastContent
+
+          nodes.forEach((node) => {
+            if (lastContent == node.textContent) {
+              node.classList.add("hidden")
+            } else {
+              node.classList.remove("hidden")
+              lastContent = node.textContent
+            }
+          })
+        }
+      }
+    </script>
+    """
+  end
+
+  attr :list_id, :string, required: true
+  attr :id, :string, required: true
+  attr :book, :any, required: true
+
+  defp book(assigns) do
+    ~H"""
+    <div id={@id}>
+      <h2 class="mt-9 text-2xl">{@book.author}</h2>
+      <h3 class="font-bold mt-2">{@book.series}</h3>
+      <div class={[@book.read && "text-gray"]}>
+        <span class={[@book.read && "bg-green-600", !@book.read && "bg-orange-600"]}>&nbsp;</span>
+        <.link patch={~p"/medien/#{@list_id}/#{@book}/bearbeiten"} title="Bearbeiten">
+          {@book.episode} {@book.title}
+          <.icon
+            :for={_ <- 1..(@book.rating || 1)}
+            :if={@book.rating}
+            name="hero-star"
+            class="text-gray size-3"
+          />
+        </.link>
+      </div>
+    </div>
     """
   end
 end

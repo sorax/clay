@@ -3,6 +3,7 @@ defmodule ClayWeb.FeatureCase do
 
   use ExUnit.CaseTemplate
 
+  alias AshAuthentication.Plug.Helpers
   alias Ecto.Adapters.SQL.Sandbox
 
   using do
@@ -41,8 +42,9 @@ defmodule ClayWeb.FeatureCase do
     new_conn =
       conn
       |> Phoenix.ConnTest.init_test_session(%{})
-      |> AshAuthentication.Plug.Helpers.store_in_session(user)
+      |> Helpers.store_in_session(user)
 
     %{context | conn: new_conn}
+    |> Map.put(:user, user)
   end
 end

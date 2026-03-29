@@ -1,4 +1,6 @@
 defmodule Clay.Accounts.Token do
+  @moduledoc false
+
   use Ash.Resource,
     otp_app: :clay,
     domain: Clay.Accounts,

@@ -21,7 +21,8 @@ defmodule Clay.Repo.Migrations.CreateList do
             type: :uuid,
             prefix: "public",
             on_delete: :delete_all
-          ), null: false
+          ),
+          null: false
     end
 
     create index(:books, [:list_id])
