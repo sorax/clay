@@ -9,11 +9,9 @@ defmodule Extension.XMLixir do
   def parse({:error, data}), do: {:error, data}
 
   def parse(xml) when is_binary(xml) do
-    try do
-      {:ok, parse!(xml)}
-    catch
-      :exit, {:fatal, error} -> {:error, error}
-    end
+    {:ok, parse!(xml)}
+  catch
+    :exit, {:fatal, error} -> {:error, error}
   end
 
   def parse!(xml) when is_binary(xml) do
@@ -52,7 +50,7 @@ defmodule Extension.XMLixir do
 
   defp parse_value(value), do: value |> to_string() |> String.trim()
 
-  def build() do
+  def build do
     ~s(<?xml version="1.0" encoding="UTF-8"?>)
   end
 end

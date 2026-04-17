@@ -1,0 +1,53 @@
+<Layouts.app flash={@flash}>
+  <.title back={~p"/medien/#{@list_id}"}>
+    {@page_title}
+  </.title>
+
+  <.form :let={f} for={@form} id="book-form" phx-change="validate" phx-submit="save">
+    <.input field={f[:author]} type="text" label="Autor" list="authors" />
+    <datalist id="authors">
+      <option :for={author <- @authors} value={author}>{author}</option>
+    </datalist>
+    <.input field={f[:series]} type="text" label="Buchreihe" list="series" />
+    <datalist id="series">
+      <option :for={series <- @series} value={series}>{series}</option>
+    </datalist>
+    <.input field={f[:episode]} type="number" label="Teil" />
+    <.input field={f[:title]} type="text" label="Titel" />
+    <div class="flex gap-2">
+      <.input field={f[:read]} type="checkbox" label="Gelesen" />
+      <div class="rating ml-8">
+        <input
+          type="radio"
+          name={f[:rating].name}
+          class="mask mask-no-symbol"
+          value=""
+          checked={f[:rating].value == nil}
+        />
+      </div>
+      <div class="rating">
+        <input
+          :for={value <- [1, 2, 3, 4, 5]}
+          type="radio"
+          name={f[:rating].name}
+          class="mask mask-star-2"
+          value={value}
+          checked={f[:rating].value == value}
+        />
+      </div>
+    </div>
+    <div class="flex justify-between">
+      <.button
+        phx-click="delete"
+        data-confirm="Wirklich löschen?"
+        title="Löschen"
+      >
+        <.icon name="hero-trash" />
+      </.button>
+
+      <.button phx-disable-with="Wird gespeichert..." variant="primary">
+        Speichern
+      </.button>
+    </div>
+  </.form>
+</Layouts.app>

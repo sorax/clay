@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="de" class="[scrollbar-gutter:stable]">
+<html lang="de">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,15 +8,34 @@
     <.live_meta name="apple-mobile-web-app-title" content={assigns[:app_title]} />
     <.live_meta name="robots" content={assigns[:robots] || "noindex,nofollow"} />
     <.live_meta name="description" content={assigns[:page_description]} />
-    <.live_title suffix=" | hausgedacht">
-      {assigns[:page_title] || "Frische Ideen aus eigenem Anbau"}
+    <.live_title default="hausgedacht | Frische Ideen aus eigenem Anbau" suffix=" | hausgedacht">
+      {assigns[:page_title]}
     </.live_title>
     <.live_link rel="canonical" href={assigns[:canonical]} />
-    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
-    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
+    <link phx-track-static rel="stylesheet" href={~p"/assets/css/app.css"} />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/js/app.js"}>
+    </script>
+    <script>
+      (() => {
+        const setTheme = (theme) => {
+          if (theme === "system") {
+            localStorage.removeItem("phx:theme");
+            document.documentElement.removeAttribute("data-theme");
+          } else {
+            localStorage.setItem("phx:theme", theme);
+            document.documentElement.setAttribute("data-theme", theme);
+          }
+        };
+        if (!document.documentElement.hasAttribute("data-theme")) {
+          setTheme(localStorage.getItem("phx:theme") || "system");
+        }
+        window.addEventListener("storage", (e) => e.key === "phx:theme" && setTheme(e.newValue || "system"));
+
+        window.addEventListener("phx:set-theme", (e) => setTheme(e.target.dataset.phxTheme));
+      })();
     </script>
   </head>
-  <body class="antialiased bg-white">
+  <body>
     {@inner_content}
   </body>
 </html>

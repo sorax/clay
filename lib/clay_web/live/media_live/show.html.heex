@@ -1,0 +1,27 @@
+<Layouts.app flash={@flash}>
+  <.title back={~p"/medien"}>
+    {@list.title}
+    <:actions>
+      <.button variant="primary" navigate={~p"/medien/#{@list}/neu"}>
+        <.icon name="hero-plus" /> Neu
+      </.button>
+    </:actions>
+  </.title>
+
+  <.form :let={f} for={@filter} id="filter" phx-change="set_filter" phx-submit="set_filter">
+    <div class="flex items-center gap-4">
+      <div class="flex-1">
+        <.input
+          field={f[:search]}
+          type="search"
+          placeholder="Suchbegriff"
+          phx-debounce="400"
+        />
+      </div>
+      <.input field={f[:read]} type="checkbox" class="toggle toggle-primary" label="Gelesen" />
+      <.input field={f[:unread]} type="checkbox" class="toggle toggle-primary" label="Ungelesen" />
+    </div>
+  </.form>
+
+  <.book_list id="books" list_id={@list.id} books={@streams.books} />
+</Layouts.app>

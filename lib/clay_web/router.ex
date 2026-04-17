@@ -1,7 +1,9 @@
 defmodule ClayWeb.Router do
   use ClayWeb, :router
 
-  import ClayWeb.UserAuth
+  use AshAuthentication.Phoenix.Router
+
+  import AshAuthentication.Plug.Helpers
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -10,11 +12,49 @@ defmodule ClayWeb.Router do
     plug :put_root_layout, html: {ClayWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :fetch_current_user
+    plug :load_from_session
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+
+    plug AshAuthentication.Strategy.ApiKey.Plug,
+      resource: Clay.Accounts.User,
+      # if you want to require an api key to be supplied, set `required?` to true
+      required?: false
+
+    plug :load_from_bearer
+    plug :set_actor, :user
+  end
+
+  scope "/", ClayWeb do
+    pipe_through :browser
+
+    # ash_authentication_live_session :authenticated_routes do
+    #   in each liveview, add one of the following at the top of the module:
+    #
+    #   If an authenticated user must be present:
+    #   on_mount {ClayWeb.LiveUserAuth, :live_user_required}
+    #
+    #   If an authenticated user *may* be present:
+    #   on_mount {ClayWeb.LiveUserAuth, :live_user_optional}
+    #
+    #   If an authenticated user must *not* be present:
+    #   on_mount {ClayWeb.LiveUserAuth, :live_no_user}
+    # end
+
+    ash_authentication_live_session :authenticated_routes,
+      on_mount: [{ClayWeb.LiveUserAuth, :live_user_required}] do
+      live "/medien", MediaLive.Index, :index
+
+      live "/medien/neu", MediaLive.ListForm, :new
+      live "/medien/:list_id/bearbeiten", MediaLive.ListForm, :edit
+
+      live "/medien/:list_id", MediaLive.Show, :show
+
+      live "/medien/:list_id/neu", MediaLive.BookForm, :new
+      live "/medien/:list_id/:book_id/bearbeiten", MediaLive.BookForm, :edit
+    end
   end
 
   scope "/", ClayWeb do
@@ -24,6 +64,37 @@ defmodule ClayWeb.Router do
 
     get "/datenschutz", PageController, :privacy
     get "/impressum", PageController, :imprint
+
+    auth_routes AuthController, Clay.Accounts.User, path: "/auth"
+    sign_out_route AuthController
+
+    # Remove these if you'd like to use your own authentication views
+    sign_in_route register_path: "/register",
+                  reset_path: "/reset",
+                  auth_routes_prefix: "/auth",
+                  on_mount: [{ClayWeb.LiveUserAuth, :live_no_user}],
+                  overrides: [
+                    ClayWeb.AuthOverrides,
+                    Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI
+                  ]
+
+    # Remove this if you do not want to use the reset password feature
+    reset_route auth_routes_prefix: "/auth",
+                overrides: [
+                  ClayWeb.AuthOverrides,
+                  Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI
+                ]
+
+    # Remove this if you do not use the confirmation strategy
+    confirm_route Clay.Accounts.User, :confirm_new_user,
+      auth_routes_prefix: "/auth",
+      overrides: [ClayWeb.AuthOverrides, Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI]
+
+    # Remove this if you do not use the magic link strategy.
+    magic_sign_in_route(Clay.Accounts.User, :magic_link,
+      auth_routes_prefix: "/auth",
+      overrides: [ClayWeb.AuthOverrides, Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI]
+    )
   end
 
   # Other scopes may use custom stacks.
@@ -45,53 +116,6 @@ defmodule ClayWeb.Router do
 
       live_dashboard "/dashboard", metrics: ClayWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
-    end
-  end
-
-  ## Authentication routes
-
-  scope "/", ClayWeb do
-    pipe_through [:browser, :redirect_if_user_is_authenticated]
-
-    live_session :redirect_if_user_is_authenticated,
-      on_mount: [{ClayWeb.UserAuth, :redirect_if_user_is_authenticated}] do
-      live "/users/register", UserRegistrationLive, :new
-      live "/users/log_in", UserLoginLive, :new
-      live "/users/reset_password", UserForgotPasswordLive, :new
-      live "/users/reset_password/:token", UserResetPasswordLive, :edit
-    end
-
-    post "/users/log_in", UserSessionController, :create
-  end
-
-  scope "/", ClayWeb do
-    pipe_through [:browser, :require_authenticated_user]
-
-    live_session :require_authenticated_user,
-      on_mount: [{ClayWeb.UserAuth, :ensure_authenticated}] do
-      live "/users/settings", UserSettingsLive, :edit
-      live "/users/settings/confirm_email/:token", UserSettingsLive, :confirm_email
-
-      live "/buecher", ListLive.Index, :index
-      live "/buecher/new", ListLive.Index, :new
-      live "/buecher/:id/import", ListLive.Index, :import
-      live "/buecher/:id/edit", ListLive.Index, :edit
-
-      live "/buecher/:list", BookLive.Index, :index
-      live "/buecher/:list/new", BookLive.Index, :new
-      live "/buecher/:list/:id/edit", BookLive.Index, :edit
-    end
-  end
-
-  scope "/", ClayWeb do
-    pipe_through [:browser]
-
-    delete "/users/log_out", UserSessionController, :delete
-
-    live_session :current_user,
-      on_mount: [{ClayWeb.UserAuth, :mount_current_user}] do
-      live "/users/confirm/:token", UserConfirmationLive, :edit
-      live "/users/confirm", UserConfirmationInstructionsLive, :new
     end
   end
 end
