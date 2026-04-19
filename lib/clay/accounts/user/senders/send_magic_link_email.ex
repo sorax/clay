@@ -21,7 +21,7 @@ defmodule Clay.Accounts.User.Senders.SendMagicLinkEmail do
       end
 
     new()
-    |> from({"noreply", "noreply@example.com"})
+    |> from({"hausgedacht", "info@hausgedacht.de"})
     |> to(to_string(email))
     |> subject("Your login link")
     |> html_body(body(token: token, email: email))

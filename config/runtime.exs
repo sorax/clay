@@ -123,15 +123,31 @@ if config_env() == :prod do
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
 
+  smtp_server = System.get_env("SMTP_SERVER")
+
   config :clay, Clay.Mailer,
     adapter: Swoosh.Adapters.SMTP,
-    relay: System.get_env("SMTP_SERVER"),
+    relay: smtp_server,
     username: System.get_env("SMTP_USERNAME"),
     password: System.get_env("SMTP_PASSWORD"),
     ssl: false,
     tls: :always,
     auth: :always,
-    port: System.get_env("SMTP_PORT"),
+    port: String.to_integer(System.get_env("SMTP_PORT")),
     retries: 2,
-    no_mx_lookups: false
+    no_mx_lookups: false,
+    tls_options: [
+      versions: [:"tlsv1.2", :"tlsv1.3"],
+      verify: :verify_peer,
+      cacerts: :public_key.cacerts_get(),
+      server_name_indication: String.to_charlist(smtp_server),
+      depth: 99
+    ]
 end
+
+config :clay,
+  services: %{
+    stadtbibliothek_rostock: [
+      base_url: "https://katalog.stadtbibliothek-rostock.de"
+    ]
+  }

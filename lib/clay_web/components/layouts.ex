@@ -27,6 +27,8 @@ defmodule ClayWeb.Layouts do
   """
   attr :flash, :map, required: true, doc: "the map of flash messages"
 
+  attr :current_user, :map, default: nil
+
   attr :current_scope, :map,
     default: nil,
     doc: "the current [scope](https://hexdocs.pm/phoenix/scopes.html)"
@@ -39,7 +41,7 @@ defmodule ClayWeb.Layouts do
     <.page_main>
       {render_slot(@inner_block)}
     </.page_main>
-    <.page_footer />
+    <.page_footer current_user={@current_user} />
     <.flash_group flash={@flash} />
     """
   end

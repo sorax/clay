@@ -59,13 +59,14 @@ defmodule ClayWeb.CustomComponents do
         <.link href="/" class="text-4xl">hausgedacht</.link>
         <p class="text-sm">Frische Ideen aus eigenem Anbau</p>
         <nav class="p-4 md:mt-4">
-          <ul>
+          <ul class={[
+            "flex gap-2 justify-center md:flex-col",
+            "max-md:[&>li]:before:content-['·'] max-md:[&>li]:before:mr-2 max-md:[&>li:first-child]:before:hidden"
+          ]}>
+            <li><.link href="/">Start</.link></li>
             <li><.link href="/medien">Medien</.link></li>
           </ul>
         </nav>
-        <div class="flex justify-between items-center">
-          <ClayWeb.Layouts.theme_toggle />
-        </div>
       </div>
     </header>
     """
@@ -81,9 +82,12 @@ defmodule ClayWeb.CustomComponents do
     """
   end
 
+  attr :current_user, :any, required: true
+
   def page_footer(assigns) do
     ~H"""
     <footer class={[
+      "relative",
       "text-white",
       "max-md:bg-page max-md:bg-bottom",
       "py-2 px-4",
@@ -113,10 +117,19 @@ defmodule ClayWeb.CustomComponents do
       </div>
       <nav class="text-white mt-2">
         <ul class="flex justify-center gap-4 md:justify-end text-xs">
+          <li :if={!@current_user}><.link href={~p"/sign-in"}>Login</.link></li>
+          <li :if={@current_user}><.link href={~p"/sign-out"}>Logout</.link></li>
           <li><.link href={~p"/datenschutz"}>Datenschutz</.link></li>
           <li><.link href={~p"/impressum"}>Impressum</.link></li>
         </ul>
       </nav>
+      <div class={[
+        "absolute flex justify-between items-center",
+        "bottom-4 max-md:right-4",
+        "md:left-4 md:bottom-8"
+      ]}>
+        <ClayWeb.Layouts.theme_toggle />
+      </div>
     </footer>
     """
   end

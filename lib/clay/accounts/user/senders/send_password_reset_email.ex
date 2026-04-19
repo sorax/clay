@@ -13,7 +13,7 @@ defmodule Clay.Accounts.User.Senders.SendPasswordResetEmail do
   @impl true
   def send(user, token, _) do
     new()
-    |> from({"noreply", "noreply@example.com"})
+    |> from({"hausgedacht", "info@hausgedacht.de"})
     |> to(to_string(user.email))
     |> subject("Reset your password")
     |> html_body(body(token: token))

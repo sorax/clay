@@ -13,7 +13,7 @@ defmodule Clay.Accounts.User.Senders.SendNewUserConfirmationEmail do
   @impl true
   def send(user, token, _) do
     new()
-    |> from({"noreply", "noreply@example.com"})
+    |> from({"hausgedacht", "info@hausgedacht.de"})
     |> to(to_string(user.email))
     |> subject("Confirm your email address")
     |> html_body(body(token: token))
