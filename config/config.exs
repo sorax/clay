@@ -106,6 +106,14 @@ config :phoenix, :json_library, Jason
 
 config :gettext, :default_locale, "de"
 
+config :clay, Oban,
+  engine: Oban.Engines.Basic,
+  notifier: Oban.Notifiers.Postgres,
+  queues: [default: 10],
+  repo: Clay.Repo,
+  plugins: [{Oban.Plugins.Cron, []}]
+
+config :ash_oban, pro?: false
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

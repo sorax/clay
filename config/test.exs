@@ -44,3 +44,5 @@ config :phoenix,
   sort_verified_routes_query_params: true
 
 config :phoenix_test, :endpoint, ClayWeb.Endpoint
+
+config :clay, Oban, testing: :manual

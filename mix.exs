@@ -42,6 +42,7 @@ defmodule Clay.MixProject do
   defp deps do
     [
       {:ash_authentication_phoenix, "~> 2.0"},
+      {:ash_oban, "~> 0.8"},
       {:ash_phoenix, "~> 2.0"},
       {:ash_postgres, "~> 2.0"},
       {:ash, "~> 3.0"},
@@ -65,6 +66,7 @@ defmodule Clay.MixProject do
       {:lazy_html, ">= 0.1.0"},
       {:memoize, "~> 1.4"},
       {:mix_test_interactive, "~> 5.1", only: :dev, runtime: false},
+      {:oban, "~> 2.0"},
       {:phoenix_ecto, "~> 4.5"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_dashboard, "~> 0.8.3"},

@@ -10,6 +10,11 @@ defmodule Clay.Application do
     children = [
       ClayWeb.Telemetry,
       Clay.Repo,
+      {Oban,
+       AshOban.config(
+         Application.fetch_env!(:clay, :ash_domains),
+         Application.fetch_env!(:clay, Oban)
+       )},
       {DNSCluster, query: Application.get_env(:clay, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Clay.PubSub},
       # Start a worker by calling: Clay.Worker.start_link(arg)
