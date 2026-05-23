@@ -34,7 +34,7 @@ defmodule ClayWeb.MediaLiveTest do
       |> fill_in("Titel", with: "Dolor Sit")
       |> click_button("Speichern")
       |> assert_path(~p"/medien")
-      |> assert_has("#flash-group", text: "List created successfully")
+      |> assert_has("#flash-group", text: "Liste gespeichert")
       |> assert_has("#lists td", text: "Dolor Sit")
     end
 
@@ -50,7 +50,7 @@ defmodule ClayWeb.MediaLiveTest do
       |> fill_in("Titel", with: "Dolor Sit")
       |> click_button("Speichern")
       |> assert_path(~p"/medien")
-      |> assert_has("#flash-group", text: "List updated successfully")
+      |> assert_has("#flash-group", text: "Liste gespeichert")
       |> assert_has("#lists-#{list.id}", text: "Dolor Sit")
     end
 

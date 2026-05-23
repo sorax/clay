@@ -10,11 +10,13 @@ defmodule Clay.Application do
     children = [
       ClayWeb.Telemetry,
       Clay.Repo,
+      Clay.Vault,
       {Oban,
        AshOban.config(
          Application.fetch_env!(:clay, :ash_domains),
          Application.fetch_env!(:clay, Oban)
        )},
+      {Task, &schedule_boot_sync/0},
       {DNSCluster, query: Application.get_env(:clay, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: Clay.PubSub},
       # Start a worker by calling: Clay.Worker.start_link(arg)
@@ -36,5 +38,11 @@ defmodule Clay.Application do
   def config_change(changed, _new, removed) do
     ClayWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp schedule_boot_sync do
+    if Application.fetch_env!(:clay, :run_boot_sync?) do
+      AshOban.schedule(Clay.Media.List, :sync_books)
+    end
   end
 end

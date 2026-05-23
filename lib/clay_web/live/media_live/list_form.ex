@@ -3,6 +3,7 @@ defmodule ClayWeb.MediaLive.ListForm do
 
   alias AshPhoenix.Form
   alias Clay.Media
+  alias Clay.Media.Service
 
   @impl true
   def mount(params, _session, socket) do
@@ -27,7 +28,7 @@ defmodule ClayWeb.MediaLive.ListForm do
     case Form.submit(socket.assigns.form, params: list_params) do
       {:ok, _list} ->
         socket
-        |> put_flash(:info, "List #{socket.assigns.form.source.type}d successfully")
+        |> put_flash(:info, "Liste gespeichert")
         |> push_navigate(to: ~p"/medien")
         |> noreply()
 
@@ -36,13 +37,25 @@ defmodule ClayWeb.MediaLive.ListForm do
     end
   end
 
+  def handle_event("add_credential", _params, socket) do
+    form = Form.add_form(socket.assigns.form, [:credentials])
+
+    socket |> assign(form: form) |> noreply()
+  end
+
+  def handle_event("remove_credential", %{"path" => path}, socket) do
+    form = Form.remove_form(socket.assigns.form, path)
+
+    socket |> assign(form: form) |> noreply()
+  end
+
   defp get_form(nil, actor) do
     Media.form_to_create_list(as: "list", actor: actor)
   end
 
   defp get_form(id, actor) do
     id
-    |> Media.get_list_by_id!(actor: actor)
+    |> Media.get_list_by_id!(load: [credentials: [:username, :password]], actor: actor)
     |> Media.form_to_update_list(as: "list", actor: actor)
   end
 end

@@ -20,6 +20,7 @@ defmodule Clay.Media do
 
     resource Clay.Media.Book do
       define :create_book, action: :create
+      define :upsert_book, action: :upsert_book
       define :read_books, action: :read
       define :get_book_by_id, action: :read, get_by: :id
       define :update_book, action: :update

@@ -5,5 +5,5 @@ defmodule Clay.Services do
 
   alias Clay.Services.StadtbibliothekRostock
 
-  defdelegate fetch_loans(), to: StadtbibliothekRostock, as: :fetch_loans
+  defdelegate fetch_loans(credential), to: StadtbibliothekRostock, as: :fetch_loans
 end

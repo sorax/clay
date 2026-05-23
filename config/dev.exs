@@ -30,6 +30,13 @@ config :clay, ClayWeb.Endpoint,
     tailwind: {Tailwind, :install_and_run, [:clay, ~w(--watch)]}
   ]
 
+config :clay, Clay.Vault,
+  ciphers: [
+    default:
+      {Cloak.Ciphers.AES.GCM,
+       tag: "AES.GCM.V1", key: Base.decode64!("oQRGldjsxHt4t4yGBsVUbIq8oyIqUplsshkpQvUDhWc=")}
+  ]
+
 # ## SSL Support
 #
 # In order to use HTTPS in development, a self-signed

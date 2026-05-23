@@ -6,6 +6,36 @@
   <.form :let={f} for={@form} id="list-form" phx-change="validate" phx-submit="save">
     <.input field={f[:title]} type="text" label="Titel" />
 
+    <.inputs_for :let={cf} field={f[:credentials]}>
+      <div class="mt-2 space-y-2 rounded border border-base-300 p-3">
+        <.input
+          field={cf[:service]}
+          type="select"
+          label="Dienst"
+          options={AshPhoenix.AshEnum.options_for_select(Service)}
+          prompt="Bitte wählen"
+        />
+        <.input field={cf[:username]} type="text" label="Benutzername" />
+        <.input field={cf[:password]} type="password" label="Passwort" />
+        <button
+          type="button"
+          phx-click="remove_credential"
+          phx-value-path={cf.name}
+          class="text-sm text-red-600 hover:underline"
+        >
+          Entfernen
+        </button>
+      </div>
+    </.inputs_for>
+
+    <button
+      type="button"
+      phx-click="add_credential"
+      class="mt-2 text-sm text-primary hover:underline"
+    >
+      Zugangsdaten hinzufügen
+    </button>
+
     <div class="flex justify-between">
       <span></span>
       <.button phx-disable-with="Wird gespeichert..." variant="primary">Speichern</.button>
