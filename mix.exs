@@ -42,12 +42,14 @@ defmodule Clay.MixProject do
   defp deps do
     [
       {:ash_authentication_phoenix, "~> 2.0"},
+      {:ash_cloak, "~> 0.2"},
       {:ash_oban, "~> 0.8"},
       {:ash_phoenix, "~> 2.0"},
       {:ash_postgres, "~> 2.0"},
       {:ash, "~> 3.0"},
       {:bandit, "~> 1.5"},
       {:bcrypt_elixir, "~> 3.0"},
+      {:cloak, "~> 1.1"},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
       {:dns_cluster, "~> 0.2.0"},
       {:ecto_sql, "~> 3.13"},
