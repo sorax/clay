@@ -54,6 +54,7 @@ defmodule Clay.MixProject do
       {:dns_cluster, "~> 0.2.0"},
       {:ecto_sql, "~> 3.13"},
       {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
+      {:faker, "~> 0.19.0-alpha.1", only: :test},
       {:gen_smtp, "~> 1.3"},
       {:gettext, "~> 1.0"},
       {:heroicons,
