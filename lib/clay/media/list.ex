@@ -53,7 +53,7 @@ defmodule Clay.Media.List do
       require_atomic? false
       accept []
 
-      change after_action(&enqueue_service_workers/2)
+      change after_action(&enqueue_service_workers/3)
     end
   end
 
@@ -94,7 +94,7 @@ defmodule Clay.Media.List do
     end
   end
 
-  defp enqueue_service_workers(_changeset, list) do
+  defp enqueue_service_workers(_changeset, list, _context) do
     list.credentials
     |> Enum.with_index()
     |> Enum.map(fn {_credential, index} ->
