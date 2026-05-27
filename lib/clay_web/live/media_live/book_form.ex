@@ -34,7 +34,7 @@ defmodule ClayWeb.MediaLive.BookForm do
     case AshPhoenix.Form.submit(socket.assigns.form, params: book_params) do
       {:ok, _book} ->
         socket
-        |> put_flash(:info, "Book #{socket.assigns.form.source.type}d successfully")
+        |> put_flash(:info, "Buch gespeichert")
         |> push_navigate(to: ~p"/medien/#{socket.assigns.list_id}")
         |> noreply()
 
