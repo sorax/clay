@@ -73,6 +73,18 @@ if config_env() == :prod do
       System.get_env("TOKEN_SIGNING_SECRET") ||
         raise("Missing environment variable `TOKEN_SIGNING_SECRET`!")
 
+  cloak_key =
+    System.get_env("CLOAK_KEY") ||
+      raise """
+      environment variable CLOAK_KEY is missing.
+      Generate one with: 32 |> :crypto.strong_rand_bytes() |> Base.encode64()
+      """
+
+  config :clay, Clay.Vault,
+    ciphers: [
+      default: {Cloak.Ciphers.AES.GCM, tag: "AES.GCM.V1", key: Base.decode64!(cloak_key)}
+    ]
+
   # ## SSL Support
   #
   # To get SSL working, you will need to add the `https` key
@@ -151,3 +163,12 @@ config :clay,
       base_url: "https://katalog.stadtbibliothek-rostock.de"
     ]
   }
+
+if config_env() == :test do
+  config :clay,
+    services: %{
+      stadtbibliothek_rostock: [
+        plug: {Req.Test, Clay.Stub.StadtbibliothekRostock}
+      ]
+    }
+end

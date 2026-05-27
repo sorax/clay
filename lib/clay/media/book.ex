@@ -33,6 +33,16 @@ defmodule Clay.Media.Book do
       change relate_actor(:user)
     end
 
+    create :upsert_book do
+      accept [:author, :series, :episode, :title, :read, :rating, :list_id]
+
+      upsert? true
+      upsert_identity :unique_in_list
+      upsert_fields []
+
+      change relate_actor(:user)
+    end
+
     read :filter do
       argument :list_id, :uuid, allow_nil?: false
       argument :search, :string
@@ -52,6 +62,10 @@ defmodule Clay.Media.Book do
     end
   end
 
+  validations do
+    validate present(:series), where: [present(:episode)]
+  end
+
   attributes do
     uuid_primary_key :id
 
@@ -61,12 +75,18 @@ defmodule Clay.Media.Book do
     attribute :title, :string, allow_nil?: false
     attribute :read, :boolean, allow_nil?: false, default: false
     attribute :rating, :integer
+
+    timestamps()
   end
 
   relationships do
     belongs_to :user, User, allow_nil?: false
 
     belongs_to :list, List, allow_nil?: false
+  end
+
+  identities do
+    identity :unique_in_list, [:list_id, :author, :title, :episode], nils_distinct?: false
   end
 
   defp filter_by_search(query) do

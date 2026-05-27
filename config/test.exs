@@ -23,6 +23,13 @@ config :clay, ClayWeb.Endpoint,
   secret_key_base: "QaeR9PsN30RHmCiSuYtx7dP3yy3sfr5dhTe9APGq7o74dgnW/gTRJzzsT9kUJuSK",
   server: false
 
+config :clay, Clay.Vault,
+  ciphers: [
+    default:
+      {Cloak.Ciphers.AES.GCM,
+       tag: "AES.GCM.V1", key: Base.decode64!("IGbpWFGHkisvzaPj333ibF/zZIaOlyktLAAytluKNlU=")}
+  ]
+
 # In test we don't send emails
 config :clay, Clay.Mailer, adapter: Swoosh.Adapters.Test
 
@@ -44,3 +51,6 @@ config :phoenix,
   sort_verified_routes_query_params: true
 
 config :phoenix_test, :endpoint, ClayWeb.Endpoint
+
+config :clay, Oban, testing: :manual
+config :clay, run_boot_sync?: false
