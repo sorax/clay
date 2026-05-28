@@ -45,6 +45,12 @@ defmodule Clay.Media.List do
     defaults [:read, :update, :destroy]
     default_accept [:title, :credentials]
 
+    read :list do
+      prepare build(default_sort: [title: :asc])
+
+      pagination keyset?: true, offset?: true, required?: false, countable: true
+    end
+
     create :create do
       change relate_actor(:user)
     end

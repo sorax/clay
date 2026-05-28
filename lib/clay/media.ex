@@ -10,7 +10,7 @@ defmodule Clay.Media do
       define :create_list, action: :create
 
       define :read_lists,
-        action: :read,
+        action: :list,
         default_options: [load: [:books_count, :books_read_count, :books_unread_count]]
 
       define :get_list_by_id, action: :read, get_by: :id
