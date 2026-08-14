@@ -7,8 +7,13 @@
 # General application configuration
 import Config
 
+# These enable behaviors that will become the default in the next major
+# version of Ash. Setting them now opts your application into the new
+# behavior and ensures a seamless upgrade. See the backwards compatibility
+# guide for an explanation of each setting:
+# https://hexdocs.pm/ash/backwards-compatibility-config.html
 config :ash,
-  allow_forbidden_field_for_relationships_by_default?: true,
+  allow_forbidden_field_for_relationships_by_default: true,
   include_embedded_source_by_default?: false,
   show_keysets_for_all_actions?: false,
   default_page_type: :keyset,
@@ -19,6 +24,7 @@ config :ash,
   bulk_actions_default_to_errors?: true,
   transaction_rollback_on_error?: true,
   redact_sensitive_values_in_errors?: true,
+  many_to_many_destroy_destination_on_match?: true,
   known_types: [AshPostgres.Timestamptz, AshPostgres.TimestamptzUsec]
 
 config :spark,
@@ -64,7 +70,12 @@ config :clay, ClayWeb.Endpoint,
     layout: false
   ],
   pubsub_server: Clay.PubSub,
-  live_view: [signing_salt: "fBiwvDwH"]
+  live_view: [signing_salt: "aQXisMzz"]
+
+# Configure LiveView
+config :phoenix_live_view,
+  # the attribute set on all root tags. Used for Phoenix.LiveView.ColocatedCSS.
+  root_tag_attribute: "phx-r"
 
 # Configure the mailer
 #
@@ -87,13 +98,14 @@ config :esbuild,
 
 # Configure tailwind (the version is required)
 config :tailwind,
-  version: "4.1.12",
+  version: "4.3.0",
   clay: [
     args: ~w(
       --input=assets/css/app.css
       --output=priv/static/assets/css/app.css
     ),
-    cd: Path.expand("..", __DIR__)
+    cd: Path.expand("..", __DIR__),
+    env: %{"NODE_PATH" => [Path.expand("../deps", __DIR__), Mix.Project.build_path()]}
   ]
 
 # Configure Elixir's Logger

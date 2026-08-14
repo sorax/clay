@@ -8,8 +8,8 @@ defmodule ClayWeb.MediaLive.Index do
     lists = Media.read_lists!(stream?: true, actor: socket.assigns.current_user)
 
     socket
-    |> assign(page_title: "Medienlisten")
-    |> assign(app_title: "Medienlisten")
+    |> assign(:page_title, "Medienlisten")
+    |> assign(:app_title, "Medienlisten")
     |> stream(:lists, lists)
     |> ok()
   end

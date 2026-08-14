@@ -12,8 +12,6 @@ defmodule ClayWeb.MediaLive.BookForm do
 
     page_title = if is_nil(params["book_id"]), do: "Buch hinzufügen", else: "Buch bearbeiten"
 
-    # series = list |> Enum.map( -> books {author, series} -> group by author?)
-
     socket
     |> assign(list_id: list.id)
     |> assign(page_title: page_title)

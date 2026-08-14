@@ -7,7 +7,7 @@ defmodule ClayWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_clay_key",
-    signing_salt: "sgCk6Me2",
+    signing_salt: "kOBvbi50",
     same_site: "Lax"
   ]
 
@@ -26,10 +26,6 @@ defmodule ClayWeb.Endpoint do
     gzip: not code_reloading?,
     only: ClayWeb.static_paths(),
     raise_on_missing_only: code_reloading?
-
-  if Mix.env() == :dev do
-    plug Tidewave
-  end
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

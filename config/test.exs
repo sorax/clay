@@ -1,5 +1,5 @@
 import Config
-config :clay, token_signing_secret: "NvEUmF28/UYXdEg0PwtKIeop3jnGyfOt"
+config :clay, token_signing_secret: "KMRHsiP02SgHIpecwWVbnTFje7hKc4MB"
 config :bcrypt_elixir, log_rounds: 1
 config :ash, policies: [show_policy_breakdowns?: true], disable_async?: true
 
@@ -20,14 +20,16 @@ config :clay, Clay.Repo,
 # you can enable the server option below.
 config :clay, ClayWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "QaeR9PsN30RHmCiSuYtx7dP3yy3sfr5dhTe9APGq7o74dgnW/gTRJzzsT9kUJuSK",
+  secret_key_base: "hgXdh/ZmNaNIhvlozd6ktnPkPjZlTRZIcCeEOFazTvCpUkXD7Q/FzZFgCYJCinAR",
   server: false
 
 config :clay, Clay.Vault,
   ciphers: [
     default:
       {Cloak.Ciphers.AES.GCM,
-       tag: "AES.GCM.V1", key: Base.decode64!("IGbpWFGHkisvzaPj333ibF/zZIaOlyktLAAytluKNlU=")}
+       tag: "AES.GCM.V1",
+       key: Base.decode64!("lKdLAO/pmiKsrxTRyHLzFO+ZZ+CS3EFdpBtmCszX4a0="),
+       iv_length: 12}
   ]
 
 # In test we don't send emails
@@ -53,4 +55,5 @@ config :phoenix,
 config :phoenix_test, :endpoint, ClayWeb.Endpoint
 
 config :clay, Oban, testing: :manual
+
 config :clay, run_boot_sync?: false

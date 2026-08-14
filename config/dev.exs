@@ -24,7 +24,7 @@ config :clay, ClayWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "z7eXX8OSdO4/9amPrm53mbJ/jok1vkI2glmhwf8Wt8fPlEgENDkm5PrHczZ01ohI",
+  secret_key_base: "Qgb/N2KBnzrZCrWq3SUeM0bC+lTy+tatBGL+f4u8BN7dPbrSwLG3pNfsjhgeVbCx",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:clay, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:clay, ~w(--watch)]}
@@ -34,7 +34,9 @@ config :clay, Clay.Vault,
   ciphers: [
     default:
       {Cloak.Ciphers.AES.GCM,
-       tag: "AES.GCM.V1", key: Base.decode64!("oQRGldjsxHt4t4yGBsVUbIq8oyIqUplsshkpQvUDhWc=")}
+       tag: "AES.GCM.V1",
+       key: Base.decode64!("F1jJeYl/jTLtMtO2YB9U0N/X2cR5jUqGzyIx8r8TFOE="),
+       iv_length: 12}
   ]
 
 # ## SSL Support
@@ -60,23 +62,8 @@ config :clay, Clay.Vault,
 # configured to run both http and https servers on
 # different ports.
 
-# Reload browser tabs when matching files change.
-config :clay, ClayWeb.Endpoint,
-  live_reload: [
-    web_console_logger: true,
-    patterns: [
-      # Static assets, except user uploads
-      ~r"priv/static/(?!uploads/).*\.(js|css|png|jpeg|jpg|gif|svg)$"E,
-      # Gettext translations
-      ~r"priv/gettext/.*\.po$"E,
-      # Router, Controllers, LiveViews and LiveComponents
-      ~r"lib/clay_web/router\.ex$"E,
-      ~r"lib/clay_web/(controllers|live|components)/.*\.(ex|heex)$"E
-    ]
-  ]
-
 # Enable dev routes for dashboard and mailbox
-config :clay, dev_routes: true, token_signing_secret: "cjrGF0eRRmSMg01/sZM/QVnkFetXGbEV"
+config :clay, dev_routes: true, token_signing_secret: "kJM1YxrtksmuKOT7p8+ejqGzS+iEEBsc"
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :default_formatter, format: "[$level] $message\n"

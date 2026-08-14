@@ -17,11 +17,8 @@ defmodule Clay.Media.List.Sync.ServiceWorker do
 
   @impl Oban.Worker
   def perform(%Oban.Job{args: %{"list_id" => list_id, "credential_index" => index}}) do
-    list =
-      Media.get_list_by_id!(list_id,
-        load: [:user, credentials: [:username, :password]],
-        authorize?: false
-      )
+    load = [:user, credentials: [:username, :password]]
+    list = Media.get_list_by_id!(list_id, load: load, authorize?: false)
 
     credential = Enum.at(list.credentials, index)
 

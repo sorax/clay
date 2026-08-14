@@ -9,9 +9,9 @@ defmodule ClayWeb.MediaLive.Show do
     list = Media.get_list_by_id!(list_id, actor: socket.assigns.current_user)
 
     socket
-    |> assign(page_title: list.title)
-    |> assign(app_title: "Bücher #{list.title}")
-    |> assign(list: list)
+    |> assign(:page_title, list.title)
+    |> assign(:app_title, "Bücher #{list.title}")
+    |> assign(:list, list)
     |> ok()
   end
 

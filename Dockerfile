@@ -11,9 +11,9 @@
 #   - https://pkgs.org/ - resource for finding needed packages
 #   - Ex: docker.io/hexpm/elixir:1.18.4-erlang-27.3.4.3-debian-bookworm-20251103-slim
 #
-ARG ELIXIR_VERSION=1.19.5
-ARG OTP_VERSION=28.3
-ARG DEBIAN_VERSION=bookworm-20251229-slim
+ARG ELIXIR_VERSION=1.20.3
+ARG OTP_VERSION=29.0.5
+ARG DEBIAN_VERSION=trixie-20260803-slim
 
 ARG BUILDER_IMAGE="docker.io/hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="docker.io/debian:${DEBIAN_VERSION}"
@@ -71,7 +71,7 @@ RUN mix release
 FROM ${RUNNER_IMAGE} AS final
 
 RUN apt-get update \
-  && apt-get install -y --no-install-recommends libstdc++6 openssl libncurses5 locales ca-certificates \
+  && apt-get install -y --no-install-recommends libstdc++6 openssl libncurses6 locales ca-certificates \
   && rm -rf /var/lib/apt/lists/*
 
 # Set the locale

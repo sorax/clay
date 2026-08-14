@@ -36,7 +36,7 @@
       #
       # Load and configure plugins here:
       #
-      plugins: [],
+      plugins: [{AshCredo, []}],
       #
       # If you create your own checks, you must specify the source files for
       # them here, so they can be loaded by Credo before running the analysis.
@@ -161,7 +161,7 @@
           {Credo.Check.Warning.UnusedRegexOperation, []},
           {Credo.Check.Warning.UnusedStringOperation, []},
           {Credo.Check.Warning.UnusedTupleOperation, []},
-          {Credo.Check.Warning.WrongTestFileExtension, []}
+          {Credo.Check.Warning.WrongTestFilename, []}
         ],
         disabled: [
           #
@@ -191,6 +191,7 @@
           {Credo.Check.Readability.WithCustomTaggedTuple, []},
           {Credo.Check.Refactor.ABCSize, []},
           {Credo.Check.Refactor.AppendSingleItem, []},
+          {Credo.Check.Refactor.CondInsteadOfIfElse, []},
           {Credo.Check.Refactor.DoubleBooleanNegation, []},
           {Credo.Check.Refactor.FilterReject, []},
           {Credo.Check.Refactor.IoPuts, []},
@@ -213,6 +214,30 @@
           #
           # Custom checks can be created using `mix credo.gen.check`.
           #
+        ],
+        extra: [
+          {AshCredo.Check.Warning.ActorOnCallOptions, []},
+          {AshCredo.Check.Warning.AuthorizeFalse, []},
+          {AshCredo.Check.Warning.AuthorizerWithoutPolicies, []},
+          {AshCredo.Check.Warning.EmptyDomain, []},
+          {AshCredo.Check.Warning.MissingDomain, []},
+          {AshCredo.Check.Warning.OverlyPermissivePolicy, []},
+          {AshCredo.Check.Warning.RedundantValidation, []},
+          {AshCredo.Check.Warning.SensitiveAttributeExposed, []},
+          {AshCredo.Check.Warning.SensitiveFieldInAccept, []},
+          {AshCredo.Check.Warning.UnknownAction, []},
+          {AshCredo.Check.Warning.WildcardAcceptOnAction, []},
+          {AshCredo.Check.Refactor.AnonymousFunctionInDsl, []},
+          {AshCredo.Check.Refactor.DirectiveInFunctionBody, []},
+          {AshCredo.Check.Refactor.LargeResource, []},
+          {AshCredo.Check.Refactor.RaisingCall, []},
+          {AshCredo.Check.Refactor.UseCodeInterface, []},
+          {AshCredo.Check.Design.MissingCodeInterface, []},
+          {AshCredo.Check.Design.MissingIdentity, []},
+          {AshCredo.Check.Design.MissingPrimaryAction, []},
+          {AshCredo.Check.Design.MissingTimestamps, []},
+          {AshCredo.Check.Readability.ActionMissingDescription, []},
+          {AshCredo.Check.Readability.BelongsToMissingAllowNil, []}
         ]
       }
     },

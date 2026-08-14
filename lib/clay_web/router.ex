@@ -12,7 +12,6 @@ defmodule ClayWeb.Router do
     plug :put_root_layout, html: {ClayWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :sign_in_with_remember_me
     plug :load_from_session
   end
 
@@ -45,7 +44,7 @@ defmodule ClayWeb.Router do
     # end
 
     ash_authentication_live_session :authenticated_routes,
-      on_mount: [{ClayWeb.LiveUserAuth, :live_user_required}] do
+      on_mount: {ClayWeb.LiveUserAuth, :live_user_required} do
       live "/medien", MediaLive.Index, :index
 
       live "/medien/neu", MediaLive.ListForm, :new
@@ -62,7 +61,6 @@ defmodule ClayWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-
     get "/datenschutz", PageController, :privacy
     get "/impressum", PageController, :imprint
 
@@ -76,25 +74,25 @@ defmodule ClayWeb.Router do
                   on_mount: [{ClayWeb.LiveUserAuth, :live_no_user}],
                   overrides: [
                     ClayWeb.AuthOverrides,
-                    Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI
+                    Elixir.AshAuthentication.Phoenix.Overrides.Default
                   ]
 
     # Remove this if you do not want to use the reset password feature
     reset_route auth_routes_prefix: "/auth",
                 overrides: [
                   ClayWeb.AuthOverrides,
-                  Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI
+                  Elixir.AshAuthentication.Phoenix.Overrides.Default
                 ]
 
     # Remove this if you do not use the confirmation strategy
     confirm_route Clay.Accounts.User, :confirm_new_user,
       auth_routes_prefix: "/auth",
-      overrides: [ClayWeb.AuthOverrides, Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI]
+      overrides: [ClayWeb.AuthOverrides, Elixir.AshAuthentication.Phoenix.Overrides.Default]
 
     # Remove this if you do not use the magic link strategy.
     magic_sign_in_route(Clay.Accounts.User, :magic_link,
       auth_routes_prefix: "/auth",
-      overrides: [ClayWeb.AuthOverrides, Elixir.AshAuthentication.Phoenix.Overrides.DaisyUI]
+      overrides: [ClayWeb.AuthOverrides, Elixir.AshAuthentication.Phoenix.Overrides.Default]
     )
   end
 

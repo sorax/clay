@@ -8,14 +8,14 @@ defmodule Clay.Repo.Migrations.AddAuthenticationResourcesAndAddPasswordAuthentic
   use Ecto.Migration
 
   def up do
-    create table(:users, primary_key: false) do
+    create table(:api_keys, primary_key: false) do
       add :id, :uuid, null: false, default: fragment("gen_random_uuid()"), primary_key: true
-      add :email, :citext, null: false
-      add :hashed_password, :text
-      add :confirmed_at, :utc_datetime_usec
+      add :api_key_hash, :binary, null: false
+      add :expires_at, :utc_datetime_usec, null: false
+      add :user_id, :uuid
     end
 
-    create unique_index(:users, [:email], name: "users_unique_email_index")
+    create unique_index(:api_keys, [:api_key_hash], name: "api_keys_unique_api_key_index")
 
     create table(:tokens, primary_key: false) do
       add :jti, :text, null: false, primary_key: true
@@ -33,34 +33,50 @@ defmodule Clay.Repo.Migrations.AddAuthenticationResourcesAndAddPasswordAuthentic
         default: fragment("(now() AT TIME ZONE 'utc')")
     end
 
-    create table(:api_keys, primary_key: false) do
+    create table(:users, primary_key: false) do
       add :id, :uuid, null: false, default: fragment("gen_random_uuid()"), primary_key: true
-      add :api_key_hash, :binary, null: false
-      add :expires_at, :utc_datetime_usec, null: false
-
-      add :user_id,
-          references(:users,
-            column: :id,
-            name: "api_keys_user_id_fkey",
-            type: :uuid,
-            prefix: "public"
-          )
     end
 
-    create unique_index(:api_keys, [:api_key_hash], name: "api_keys_unique_api_key_index")
+    alter table(:api_keys) do
+      modify :user_id,
+             references(:users,
+               column: :id,
+               name: "api_keys_user_id_fkey",
+               type: :uuid,
+               prefix: "public"
+             )
+    end
+
+    alter table(:users) do
+      add :email, :citext, null: false
+      add :hashed_password, :text
+      add :confirmed_at, :utc_datetime_usec
+    end
+
+    create unique_index(:users, [:email], name: "users_unique_email_index")
   end
 
   def down do
-    drop_if_exists unique_index(:api_keys, [:api_key_hash], name: "api_keys_unique_api_key_index")
+    drop_if_exists unique_index(:users, [:email], name: "users_unique_email_index")
+
+    alter table(:users) do
+      remove :confirmed_at
+      remove :hashed_password
+      remove :email
+    end
 
     drop constraint(:api_keys, "api_keys_user_id_fkey")
 
-    drop table(:api_keys)
+    alter table(:api_keys) do
+      modify :user_id, :uuid
+    end
+
+    drop table(:users)
 
     drop table(:tokens)
 
-    drop_if_exists unique_index(:users, [:email], name: "users_unique_email_index")
+    drop_if_exists unique_index(:api_keys, [:api_key_hash], name: "api_keys_unique_api_key_index")
 
-    drop table(:users)
+    drop table(:api_keys)
   end
 end
