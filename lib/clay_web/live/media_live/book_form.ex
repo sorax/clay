@@ -5,19 +5,21 @@ defmodule ClayWeb.MediaLive.BookForm do
 
   @impl true
   def mount(%{"list_id" => list_id} = params, _session, socket) do
-    load = [:authors, :series]
-    list = Media.get_list_by_id!(list_id, load: load, actor: socket.assigns.current_user)
+    list = Media.get_list_by_id!(list_id, load: [:authors], actor: socket.assigns.current_user)
 
     form = get_form(list.id, params["book_id"], socket.assigns.current_user)
 
     page_title = if is_nil(params["book_id"]), do: "Buch hinzufügen", else: "Buch bearbeiten"
+
+    series_by_author = series_by_author(list.id, socket.assigns.current_user)
 
     socket
     |> assign(list_id: list.id)
     |> assign(page_title: page_title)
     |> assign(form: to_form(form))
     |> assign(authors: list.authors)
-    |> assign(series: list.series)
+    |> assign(series_by_author: series_by_author)
+    |> assign(series: series_for_author(series_by_author, AshPhoenix.Form.value(form, :author)))
     |> ok()
   end
 
@@ -25,6 +27,7 @@ defmodule ClayWeb.MediaLive.BookForm do
   def handle_event("validate", %{"book" => book_params}, socket) do
     socket
     |> assign(form: AshPhoenix.Form.validate(socket.assigns.form, book_params))
+    |> assign(series: series_for_author(socket.assigns.series_by_author, book_params["author"]))
     |> noreply()
   end
 
@@ -39,6 +42,18 @@ defmodule ClayWeb.MediaLive.BookForm do
       {:error, form} ->
         socket |> assign(form: form) |> noreply()
     end
+  end
+
+  defp series_by_author(list_id, actor) do
+    list_id
+    |> Media.filter_books!(%{}, actor: actor)
+    |> Enum.reject(&is_nil(&1.series))
+    |> Enum.group_by(& &1.author, & &1.series)
+    |> Map.new(fn {author, series} -> {author, Enum.uniq(series)} end)
+  end
+
+  defp series_for_author(series_by_author, author) do
+    Map.get(series_by_author, author, [])
   end
 
   defp get_form(list_id, nil, actor) do

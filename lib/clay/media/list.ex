@@ -93,11 +93,6 @@ defmodule Clay.Media.List do
       sort :author
       uniq? true
     end
-
-    list :series, :books, :series do
-      sort :series
-      uniq? true
-    end
   end
 
   defp enqueue_service_workers(_changeset, list, _context) do
