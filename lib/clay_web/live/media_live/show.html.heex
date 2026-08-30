@@ -9,21 +9,20 @@
   </.title>
 
   <.form :let={f} for={@filter} id="filter" phx-change="set_filter" phx-submit="set_filter">
-    <div class="flex items-center gap-4">
-      <div class="flex-1">
-        <.input
-          field={f[:search]}
-          type="search"
-          placeholder="Suchbegriff"
-          phx-debounce="400"
-        />
-      </div>
+    <.input
+      field={f[:search]}
+      type="search"
+      placeholder="Suchbegriff"
+      phx-debounce="400"
+    />
+
+    <div class="flex gap-2">
       <.input
         :for={{label, status} <- progress_options()}
+        class="btn btn-sm"
         field={f[status]}
         type="checkbox"
-        class="toggle toggle-primary"
-        label={label}
+        aria-label={label}
       />
     </div>
   </.form>
