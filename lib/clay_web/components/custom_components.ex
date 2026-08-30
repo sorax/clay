@@ -213,7 +213,9 @@ defmodule ClayWeb.CustomComponents do
     """
   end
 
-  def progress_options, do: [Ungelesen: "unread", Gelesen: "read", Abgebrochen: "aborted"]
+  def progress_options do
+    [Ungelesen: "unread", Pausiert: "paused", Abgebrochen: "aborted", Gelesen: "read"]
+  end
 
   attr :list_id, :string, required: true
   attr :id, :string, required: true
@@ -240,7 +242,8 @@ defmodule ClayWeb.CustomComponents do
     """
   end
 
-  defp progress_color(:read), do: "bg-green-600"
   defp progress_color(:unread), do: "bg-orange-600"
-  defp progress_color(:aborted), do: "bg-green-600"
+  defp progress_color(:paused), do: "bg-yellow-600"
+  defp progress_color(:aborted), do: "bg-blue-600"
+  defp progress_color(:read), do: "bg-green-600"
 end

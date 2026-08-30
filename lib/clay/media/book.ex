@@ -14,7 +14,7 @@ defmodule Clay.Media.Book do
   alias Clay.Accounts.User
   alias Clay.Media.List
 
-  @progress_values [:unread, :read, :aborted]
+  @progress_values [:unread, :paused, :aborted, :read]
   @accepted_attributes [:author, :series, :episode, :title, :progress, :rating]
 
   def progress_values, do: @progress_values
