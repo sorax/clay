@@ -18,8 +18,13 @@
           phx-debounce="400"
         />
       </div>
-      <.input field={f[:read]} type="checkbox" class="toggle toggle-primary" label="Gelesen" />
-      <.input field={f[:unread]} type="checkbox" class="toggle toggle-primary" label="Ungelesen" />
+      <.input
+        :for={{label, status} <- progress_options()}
+        field={f[status]}
+        type="checkbox"
+        class="toggle toggle-primary"
+        label={label}
+      />
     </div>
   </.form>
 

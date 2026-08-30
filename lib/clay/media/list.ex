@@ -86,8 +86,8 @@ defmodule Clay.Media.List do
 
   aggregates do
     count :books_count, :books
-    count :books_read_count, :books, filter: expr(read == true)
-    count :books_unread_count, :books, filter: expr(read == false)
+    count :books_read_count, :books, filter: expr(progress == :read)
+    count :books_unread_count, :books, filter: expr(progress == :unread)
 
     list :authors, :books, :author do
       sort :author

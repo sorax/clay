@@ -213,6 +213,8 @@ defmodule ClayWeb.CustomComponents do
     """
   end
 
+  def progress_options, do: [Ungelesen: "unread", Gelesen: "read", Abgebrochen: "aborted"]
+
   attr :list_id, :string, required: true
   attr :id, :string, required: true
   attr :book, :any, required: true
@@ -222,8 +224,8 @@ defmodule ClayWeb.CustomComponents do
     <div id={@id}>
       <h2 class="mt-9 text-2xl">{@book.author}</h2>
       <h3 class="font-bold mt-2">{@book.series}</h3>
-      <div class={[@book.read && "text-gray"]}>
-        <span class={[@book.read && "bg-green-600", !@book.read && "bg-orange-600"]}>&nbsp;</span>
+      <div class={[@book.progress != :unread && "text-gray"]}>
+        <span class={progress_color(@book.progress)}>&nbsp;</span>
         <.link patch={~p"/medien/#{@list_id}/#{@book}/bearbeiten"} title="Bearbeiten">
           {@book.episode} {@book.title}
           <.icon
@@ -237,4 +239,8 @@ defmodule ClayWeb.CustomComponents do
     </div>
     """
   end
+
+  defp progress_color(:read), do: "bg-green-600"
+  defp progress_color(:unread), do: "bg-orange-600"
+  defp progress_color(:aborted), do: "bg-green-600"
 end

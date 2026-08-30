@@ -38,7 +38,7 @@ defmodule Clay.Media.List.SyncTest do
                  title: "Gefährliche Geburtstagsgrüße",
                  series: "Lucy Longfinger – einfach unfassbar!",
                  episode: 1,
-                 read: true
+                 progress: :read
                }
              ] = updated.books
     end

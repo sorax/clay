@@ -29,7 +29,7 @@ defmodule Clay.Media.List.Sync do
       title: loan.title,
       series: loan.series,
       episode: parse_episode(loan.episode),
-      read: true
+      progress: :read
     }
 
     case Media.upsert_book(attrs, actor: list.user) do

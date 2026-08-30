@@ -15,7 +15,7 @@
     <.input field={f[:episode]} type="number" label="Teil" />
     <.input field={f[:title]} type="text" label="Titel" />
     <div class="flex gap-2">
-      <.input field={f[:read]} type="checkbox" label="Gelesen" />
+      <.input field={f[:progress]} type="select" label="Status" options={progress_options()} />
       <div class="rating ml-8">
         <input
           type="radio"

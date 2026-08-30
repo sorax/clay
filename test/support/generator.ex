@@ -3,6 +3,8 @@ defmodule Clay.Generator do
 
   use Ash.Generator
 
+  alias Clay.Media.Book
+
   def user(opts \\ []) do
     {:ok, hashed} = AshAuthentication.BcryptProvider.hash("password")
 
@@ -48,7 +50,7 @@ defmodule Clay.Generator do
         author: StreamData.repeatedly(&Faker.Person.name/0),
         series: StreamData.repeatedly(&Faker.Lorem.word/0),
         episode: StreamData.integer(1..20),
-        read: StreamData.boolean()
+        progress: StreamData.member_of(Book.progress_values())
       ],
       overrides: opts
     )

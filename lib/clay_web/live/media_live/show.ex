@@ -2,7 +2,11 @@ defmodule ClayWeb.MediaLive.Show do
   use ClayWeb, :live_view
 
   alias Clay.Media
+  alias Clay.Media.Book
   alias Plug.Conn.Query
+
+  @progress_states Enum.map(Book.progress_values(), &to_string/1)
+  @default_filter Enum.map_join(@progress_states, "&", &"#{&1}=true")
 
   @impl true
   def mount(%{"list_id" => list_id}, _session, socket) do
@@ -17,8 +21,7 @@ defmodule ClayWeb.MediaLive.Show do
 
   @impl true
   def handle_params(%{"list_id" => list_id} = params, _uri, socket) do
-    default = "read=true&unread=true"
-    form = params |> Map.get("filter", default) |> Query.decode()
+    form = params |> Map.get("filter", @default_filter) |> Query.decode()
 
     query = query_from_form(form)
     books = Media.filter_books!(list_id, query, stream?: true, actor: socket.assigns.current_user)
@@ -48,13 +51,10 @@ defmodule ClayWeb.MediaLive.Show do
   end
 
   defp query_from_form(form) do
-    read = get_read(form)
+    progress = for status <- @progress_states, form[status] == "true", do: status
 
-    form |> Map.put("read", read) |> Map.delete("unread")
+    form
+    |> Map.drop(@progress_states)
+    |> Map.put("progress", progress)
   end
-
-  defp get_read(%{"read" => "true", "unread" => "true"}), do: ""
-  defp get_read(%{"read" => "true"}), do: "true"
-  defp get_read(%{"unread" => "true"}), do: "false"
-  defp get_read(_), do: ""
 end

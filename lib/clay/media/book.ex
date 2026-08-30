@@ -14,6 +14,11 @@ defmodule Clay.Media.Book do
   alias Clay.Accounts.User
   alias Clay.Media.List
 
+  @progress_values [:unread, :read, :aborted]
+  @accepted_attributes [:author, :series, :episode, :title, :progress, :rating]
+
+  def progress_values, do: @progress_values
+
   postgres do
     table "books"
     repo Clay.Repo
@@ -25,16 +30,16 @@ defmodule Clay.Media.Book do
 
   actions do
     defaults [:read, :update, :destroy]
-    default_accept [:author, :series, :episode, :title, :read, :rating]
+    default_accept @accepted_attributes
 
     create :create do
-      accept [:author, :series, :episode, :title, :read, :rating, :list_id]
+      accept @accepted_attributes ++ [:list_id]
 
       change relate_actor(:user)
     end
 
     create :upsert_book do
-      accept [:author, :series, :episode, :title, :read, :rating, :list_id]
+      accept @accepted_attributes ++ [:list_id]
 
       upsert? true
       upsert_identity :unique_in_list
@@ -46,7 +51,8 @@ defmodule Clay.Media.Book do
     read :filter do
       argument :list_id, :uuid, allow_nil?: false
       argument :search, :string
-      argument :read, :boolean
+
+      argument :progress, {:array, :atom}, constraints: [items: [one_of: @progress_values]]
 
       pagination required?: false, offset?: true, keyset?: true
 
@@ -57,7 +63,7 @@ defmodule Clay.Media.Book do
       prepare fn query, _context ->
         query
         |> filter_by_search()
-        |> filter_by_read_status()
+        |> filter_by_progress()
       end
     end
   end
@@ -73,7 +79,12 @@ defmodule Clay.Media.Book do
     attribute :series, :string
     attribute :episode, :integer
     attribute :title, :string, allow_nil?: false
-    attribute :read, :boolean, allow_nil?: false, default: false
+
+    attribute :progress, :atom,
+      allow_nil?: false,
+      default: :unread,
+      constraints: [one_of: @progress_values]
+
     attribute :rating, :integer
 
     timestamps()
@@ -107,10 +118,13 @@ defmodule Clay.Media.Book do
     end
   end
 
-  defp filter_by_read_status(query) do
-    case Ash.Query.get_argument(query, :read) do
-      nil -> query
-      value -> Ash.Query.filter(query, read == ^value)
+  defp filter_by_progress(query) do
+    values = Ash.Query.get_argument(query, :progress) || []
+
+    if values == [] or Enum.sort(values) == Enum.sort(@progress_values) do
+      query
+    else
+      Ash.Query.filter(query, progress in ^values)
     end
   end
 end
