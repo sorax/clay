@@ -41,15 +41,6 @@ defmodule ClayWeb.MediaLive.Show do
     |> noreply()
   end
 
-  def handle_event("delete", %{"id" => id}, socket) do
-    book = Media.get_book_by_id!(id, actor: socket.assigns.current_user)
-    Media.destroy_book!(book, actor: socket.assigns.current_user)
-
-    socket
-    |> stream_delete(:books, book)
-    |> noreply()
-  end
-
   defp query_from_form(form) do
     progress = for status <- @progress_states, form[status] == "true", do: status
 
